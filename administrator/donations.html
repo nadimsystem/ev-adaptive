@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Manage Donations — Admin BMW e.V.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../mod.css">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8f9fa; }
+        .admin-wrapper { display: flex; min-height: 100vh; }
+        .admin-sidebar { width: 260px; background-color: #1a1a1a; color: #fff; flex-shrink: 0; padding-top: 1rem; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+        .admin-sidebar .admin-logo { padding: 0 1.5rem 1rem 1.5rem; display: flex; align-items: center; gap: 10px; }
+        .admin-sidebar .admin-logo img { height: 40px; filter: brightness(0) invert(1); }
+        .admin-sidebar .admin-logo span { font-size: 0.9rem; font-weight: 600; opacity: 0.8; }
+        .admin-nav { padding: 0 1rem; }
+        .admin-nav .nav-link { color: rgba(255, 255, 255, 0.7); font-weight: 500; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 1rem; transition: all 0.2s ease; }
+        .admin-nav .nav-link:hover { color: #fff; background-color: rgba(255, 255, 255, 0.05); }
+        .admin-nav .nav-link.active { color: #fff; background-color: var(--bmw-sky, #007bff); font-weight: 700; border-radius: 8px; }
+        .nav-heading { text-transform: uppercase; font-size: 0.7rem; font-weight: 700; color: rgba(255, 255, 255, 0.4); padding: 2rem 1rem 0.5rem 1rem; }
+        .admin-content { flex-grow: 1; padding: 2rem; overflow-x: hidden; }
+        .pagination .page-link { cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="admin-wrapper">
+        <nav class="admin-sidebar">
+            <div class="admin-logo"><img src="../images/bmw logo.svg" alt="BmW e.V. Logo"><span>Admin Panel</span></div>
+            <hr class="text-secondary m-0">
+            <ul class="nav flex-column admin-nav pt-3">
+                <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-grid-fill"></i> Dashboard</a></li>
+                <li class="nav-heading">Keuangan</li>
+                <li class="nav-item"><a class="nav-link active" href="donations.html"><i class="bi bi-cash-coin"></i> Donations</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="campaigns.html"><i class="bi bi-bullseye"></i> Campaigns</a></li> -->
+                <li class="nav-heading">Website Content</li>
+                <li class="nav-item"><a class="nav-link" href="programs.html"><i class="bi bi-layout-text-window-reverse"></i> Programs</a></li>
+                <li class="nav-item"><a class="nav-link" href="team-partners.html"><i class="bi bi-people-fill"></i> Team & Partners</a></li>
+                <li class="nav-item"><a class="nav-link" href="gallery.html"><i class="bi bi-images"></i> Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="content.html"><i class="bi bi-pencil-square"></i> Site Text & Impact</a></li>
+                <li class="nav-heading">Submissions</li>
+                <li class="nav-item"><a class="nav-link" href="messages.html"><i class="bi bi-envelope-fill"></i> Messages</a></li>
+                <li class="nav-heading">System</li>
+                <li class="nav-item"><a class="nav-link" href="users.html"><i class="bi bi-person-gear"></i> Manage Admins</a></li>
+                <li class="nav-item"><a class="nav-link" href="../index.html" target="_blank"><i class="bi bi-box-arrow-up-right"></i> View Public Site</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-door-closed-fill"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="admin-content" id="app">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <span class="kicker">Keuangan</span>
+                        <h1 class="display-5 fw-bold">Manage Donations</h1>
+                        <p class="text-muted">Database semua donasi yang diterima. Gunakan filter untuk pelaporan.</p>
+                    </div>
+                    <div>
+                        <button @click="exportCSV" class="btn btn-lg btn-success">
+                            <i class="bi bi-file-earmark-spreadsheet-fill me-2"></i> Export Report (CSV)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="row g-3 mb-3 p-3 bg-light rounded align-items-end">
+                            <div class="col-md-4">
+                                <label class="form-label">Search by Name/Email</label>
+                                <input type="text" class="form-control" v-model="filters.search" @keyup.enter="applyFilters" placeholder="Search...">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Filter by Program</label>
+                                <select class="form-select" v-model="filters.program" @change="applyFilters">
+                                    <option value="">All Programs</option>
+                                    <option v-for="program in programs" :key="program.id" :value="program.title">{{ program.title }}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Items per page</label>
+                                <select class="form-select" v-model="filters.limit" @change="applyFilters">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary w-100" @click="applyFilters" :disabled="loading">
+                                    <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Filter Data
+                                </button>
+                            </div>
+                        </div>
+
+                        <div v-if="error" class="alert alert-danger">
+                            <strong>Error:</strong> {{ error }}
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Donator</th>
+                                        <th>Email</th>
+                                        <th>Amount</th>
+                                        <th>Program</th>
+                                        <th>Frequency</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-if="loading">
+                                        <td colspan="7" class="text-center text-muted py-4">
+                                            <div class="spinner-border spinner-border-sm" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                            Loading data...
+                                        </td>
+                                    </tr>
+                                    <tr v-if="!loading && donations.length > 0" v-for="donation in donations" :key="donation.id">
+                                        <td>{{ formatDate(donation.donation_date) }}</td>
+                                        <td>{{ donation.first_name }} {{ donation.last_name }}</td>
+                                        <td>{{ donation.email }}</td>
+                                        <td><strong>{{ formatCurrency(donation.amount, donation.currency) }}</strong></td>
+                                        <td>{{ donation.program_name }}</td>
+                                        <td>{{ donation.frequency }}</td>
+                                        <td><a href="#" class="btn btn-sm btn-outline-secondary"><i class="bi bi-eye-fill"></i></a></td>
+                                    </tr>
+                                    <tr v-if="!loading && donations.length === 0">
+                                        <td colspan="7" class="text-center text-muted py-4">
+                                            {{ error ? 'Failed to load data. Please check the console for details.' : 'No donations found for the selected filters.' }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <nav aria-label="Page navigation" v-if="!loading && pagination.totalPages > 1">
+                            <ul class="pagination justify-content-end mb-0">
+                                <li class="page-item" :class="{ disabled: pagination.currentPage === 1 }">
+                                    <a class="page-link" @click.prevent="changePage(pagination.currentPage - 1)">Previous</a>
+                                </li>
+                                <li class="page-item" v-for="page in pagination.totalPages" :key="page" :class="{ active: page === pagination.currentPage }">
+                                    <a class="page-link" @click.prevent="changePage(page)">{{ page }}</a>
+                                </li>
+                                <li class="page-item" :class="{ disabled: pagination.currentPage === pagination.totalPages }">
+                                    <a class="page-link" @click.prevent="changePage(pagination.currentPage + 1)">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    donations: [],
+                    programs: [],
+                    filters: {
+                        search: '',
+                        program: '',
+                        limit: 10
+                    },
+                    pagination: {
+                        currentPage: 1,
+                        totalPages: 1,
+                        totalRecords: 0
+                    },
+                    loading: true,
+                    error: null
+                }
+            },
+            mounted() {
+                this.fetchDonations();
+                this.fetchProgramsForFilter();
+            },
+            methods: {
+                // *** FUNGSI BARU UNTUK EKSPOR CSV ***
+                exportCSV() {
+                    // Membangun URL untuk ekspor, menyertakan filter yang sedang aktif
+                    const params = new URLSearchParams({
+                        action: 'export_donations_csv',
+                        search: this.filters.search,
+                        program: this.filters.program
+                    });
+                    
+                    // Memicu unduhan dengan mengarahkan browser ke URL API
+                    window.location.href = `api.php?${params.toString()}`;
+                },
+                fetchDonations() {
+                    this.loading = true;
+                    this.error = null;
+
+                    let params = new URLSearchParams({
+                        action: 'get_donations',
+                        page: this.pagination.currentPage,
+                        limit: this.filters.limit,
+                        search: this.filters.search,
+                        program: this.filters.program
+                    });
+                    
+                    fetch(`api.php?${params.toString()}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`Network response was not ok. Status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (typeof data !== 'object' || data === null) {
+                                throw new Error('Received invalid data from server. Check api.php for syntax errors.');
+                            }
+                            if (data.status === 'success') {
+                                this.donations = data.data;
+                                this.pagination = data.pagination;
+                            } else {
+                                throw new Error(data.message || 'An unknown API error occurred.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error("There was a problem with the fetch operation:", error);
+                            this.error = error.message;
+                        })
+                        .finally(() => {
+                            this.loading = false;
+                        });
+                },
+                fetchProgramsForFilter() {
+                    fetch('api.php?action=get_programs')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.programs = data.data;
+                            }
+                        });
+                },
+                applyFilters() {
+                    this.pagination.currentPage = 1;
+                    this.fetchDonations();
+                },
+                changePage(page) {
+                    if (page >= 1 && page <= this.pagination.totalPages && page !== this.pagination.currentPage) {
+                        this.pagination.currentPage = page;
+                        this.fetchDonations();
+                    }
+                },
+                formatDate(dateString) {
+                    if (!dateString) return 'N/A';
+                    const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+                    return new Date(dateString).toLocaleDateString('en-GB', options);
+                },
+                formatCurrency(amount, currency) {
+                    if (amount === null || currency === null) return 'N/A';
+                    try {
+                        const options = { style: 'currency', currency: currency, minimumFractionDigits: 2 };
+                        return new Intl.NumberFormat('de-DE', options).format(amount);
+                    } catch (e) {
+                        return `${currency} ${amount}`;
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

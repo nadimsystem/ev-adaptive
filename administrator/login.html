@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin Login — BMW e.V.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="login-card">
+        <div class="card shadow-sm">
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <img src="../images/bmw logo.svg" alt="Logo" height="60">
+                    <h1 class="h3 mt-3 mb-1 fw-bold">Admin Panel Login</h1>
+                    <p class="text-muted">Bildung mit Wirkung e.V.</p>
+                </div>
+                
+                <div v-if="error" class="alert alert-danger">{{ error }}</div>
+
+                <form @submit.prevent="handleLogin">
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" v-model="credentials.email" placeholder="name@example.com" required>
+                        <label for="email">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="password" v-model="credentials.password" placeholder="Password" required>
+                        <label for="password">Password</label>
+                    </div>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit" :disabled="isLoading">
+                        <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        {{ isLoading ? 'Logging in...' : 'Log In' }}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    credentials: {
+                        email: '',
+                        password: ''
+                    },
+                    isLoading: false,
+                    error: null
+                }
+            },
+            methods: {
+                handleLogin() {
+                    this.isLoading = true;
+                    this.error = null;
+
+                    const formData = new FormData();
+                    formData.append('action', 'login');
+                    formData.append('email', this.credentials.email);
+                    formData.append('password', this.credentials.password);
+
+                    fetch('api.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Jika login sukses, arahkan ke dashboard admin
+                            window.location.href = 'index.html';
+                        } else {
+                            this.error = data.message;
+                        }
+                    })
+                    .catch(err => {
+                        this.error = 'A network error occurred. Please try again.';
+                        console.error(err);
+                    })
+                    .finally(() => {
+                        this.isLoading = false;
+                    });
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

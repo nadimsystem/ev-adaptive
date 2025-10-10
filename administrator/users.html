@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Manage Admins — Admin BMW e.V.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../mod.css">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8f9fa; } .admin-wrapper { display: flex; min-height: 100vh; } .admin-sidebar { width: 260px; background-color: #1a1a1a; color: #fff; flex-shrink: 0; padding-top: 1rem; position: sticky; top: 0; height: 100vh; overflow-y: auto; } .admin-sidebar .admin-logo { padding: 0 1.5rem 1rem 1.5rem; display: flex; align-items: center; gap: 10px; } .admin-sidebar .admin-logo img { height: 40px; filter: brightness(0) invert(1); } .admin-sidebar .admin-logo span { font-size: 0.9rem; font-weight: 600; opacity: 0.8; } .admin-nav { padding: 0 1rem; } .admin-nav .nav-link { color: rgba(255, 255, 255, 0.7); font-weight: 500; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 1rem; transition: all 0.2s ease; } .admin-nav .nav-link:hover { color: #fff; background-color: rgba(255, 255, 255, 0.05); } .admin-nav .nav-link.active { color: #fff; background-color: var(--bmw-sky, #007bff); font-weight: 700; border-radius: 8px; } .nav-heading { text-transform: uppercase; font-size: 0.7rem; font-weight: 700; color: rgba(255, 255, 255, 0.4); padding: 2rem 1rem 0.5rem 1rem; } .admin-content { flex-grow: 1; padding: 2rem; overflow-x: hidden; }
+    </style>
+</head>
+<body>
+    <div class="admin-wrapper">
+        <nav class="admin-sidebar">
+            <div class="admin-logo"><img src="../images/bmw logo.svg" alt="BmW e.V. Logo"><span>Admin Panel</span></div>
+            <hr class="text-secondary m-0">
+            <ul class="nav flex-column admin-nav pt-3">
+                <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-grid-fill"></i> Dashboard</a></li>
+                <li class="nav-heading">Keuangan</li>
+                <li class="nav-item"><a class="nav-link" href="donations.html"><i class="bi bi-cash-coin"></i> Donations</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="campaigns.html"><i class="bi bi-bullseye"></i> Campaigns</a></li> -->
+                <li class="nav-heading">Website Content</li>
+                <li class="nav-item"><a class="nav-link" href="programs.html"><i class="bi bi-layout-text-window-reverse"></i> Programs</a></li>
+                <li class="nav-item"><a class="nav-link" href="team-partners.html"><i class="bi bi-people-fill"></i> Team & Partners</a></li>
+                <li class="nav-item"><a class="nav-link" href="gallery.html"><i class="bi bi-images"></i> Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="content.html"><i class="bi bi-pencil-square"></i> Site Text & Impact</a></li>
+                <li class="nav-heading">Submissions</li>
+                <li class="nav-item"><a class="nav-link" href="messages.html"><i class="bi bi-envelope-fill"></i> Messages</a></li>
+                <li class="nav-heading">System</li>
+                <li class="nav-item"><a class="nav-link active" href="users.html"><i class="bi bi-person-gear"></i> Manage Admins</a></li>
+                <li class="nav-item"><a class="nav-link" href="../index.html" target="_blank"><i class="bi bi-box-arrow-up-right"></i> View Public Site</a></li>
+                <li class="nav-item"><a class="nav-link" href="logout.php"><i class="bi bi-door-closed-fill"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="admin-content" id="app">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <span class="kicker">System</span>
+                        <h1 class="display-5 fw-bold">Manage Admin Users</h1>
+                        <p class="text-muted">Kelola siapa yang memiliki akses login ke panel admin ini.</p>
+                    </div>
+                     <div>
+                        <button @click="showAddModal" class="btn btn-lg btn-primary">
+                            <i class="bi bi-person-plus-fill me-2"></i> Add New Admin
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email / Username</th>
+                                        <th>Role</th>
+                                        <th>Last Login</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-if="loading"><td colspan="5" class="text-center py-4">Loading...</td></tr>
+                                    <tr v-for="admin in admins" :key="admin.id">
+                                        <td><strong>{{ admin.name }}</strong></td>
+                                        <td>{{ admin.email }}</td>
+                                        <td><span class="badge bg-primary">{{ admin.role }}</span></td>
+                                        <td class="text-muted small">{{ formatLoginDate(admin.last_login) }}</td>
+                                        <td>
+                                            <button @click="deleteAdmin(admin.id)" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i> Delete</button>
+                                        </td>
+                                    </tr>
+                                    <tr v-if="!loading && admins.length === 0"><td colspan="5" class="text-center py-4">No admins found.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="adminModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add New Admin</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form @submit.prevent="addAdmin">
+                                <div v-if="error" class="alert alert-danger">{{ error }}</div>
+                                <div class="mb-3">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" v-model="newAdmin.name" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" v-model="newAdmin.email" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password (min. 6 characters)</label>
+                                    <input type="password" v-model="newAdmin.password" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Role</label>
+                                    <select v-model="newAdmin.role" class="form-select">
+                                        <option>Administrator</option>
+                                        <option>Editor</option>
+                                        <option>Treasurer</option>
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" :disabled="isLoading">
+                                        <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
+                                        Save Admin
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    admins: [],
+                    loading: true,
+                    isLoading: false,
+                    error: null,
+                    adminModal: null,
+                    newAdmin: {
+                        name: '', email: '', password: '', role: 'Administrator'
+                    }
+                }
+            },
+            mounted() {
+                this.fetchAdmins();
+                this.adminModal = new bootstrap.Modal(document.getElementById('adminModal'));
+            },
+            methods: {
+                fetchAdmins() {
+                    this.loading = true;
+                    fetch('api.php?action=get_admins')
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.admins = data.data;
+                            } else { alert('Error: ' + data.message); }
+                            this.loading = false;
+                        });
+                },
+                showAddModal() {
+                    this.error = null;
+                    this.newAdmin = { name: '', email: '', password: '', role: 'Administrator' };
+                    this.adminModal.show();
+                },
+                addAdmin() {
+                    this.isLoading = true;
+                    this.error = null;
+                    const formData = new FormData();
+                    formData.append('action', 'add_admin');
+                    formData.append('name', this.newAdmin.name);
+                    formData.append('email', this.newAdmin.email);
+                    formData.append('password', this.newAdmin.password);
+                    formData.append('role', this.newAdmin.role);
+
+                    fetch('api.php', { method: 'POST', body: formData })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.fetchAdmins();
+                                this.adminModal.hide();
+                            } else {
+                                this.error = data.message;
+                            }
+                        }).finally(() => this.isLoading = false);
+                },
+                deleteAdmin(id) {
+                    if (!confirm('Are you sure you want to delete this admin? This action cannot be undone.')) return;
+                    
+                    const formData = new FormData();
+                    formData.append('action', 'delete_admin');
+                    formData.append('id', id);
+
+                    fetch('api.php', { method: 'POST', body: formData })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.fetchAdmins();
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        });
+                },
+                formatLoginDate(dateString) {
+                    if (!dateString) return 'Never';
+                    return new Date(dateString).toLocaleString('en-GB');
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<?php require 'auth_check.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin Dashboard — Bildung mit Wirkung e.V.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../mod.css">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8f9fa; } .admin-wrapper { display: flex; min-height: 100vh; } .admin-sidebar { width: 260px; background-color: #1a1a1a; color: #fff; flex-shrink: 0; padding-top: 1rem; position: sticky; top: 0; height: 100vh; overflow-y: auto; } .admin-sidebar .admin-logo { padding: 0 1.5rem 1rem 1.5rem; display: flex; align-items: center; gap: 10px; } .admin-sidebar .admin-logo img { height: 40px; filter: brightness(0) invert(1); } .admin-sidebar .admin-logo span { font-size: 0.9rem; font-weight: 600; opacity: 0.8; } .admin-nav { padding: 0 1rem; } .admin-nav .nav-link { color: rgba(255, 255, 255, 0.7); font-weight: 500; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 1rem; transition: all 0.2s ease; } .admin-nav .nav-link:hover { color: #fff; background-color: rgba(255, 255, 255, 0.05); } .admin-nav .nav-link.active { color: #fff; background-color: var(--bmw-sky, #007bff); font-weight: 700; border-radius: 8px; } .nav-heading { text-transform: uppercase; font-size: 0.7rem; font-weight: 700; color: rgba(255, 255, 255, 0.4); padding: 2rem 1rem 0.5rem 1rem; } .admin-content { flex-grow: 1; padding: 2.5rem; overflow-x: hidden; } .stat-card { border: none; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04); border-radius: 12px; } .stat-card .card-body { display: flex; align-items: center; gap: 1.5rem; } .stat-card .stat-icon { font-size: 2.5rem; padding: 18px; border-radius: 50%; display: grid; place-items: center; } .stat-card .stat-value { font-size: 2.25rem; font-weight: 800; line-height: 1; } .stat-card .stat-label { font-weight: 500; color: #6c757d; font-size: 0.9rem; } .icon-bg-success { background-color: rgba(25, 135, 84, 0.1); color: #198754; } .icon-bg-primary { background-color: rgba(0, 123, 255, 0.1); color: var(--bmw-sky, #007bff); } .icon-bg-warning { background-color: rgba(255, 193, 7, 0.1); color: #ffc107; } .icon-bg-info { background-color: rgba(13, 202, 240, 0.1); color: #0dcaf0; } .activity-list .list-group-item { display: flex; gap: 1rem; border-right: 0; border-left: 0; } .activity-list .activity-icon { font-size: 1.25rem; }
+    </style>
+</head>
+<body>
+    <div class="admin-wrapper">
+        <nav class="admin-sidebar">
+            <div class="admin-logo">
+                <img src="../images/bmw logo.svg" alt="BmW e.V. Logo">
+                <span>Admin Panel</span>
+            </div>
+            <hr class="text-secondary m-0">
+            <ul class="nav flex-column admin-nav pt-3">
+                <li class="nav-item"><a class="nav-link active" href="index.html"> <i class="bi bi-grid-fill"></i> Dashboard</a></li>
+                <li class="nav-heading">Keuangan</li>
+                <li class="nav-item"><a class="nav-link" href="donations.html"> <i class="bi bi-cash-coin"></i> Donations</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="campaigns.html"><i class="bi bi-bullseye"></i> Campaigns</a></li> -->
+                <li class="nav-heading">Website Content</li>
+                <li class="nav-item"><a class="nav-link" href="programs.html"><i class="bi bi-layout-text-window-reverse"></i> Programs</a></li>
+                <li class="nav-item"><a class="nav-link" href="team-partners.html"><i class="bi bi-people-fill"></i> Team & Partners</a></li>
+                <li class="nav-item"><a class="nav-link" href="gallery.html"><i class="bi bi-images"></i> Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="content.html"><i class="bi bi-pencil-square"></i> Site Text & Impact</a></li>
+                <li class="nav-heading">Submissions</li>
+                <li class="nav-item"><a class="nav-link" href="messages.html"><i class="bi bi-envelope-fill"></i> Messages</a></li>
+                <li class="nav-heading">System</li>
+                <li class="nav-item"><a class="nav-link" href="users.html"><i class="bi bi-person-gear"></i> Manage Admins</a></li>
+                <li class="nav-item"><a class="nav-link" href="../index.html" target="_blank"> <i class="bi bi-box-arrow-up-right"></i> View Public Site</a></li>
+                <li class="nav-item"><a class="nav-link" href="logout.php"> <i class="bi bi-door-closed-fill"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="admin-content" id="app">
+            <div class="container-fluid" v-if="!loading">
+                <div class="mb-4">
+                    <span class="kicker">Overview</span>
+                    <h1 class="display-5 fw-bold">Admin Dashboard</h1>
+                    <p class="text-muted lead">Welcome back, <?php echo htmlspecialchars($_SESSION['admin_name']); ?>. Here is a summary of website activity.</p>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6 col-xl-3">
+                        <div class="card stat-card h-100">
+                            <div class="card-body">
+                                <div class="stat-icon icon-bg-success"><i class="bi bi-currency-euro"></i></div>
+                                <div>
+                                    <div class="stat-value">{{ formatCurrency(dashboardData.donations_this_month) }}</div>
+                                    <div class="stat-label">Donations (This Month)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="card stat-card h-100">
+                            <div class="card-body">
+                                <div class="stat-icon icon-bg-primary"><i class="bi bi-people-fill"></i></div>
+                                <div>
+                                    <div class="stat-value">{{ dashboardData.new_donors_this_month }}</div>
+                                    <div class="stat-label">New Donors (This Month)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="card stat-card h-100">
+                            <div class="card-body">
+                                <div class="stat-icon icon-bg-warning"><i class="bi bi-envelope-exclamation-fill"></i></div>
+                                <div>
+                                    <div class="stat-value">{{ dashboardData.unread_messages }}</div>
+                                    <div class="stat-label">Unread Messages</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="card stat-card h-100">
+                            <div class="card-body">
+                                <div class="stat-icon icon-bg-info"><i class="bi bi-bell-fill"></i></div>
+                                <div>
+                                    <div class="stat-value">{{ dashboardData.newsletter_signups_7d }}</div>
+                                    <div class="stat-label">Newsletter Signups (7d)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-lg-8">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header bg-white border-0 py-3"><h5 class="mb-0 fw-bold">Donation Growth (Last 6 Months)</h5></div>
+                            <div class="card-body p-4"><canvas id="donationChart" height="250"></canvas></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                         <div class="card shadow-sm h-100">
+                            <div class="card-header bg-white border-0 py-3"><h5 class="mb-0 fw-bold">Recent Activity</h5></div>
+                            <div class="list-group list-group-flush activity-list p-3" style="max-height: 400px; overflow-y: auto;">
+                                <div class="list-group-item" v-for="activity in dashboardData.recent_activities">
+                                    <div class="activity-icon" :class="activityIcon(activity.type).color"><i :class="activityIcon(activity.type).icon"></i></div>
+                                    <div>
+                                        <strong>{{ activity.description }}</strong>
+                                        <div class="small text-muted">{{ formatActivityDate(activity.activity_date) }}</div>
+                                    </div>
+                                </div>
+                                <div v-if="dashboardData.recent_activities && dashboardData.recent_activities.length === 0" class="list-group-item text-muted">No recent activity.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card stat-card h-100">
+                            <div class="card-body">
+                                <div class="stat-icon icon-bg-primary"><i class="bi bi-layout-text-window-reverse"></i></div>
+                                <div>
+                                    <div class="stat-value">{{ dashboardData.total_programs }}</div>
+                                    <div class="stat-label">Total Programs</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                        <div class="card stat-card h-100">
+                            <div class="card-body">
+                                <div class="stat-icon icon-bg-info"><i class="bi bi-images"></i></div>
+                                <div>
+                                    <div class="stat-value">{{ dashboardData.total_gallery_images }}</div>
+                                    <div class="stat-label">Total Gallery Images</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                        <div class="card stat-card h-100">
+                            <div class="card-body">
+                                <div class="stat-icon icon-bg-warning"><i class="bi bi-person-gear"></i></div>
+                                <div>
+                                    <div class="stat-value">{{ dashboardData.total_admins }}</div>
+                                    <div class="stat-label">Total Admins</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div v-if="loading" class="text-center py-5"><div class="spinner-border" style="width: 3rem; height: 3rem;"></div></div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp, nextTick } = Vue;
+        createApp({
+            data() {
+                return {
+                    loading: true,
+                    dashboardData: {
+                        donation_chart: { labels: [], data: [] },
+                        recent_activities: []
+                    },
+                    chartInstance: null
+                }
+            },
+            mounted() {
+                this.fetchDashboardData();
+            },
+            methods: {
+                fetchDashboardData() {
+                    fetch('api.php?action=get_dashboard_data', { credentials: 'same-origin' })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.dashboardData = data.data;
+                                nextTick(() => {
+                                    this.renderChart();
+                                });
+                            } else {
+                                alert('Error fetching dashboard data: ' + data.message);
+                            }
+                        })
+                        .finally(() => this.loading = false);
+                },
+                formatCurrency(amount) {
+                    return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(amount || 0);
+                },
+                formatActivityDate(dateString) {
+                    if (!dateString) return '';
+                    const date = new Date(dateString);
+                    return date.toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+                },
+                activityIcon(type) {
+                    if (type === 'donation') return { icon: 'bi bi-plus-circle-fill', color: 'text-success' };
+                    if (type === 'message') return { icon: 'bi bi-envelope-fill', color: 'text-warning' };
+                    return { icon: 'bi bi-bell-fill', color: 'text-info' };
+                },
+                renderChart() {
+                    const ctx = document.getElementById('donationChart');
+                    if (this.chartInstance) {
+                        this.chartInstance.destroy();
+                    }
+                    if (ctx && this.dashboardData.donation_chart) {
+                        this.chartInstance = new Chart(ctx, {
+                            type: 'line', // Mengubah tipe grafik menjadi 'line' untuk pertumbuhan
+                            data: {
+                                labels: this.dashboardData.donation_chart.labels,
+                                datasets: [{
+                                    label: 'Donations (€)',
+                                    data: this.dashboardData.donation_chart.data,
+                                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                                    borderColor: 'rgba(0, 123, 255, 1)',
+                                    borderWidth: 2,
+                                    fill: true,
+                                    tension: 0.4 // Membuat garis lebih melengkung
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        ticks: { callback: (value) => '€' + value.toLocaleString() }
+                                    }
+                                },
+                                plugins: { legend: { display: false } }
+                            }
+                        });
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

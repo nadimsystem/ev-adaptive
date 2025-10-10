@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Program Detail — Bildung mit Wirkung e.V.</title>
+    <meta name="description" content="Detailed information about our programs, including Education Access, Elderly Care, and more." />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mod.css">
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg mt-3 navbar-light fixed-top scrolled">
+            <div class="container bg-white px-3 py-2 rounded-5">
+                <a class="navbar-brand d-flex align-items-center" href="index.html"> <img src="images/bmw logo.svg" alt="Bildung mit Wirkung e.V. Logo" height="50px" class="me-2"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav m-auto align-items-lg-center mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="index.html#home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html#impact">Impact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html#gallery">Gallery</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="program.html">Programs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html#getinvolved">Get Involved</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+                    </ul>
+                    <div class="d-flex ms-3 align-items-center">
+                        <a href="index.html#donate" class="btn btn-donate btn-sm me-3">Donate</a>
+                        <div class="lang-switcher">
+                            <a href="javascript:void(0)" class="lang-btn" data-lang="de" title="Deutsch"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/de.svg" alt="German" width="24"></a>
+                            <a href="javascript:void(0)" class="lang-btn" data-lang="en" title="English"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/gb.svg" alt="English" width="24"></a>
+                            <a href="javascript:void(0)" class="lang-btn" data-lang="id" title="Bahasa Indonesia"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/id.svg" alt="Indonesian" width="24"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div id="google_translate_element"></div>
+
+        <div v-if="program">
+            <div class="container pt-5 container-narrow" style="padding-top: 120px !important;">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="program.html">Programs</a></li>
+                        <li class="breadcrumb-item fw-bold">{{ program.title }}</li>
+                    </ol>
+                </nav>
+            </div>
+
+            <header class="section-compact bg-light mt-4">
+                <div class="container container-narrow">
+                    <a href="program.html" class="btn btn-dark btn-lg"><i class="bi bi-arrow-left me-2"></i> Back to Programs</a>
+                </div>
+                <div class="container container-narrow mt-4">
+                    <span class="kicker">Program Details</span>
+                    <h1 class="fw-bold display-3">{{ program.title }}</h1>
+                    <p class="lead mb-4">{{ program.short_description }}</p>
+                </div>
+            </header>
+
+            <main class="section-compact py-5">
+                <div class="container container-narrow">
+                    <div class="row g-5">
+                        <div class="col-lg-8">
+                            <figure class="mb-4">
+                                <img :src="program.image_url" class="img-fluid rounded-3" :alt="program.title" @error="handleImageError">
+                            </figure>
+                            <div v-html="program.full_content"></div>
+                            <a href="index.html#donate" class="btn btn-donate btn-lg mt-4">Support This Program</a>
+                        </div>
+                        <aside class="col-lg-4">
+                            <div class="sticky-top" style="top: 120px;">
+                                <div class="card bg-light border-0">
+                                    <div class="card-body p-4">
+                                        <h5 class="text-bmw-brick mb-3">Program Facts</h5>
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2">
+                                                <i class="bi bi-geo-alt-fill me-2 text-muted"></i>
+                                                <strong>Location:</strong> {{ program.location }}
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="bi bi-people-fill me-2 text-muted"></i>
+                                                <strong>Focus:</strong> {{ program.focus }}
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="bi bi-award-fill me-2 text-muted"></i>
+                                                <strong>Key Areas:</strong> {{ program.key_areas }}
+                                            </li>
+                                        </ul>
+                                        <hr>
+                                        <h5 class="text-bmw-brick mb-3">Our Partner</h5>
+                                        <p class="small text-muted">This program is implemented with the <strong>Lentera Aksara Negeri Foundation</strong>.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div v-else class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+        <footer class="site-footer" role="contentinfo">
+            <div class="container container-narrow"> <div class="footer-grid"> <div> <h6>Bildung mit Wirkung e.V.</h6> <p class="muted small">Registered association based in München. Our work connects German donors and institutions with remote communities across Indonesia to build sustainable education and elderly care.</p> <p class="muted small">Hirsch-Gereuth-Straße 55, 81369 München, Deutschland</p> </div> <div> <h6>Quick Links</h6> <ul class="list-unstyled muted small"> <li><a href="program.html">Programs</a></li> <li><a href="index.html#impact">Impact</a></li> <li><a href="index.html#partners">Partners</a></li> <li><a href="index.html#faq">FAQ</a></li> <li><a href="index.html#contact">Contact</a></li> </ul> </div> <div> <h6>Stay in touch</h6> <p class="muted small mb-2">Subscribe to our newsletter for updates and impact stories.</p> <form id="newsletterForm" class="d-flex gap-2"> <input id="newsletterEmail" type="email" class="form-control form-control-sm" placeholder="Your email" required> <button class="btn btn-donate btn-sm" type="submit">Subscribe</button> </form> <div class="mt-3"> <a href="#" class="me-2 muted"><i class="bi bi-twitter"></i></a> <a href="#" class="me-2 muted"><i class="bi bi-facebook"></i></a> <a href="#" class="me-2 muted"><i class="bi bi-instagram"></i></a> </div> </div> </div> <hr style="margin:1.5rem 0;border-color:rgba(0,0,0,0.05)"> <div class="d-flex justify-content-between flex-wrap muted small"> <div>© 2025 Bildung mit Wirkung e.V.. All rights reserved.</div> <div>Privacy · Terms · Transparency</div> </div> </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        function googleTranslateElementInit() { new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'en,de,id', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element' ); }
+
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    program: null
+                }
+            },
+            mounted() {
+                const params = new URLSearchParams(window.location.search);
+                const programId = params.get('id');
+
+                if (programId) {
+                    fetch(`administrator/api.php?action=get_program_detail&id=${programId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.program = data.data;
+                                document.title = this.program.title + " — Bildung mit Wirkung e.V.";
+                            } else {
+                                console.error(data.message);
+                                window.location.href = 'program.html';
+                            }
+                        });
+                } else {
+                    window.location.href = 'program.html';
+                }
+            },
+            methods: {
+                handleImageError(event) {
+                    event.target.src = 'images/bg-logo-light.jpg';
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

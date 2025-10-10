@@ -1,0 +1,299 @@
+/* --- CSS KUSTOM UTAMA (Simulasi iOS Elegance & Frosted Glass) --- */
+
+
+/* Versi Refactor dengan Prefiks 'm-' untuk Menghindari Konflik */
+
+
+/* Variabel Warna dan Font (Simulasi iOS) */
+
+:root {
+    --ios-bg-light: #f9f9f9;
+    --ios-text-primary: #1c1c1e;
+    --ios-text-secondary: #6a6a6a;
+    --ios-accent-blue: #007aff;
+    --ios-card-bg: #ffffff;
+    --bmw-coral: #e8635c;
+    /* Warna Brand Anda */
+}
+
+
+/* Penerapan Font dan Padding Body */
+
+
+/* (Body tidak diubah karena merupakan elemen global) */
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    /* color: var(--ios-text-primary); */
+    /* background-color: var(--ios-bg-light); */
+    padding-bottom: 75px;
+    /* Ruang untuk bottom navbar */
+    padding-top: 55px;
+    /* Ruang untuk fixed top header */
+    font-weight: 400;
+}
+
+
+/* Efek Frosted Glass (Kaca Buram) */
+
+.m-frosted-glass {
+    backdrop-filter: blur(10px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.85);
+    /* Transparansi dan buram */
+    border: 1px solid rgba(200, 200, 200, 0.3);
+}
+
+
+/* Penyesuaian Top Header */
+
+.m-navbar-app-header {
+    height: 55px;
+    z-index: 1060;
+}
+
+.m-navbar-app-header .navbar-brand {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.m-btn-header-donate {
+    background-color: var(--bmw-coral);
+    border-color: var(--bmw-coral);
+    color: white;
+    font-weight: 600;
+    font-size: 0.7rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    letter-spacing: 0.05em;
+}
+
+
+/* Bottom Nav Bar */
+
+.m-bottom-navbar {
+    position: fixed;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    height: 70px;
+    z-index: 1050;
+    backdrop-filter: blur(20px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.85);
+    border-top: 1px solid rgba(220, 220, 220, 0.5);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.m-nav-item-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--ios-text-secondary);
+    font-size: 0.65rem;
+    /* Teks sangat kecil */
+    font-weight: 600;
+    transition: color 0.2s;
+    flex-grow: 1;
+    padding-top: 5px;
+}
+
+.m-nav-item-app.active {
+    color: var(--bmw-coral);
+}
+
+.m-nav-item-app i {
+    font-size: 1.4rem;
+    margin-bottom: 3px;
+}
+
+
+/* Typography dan Konten */
+
+.m-section-pad {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    padding-top: 2rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+p.small,
+.muted,
+.text-muted,
+.small,
+.fs-6 {
+    font-size: 0.9rem !important;
+    /* Standar teks kecil */
+    color: var(--ios-text-secondary) !important;
+    line-height: 1.4;
+}
+
+
+/* Hero Section */
+
+.m-hero {
+    border-radius: 0 !important;
+    background-image: linear-gradient(135deg, #e8635c, #ff906e);
+    /* Gradient lembut */
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.m-hero h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+
+/* Program Cards (Scroll) */
+
+.m-program-cards-scroll {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.m-program-cards-scroll .card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    background-color: var(--ios-card-bg);
+}
+
+.m-program-cards-scroll h5 {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.m-program-cards-scroll .btn-dark {
+    background-color: var(--ios-text-primary);
+    border-radius: 8px;
+    font-size: 0.8rem;
+}
+
+
+/* Impact Cards Styling */
+
+.m-impact-card {
+    background-color: var(--ios-card-bg);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: none;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.m-impact-num {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--bmw-coral);
+}
+
+.m-impact-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ios-text-secondary);
+}
+
+
+/* Get Involved Cards */
+
+#getinvolved .m-involve-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0;
+}
+
+#getinvolved .m-involve-card {
+    background-color: var(--ios-card-bg);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    padding: 1.5rem !important;
+    width: 100%;
+}
+
+#getinvolved .m-involve-card h5 {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+}
+
+
+/* Tabel Data */
+
+.m-data-table tr td {
+    padding-top: 0.3rem !important;
+    padding-bottom: 0.3rem !important;
+    font-size: 0.9rem;
+}
+
+.m-data-table h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+
+/* Line Clamp untuk program card */
+
+.m-description-clamp {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    text-overflow: ellipsis;
+    font-size: 0.8rem !important;
+    /* Pastikan teks deskripsi lebih kecil */
+}
+
+
+/* Penyesuaian Footer */
+
+.m-site-footer {
+    background-color: var(--ios-card-bg);
+    padding-bottom: 90px;
+}
+
+.m-site-footer h6 {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ios-text-primary);
+}
+
+.m-footer-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+
+/* Memastikan visibility (Tidak diubah, karena ini meng-override Bootstrap) */
+
+.d-lg-block,
+.d-none {
+    display: none !important;
+}
+
+.d-block {
+    display: block !important;
+}
+
+.d-sm-flex {
+    display: flex !important;
+}
+
+.d-md-flex {
+    display: none !important;
+}

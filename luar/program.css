@@ -1,0 +1,343 @@
+
+        :root {
+            --bmw-coral: #F18701;
+            --bmw-sky: #A6DCEF;
+            --bmw-brick: #B0413E;
+            --bmw-yellow: #FBC252;
+            --bmw-off: #FAF8F0;
+            --text: #222222;
+            --muted: #6b7280;
+            --max-width: 1100px;
+            --placeholder-img: url("https://images.unsplash.com/photo-1566205865731-51803de32a35?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=0&k=20&c=v0a_B58wPFNDPULSiw_BmPyhSNCyrP_d17i2BPPyDTk=");
+        }
+        /* ===========================
+       Base & typography
+       =========================== */
+        html,
+        body {
+            height: 100%;
+            background: #ffffff;
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.55;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .container-narrow {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        /* ===========================
+       Navbar
+       =========================== */
+        .navbar {
+            background: transparent;
+            color: white !important;
+            transition: background-color 220ms ease, box-shadow 220ms ease;
+        }
+        .navbar.scrolled {
+            background: #ffffff;
+            box-shadow: 0 6px 20px rgba(16, 24, 40, 0.06);
+        }
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            color: var(--bmw-brick);
+        }
+        .nav-link {
+            color: var(--muted);
+            margin-right: .5rem;
+            font-weight: 500;
+        }
+        .nav-link:hover {
+            color: var(--text);
+            text-decoration: none;
+        }
+        .btn-donate {
+            background: var(--bmw-coral);
+            color: #111827;
+            border: none;
+            font-weight: 600;
+            box-shadow: 0 6px 18px rgba(251, 194, 82, 0.14);
+        }
+        .btn-donate:focus {
+            box-shadow: 0 0 0 .2rem rgba(135, 90, 1, 0.2);
+             background: var(--bmw-coral);
+            color: #111827;
+            border: none;
+            font-weight: 600;
+
+        }
+        /* ===========================
+       Hero
+       =========================== */
+        .hero {
+            padding: 6.5rem 0 4rem;
+            background: linear-gradient(rgba(34, 34, 34, 0.531), rgba(34, 34, 34, 0.646)), url(https://images.unsplash.com/photo-1543339186-0d611b663a06?w=1920&q=80);
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        .hero .eyebrow {
+            color: var(--bmw-yellow);
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .hero h1 {
+            font-size: clamp(1.6rem, 3.6vw, 3.2rem);
+            line-height: 1.05;
+            margin-bottom: .6rem;
+            font-weight: 800;
+            color: white;
+        }
+        .hero p.lead {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.05rem;
+            margin-bottom: 1.2rem;
+            max-width: 720px;
+        }
+        /* ===========================
+       Section spacing & utilities
+       =========================== */
+        section {
+            padding: 4.5rem 0;
+        }
+        .section-compact {
+            padding: 2.5rem 0;
+        }
+        .muted {
+            color: var(--muted);
+        }
+        .kicker {
+            font-weight: 600;
+            color: var(--bmw-brick);
+            margin-bottom: .6rem;
+            display: inline-block;
+        }
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: .6rem;
+        }
+        .card-soft {
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 8px 28px rgba(16, 24, 40, 0.04);
+            border: none;
+        }
+        /* ===========================
+       Impact (counters + progress)
+       =========================== */
+        .impact-counters {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .impact-card {
+            background: #fff;
+            padding: 1.6rem;
+            border-radius: 10px;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(16, 24, 40, 0.04);
+            text-align: center;
+        }
+        .impact-num {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--bmw-brick);
+        }
+        .impact-label {
+            color: var(--muted);
+            margin-top: .4rem;
+        }
+        .progress-compact {
+            height: 14px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #eee;
+        }
+        .progress-compact .bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--bmw-coral), var(--bmw-yellow));
+            border-radius: 10px;
+        }
+        /* ===========================
+       Testimonials
+       =========================== */
+        .testimonial-item {
+            padding: 2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .testimonial-item img {
+            width: 86px;
+            height: 86px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            box-shadow: 0 8px 18px rgba(16, 24, 40, 0.06);
+        }
+        .testimonial-item blockquote {
+            font-style: italic;
+            color: var(--text);
+            margin: 0 0 0.6rem;
+        }
+        .testimonial-item .who {
+            color: var(--muted);
+            font-size: .95rem;
+        }
+        /* ===========================
+       Gallery
+       =========================== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(16, 24, 40, 0.08);
+            position: relative;
+            height: 200px;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem;
+            font-size: 0.85rem;
+        }
+        @media (max-width: 992px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 576px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* ===========================
+       Donation section
+       =========================== */
+        .donation-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .donation-option {
+            flex: 1;
+            min-width: 120px;
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .donation-option:hover, .donation-option.selected {
+            border-color: var(--bmw-coral);
+            background-color: rgba(241, 135, 1, 0.05);
+        }
+        .donation-option.selected {
+            box-shadow: 0 4px 12px rgba(241, 135, 1, 0.15);
+        }
+        .donation-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--bmw-brick);
+        }
+        .donation-desc {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+        .donation-custom {
+            flex: 1;
+            min-width: 120px;
+        }
+        .donation-custom input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .donation-progress {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        /* ===========================
+       Contact & footer
+       =========================== */
+        .contact-card {
+            padding: 1.2rem;
+            border-radius: 12px;
+            background: linear-gradient(180deg, #fff, #fff);
+            box-shadow: 0 10px 30px rgba(16, 24, 40, 0.04);
+        }
+        iframe.map {
+            width: 100%;
+            height: 260px;
+            border: 0;
+            border-radius: 10px;
+        }
+        footer.site-footer {
+            background: var(--bmw-off);
+            padding: 3rem 0 2.5rem;
+            color: var(--muted);
+        }
+        footer .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.2rem;
+        }
+        footer h6 {
+            color: var(--bmw-brick);
+            margin-bottom: .6rem;
+        }
+        @media (max-width:768px) {
+            footer .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Breadcrumbs */
+        .breadcrumb {
+            background: transparent;
+            padding: 0;
+            margin-bottom: 1rem;
+        }
+        .breadcrumb-item a {
+            color: var(--bmw-brick);
+            text-decoration: none;
+        }
+        .breadcrumb-item.active {
+            color: var(--muted);
+            font-weight: 500;
+        }

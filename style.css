@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+US+Trad+Guides&family=Playwrite+US+Trad:wght@100..400&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@font-face {
+    font-family: 'bother-font';
+    src: url('fonts/BrothersideSignature.otf') format('opentype'),
+         url('fonts/BrothersideSignature.ttf') format('truetype');
+}
+
+.btn-success{
+    background-color: rgb(108, 178, 4) !important    ;
+    border: none;
+}
+
+
+
+.ls-1 {
+    letter-spacing: -1px;
+}
+.ls-2 {
+    letter-spacing: -2px;
+}
+.ls-3 {
+    letter-spacing: -3px;
+}
+.ls-4 {
+    letter-spacing: -4px;
+}
+.ls-5 {
+    letter-spacing: -5px;
+}
+.bt-font {
+    font-family: 'bother-font';
+}
+
+.pp {
+    font-family: 'Poppins', sans-serif;
+}
+
+.playwrite-font{
+    font-family: "Playwrite US Trad", serif;
+}
+
+.pf-font {
+    font-family: 'Playfair Display', serif;
+}
+
+.mst-font {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.jkt-font{
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.wk-font{
+    font-family: 'Work Sans', sans-serif;
+}
+
+.pink{
+  color: pink;
+}
+
+.bg-pink{
+  background-color: pink;
+}
+
+::placeholder{
+    font-weight: 200;
+}
+
+
+.pkecil{
+    font-size: 12px;
+}
+
+
+.hidden {
+    opacity: 0;
+    transition: all 1.3s;
+    filter: blur(5px);
+    transform: translateX(-100%);
+}
+  
+.show {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+}
+
+a{
+    text-decoration: none;
+}
+
+.member :nth-child(1) {
+    transition-delay: 200ms;
+}
+.member :nth-child(2) {
+    transition-delay: 400ms;
+}
+.member :nth-child(3) {
+    transition-delay: 600ms;
+}
+.member :nth-child(4) {
+    transition-delay: 800ms;
+}
+.member :nth-child(5) {
+    transition-delay: 1000ms;
+}
+.member :nth-child(6) {
+    transition-delay: 1200ms;
+}
+.member :nth-child(7) {
+    transition-delay: 1400ms;
+}
+.member :nth-child(8) {
+    transition-delay: 1600ms;
+}
+.member :nth-child(9) {
+    transition-delay: 1800ms;
+}
+.member :nth-child(10) {
+    transition-delay: 2000ms;
+}
+.member :nth-child(11) {
+    transition-delay: 2200ms;
+}
+.member :nth-child(12) {
+    transition-delay: 2400ms;
+}
+.member :nth-child(13) {
+    transition-delay: 2600ms;
+}
+.member :nth-child(14) {
+    transition-delay: 2800ms;
+}
+.member :nth-child(15) {
+    transition-delay: 3000ms;
+}
+.member :nth-child(16) {
+    transition-delay: 3200ms;
+}
+
+
+/* --- Style Tombol Bendera (Language Switcher) --- */
+.lang-switcher {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.lang-switcher .lang-btn {
+    padding: 4px;
+    border-radius: 4px;
+    opacity: 0.7;
+    transition: opacity 0.2s, background-color 0.2s;
+    cursor: pointer;
+}
+.lang-switcher .lang-btn:hover {
+    opacity: 1;
+    background-color: #f0f0f0;
+}
+.lang-switcher .lang-btn.active {
+     opacity: 1;
+     background-color: #e0e0e0;
+     box-shadow: 0 0 0 2px var(--bmw-sky, #007bff); /* Fallback ke biru jika var tidak ada */
+}
+.lang-switcher img {
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+}
+
+/* --- Sembunyikan UI Bawaan Google Translate --- */
+#google_translate_element {
+    display: none !important; /* Sembunyikan widget dropdown asli */
+    position: fixed; /* Hentikan agar tidak memakan ruang */
+    bottom: -100px;
+    right: -100px;
+    z-index: -999;
+}
+.goog-te-banner-frame.skiptranslate {
+    display: none !important; /* Sembunyikan bar atas setelah translasi */
+}
+body {
+    top: 0px !important; /* Perbaiki masalah margin atas dari bar Google */
+}
+/* Sembunyikan tooltip "Original" dari Google */
+.goog-tooltip {
+    display: none !important;
+}
+.goog-tooltip:hover {
+    display: none !important;
+}
+.goog-text-highlight {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}

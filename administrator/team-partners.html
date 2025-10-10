@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Manage Team & Partners — Admin BMW e.V.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../mod.css">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8f9fa; }
+        .admin-wrapper { display: flex; min-height: 100vh; }
+        .admin-sidebar { width: 260px; background-color: #1a1a1a; color: #fff; flex-shrink: 0; padding-top: 1rem; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+        .admin-sidebar .admin-logo { padding: 0 1.5rem 1rem 1.5rem; display: flex; align-items: center; gap: 10px; }
+        .admin-sidebar .admin-logo img { height: 40px; filter: brightness(0) invert(1); }
+        .admin-sidebar .admin-logo span { font-size: 0.9rem; font-weight: 600; opacity: 0.8; }
+        .admin-nav { padding: 0 1rem; }
+        .admin-nav .nav-link { color: rgba(255, 255, 255, 0.7); font-weight: 500; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 1rem; transition: all 0.2s ease; }
+        .admin-nav .nav-link:hover { color: #fff; background-color: rgba(255, 255, 255, 0.05); }
+        .admin-nav .nav-link.active { color: #fff; background-color: var(--bmw-sky, #007bff); font-weight: 700; border-radius: 8px; }
+        .nav-heading { text-transform: uppercase; font-size: 0.7rem; font-weight: 700; color: rgba(255, 255, 255, 0.4); padding: 2rem 1rem 0.5rem 1rem; }
+        .admin-content { flex-grow: 1; padding: 2rem; overflow-x: hidden; }
+        .team-avatar-sm { width: 50px; height: 50px; object-fit: cover; border-radius: 50%; }
+        .logo-sm { max-height: 50px; max-width: 150px; background: #eee; padding: 5px; border-radius: 5px; }
+        .image-preview { max-width: 100px; height: 100px; object-fit: cover; border-radius: 50%; margin-top: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="admin-wrapper">
+        <nav class="admin-sidebar">
+            <div class="admin-logo"><img src="../images/bmw logo.svg" alt="BmW e.V. Logo"><span>Admin Panel</span></div>
+            <hr class="text-secondary m-0">
+            <ul class="nav flex-column admin-nav pt-3">
+                <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-grid-fill"></i> Dashboard</a></li>
+                <li class="nav-heading">Keuangan</li>
+                <li class="nav-item"><a class="nav-link" href="donations.html"><i class="bi bi-cash-coin"></i> Donations</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="campaigns.html"><i class="bi bi-bullseye"></i> Campaigns</a></li> -->
+                <li class="nav-heading">Website Content</li>
+                <li class="nav-item"><a class="nav-link" href="programs.html"><i class="bi bi-layout-text-window-reverse"></i> Programs</a></li>
+                <li class="nav-item"><a class="nav-link active" href="team-partners.html"><i class="bi bi-people-fill"></i> Team & Partners</a></li>
+                <li class="nav-item"><a class="nav-link" href="gallery.html"><i class="bi bi-images"></i> Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="content.html"><i class="bi bi-pencil-square"></i> Site Text & Impact</a></li>
+                <li class="nav-heading">Submissions</li>
+                <li class="nav-item"><a class="nav-link" href="messages.html"><i class="bi bi-envelope-fill"></i> Messages</a></li>
+                <li class="nav-heading">System</li>
+                <li class="nav-item"><a class="nav-link" href="users.html"><i class="bi bi-person-gear"></i> Manage Admins</a></li>
+                <li class="nav-item"><a class="nav-link" href="../index.html" target="_blank"><i class="bi bi-box-arrow-up-right"></i> View Public Site</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-door-closed-fill"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="admin-content" id="app">
+            <div class="container-fluid">
+                <div class="mb-4">
+                    <span class="kicker">Website Content</span>
+                    <h1 class="display-5 fw-bold">Manage Team & Partners</h1>
+                    <p class="text-muted">Kelola data dari tim inti dan partner organisasi.</p>
+                </div>
+                
+                <div class="row g-4">
+                    <div class="col-lg-12">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 fw-bold">Core Team Members</h5>
+                                <button @click="showAddModal" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Add Member</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Photo</th>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Display Order</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-if="loading">
+                                            <td colspan="5" class="text-center py-4"><div class="spinner-border spinner-border-sm"></div> Loading...</td>
+                                        </tr>
+                                        <tr v-if="!loading" v-for="member in teamMembers" :key="member.id">
+                                            <td><img :src="'../' + member.image_url" class="team-avatar-sm"></td>
+                                            <td><strong>{{ member.name }}</strong></td>
+                                            <td>{{ member.position }}</td>
+                                            <td>{{ member.display_order }}</td>
+                                            <td>
+                                                <button @click="showEditModal(member)" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil-fill"></i> Edit</button>
+                                                <button @click="deleteMember(member.id)" class="btn btn-sm btn-outline-danger ms-1"><i class="bi bi-trash-fill"></i> Delete</button>
+                                            </td>
+                                        </tr>
+                                        <tr v-if="!loading && teamMembers.length === 0">
+                                            <td colspan="5" class="text-center text-muted py-4">No team members found.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="teamModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ isEditing ? 'Edit Team Member' : 'Add New Team Member' }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form @submit.prevent="submitForm" enctype="multipart/form-data">
+                                <div v-if="error" class="alert alert-danger">{{ error }}</div>
+                                <div class="mb-3">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" v-model="currentMember.name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Position</label>
+                                    <input type="text" class="form-control" v-model="currentMember.position" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Display Order</label>
+                                    <input type="number" class="form-control" v-model="currentMember.display_order">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Photo</label>
+                                    <input type="file" class="form-control" @change="handleFileSelect" ref="fileInput" accept="image/*">
+                                    <small class="form-text text-muted" v-if="isEditing">Leave blank to keep the current photo.</small>
+                                    <img v-if="imagePreview" :src="imagePreview" class="image-preview" alt="Image Preview"/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" :disabled="isUploading">
+                                        <span v-if="isUploading" class="spinner-border spinner-border-sm"></span>
+                                        {{ isEditing ? 'Update Member' : 'Save Member' }}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    teamMembers: [],
+                    loading: true,
+                    isEditing: false,
+                    isUploading: false,
+                    error: null,
+                    teamModal: null,
+                    imagePreview: null,
+                    currentMember: {
+                        id: null,
+                        name: '',
+                        position: '',
+                        image_url: '',
+                        display_order: 0,
+                        file: null
+                    }
+                }
+            },
+            mounted() {
+                this.fetchTeamMembers();
+                this.teamModal = new bootstrap.Modal(document.getElementById('teamModal'));
+            },
+            methods: {
+                fetchTeamMembers() {
+                    this.loading = true;
+                    fetch('api.php?action=get_team_members')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.teamMembers = data.data;
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                            this.loading = false;
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            this.loading = false;
+                        });
+                },
+                resetForm() {
+                    this.isEditing = false;
+                    this.error = null;
+                    this.imagePreview = null;
+                    this.currentMember = { id: null, name: '', position: '', image_url: '', display_order: 0, file: null };
+                    if (this.$refs.fileInput) {
+                        this.$refs.fileInput.value = '';
+                    }
+                },
+                showAddModal() {
+                    this.resetForm();
+                    this.teamModal.show();
+                },
+                showEditModal(member) {
+                    this.resetForm();
+                    this.isEditing = true;
+                    this.currentMember = { ...member, file: null }; // Salin data member
+                    this.imagePreview = member.image_url ? '../' + member.image_url : null;
+                    this.teamModal.show();
+                },
+                handleFileSelect(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        this.currentMember.file = file;
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            this.imagePreview = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        this.currentMember.file = null;
+                        this.imagePreview = this.isEditing ? ('../' + this.currentMember.image_url) : null;
+                    }
+                },
+                submitForm() {
+                    this.isUploading = true;
+                    this.error = null;
+
+                    const formData = new FormData();
+                    formData.append('name', this.currentMember.name);
+                    formData.append('position', this.currentMember.position);
+                    formData.append('display_order', this.currentMember.display_order);
+
+                    if (this.currentMember.file) {
+                        formData.append('image', this.currentMember.file);
+                    }
+
+                    if (this.isEditing) {
+                        formData.append('action', 'update_team_member');
+                        formData.append('id', this.currentMember.id);
+                        formData.append('existing_image_url', this.currentMember.image_url);
+                    } else {
+                        formData.append('action', 'add_team_member');
+                    }
+                    
+                    fetch('api.php', { method: 'POST', body: formData })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.fetchTeamMembers();
+                                this.teamModal.hide();
+                            } else {
+                                this.error = data.message;
+                            }
+                        })
+                        .catch(err => {
+                            this.error = 'A network error occurred. Please check the console.';
+                            console.error(err);
+                        })
+                        .finally(() => {
+                            this.isUploading = false;
+                        });
+                },
+                deleteMember(id) {
+                    if (!confirm('Are you sure you want to delete this team member?')) return;
+
+                    const formData = new FormData();
+                    formData.append('action', 'delete_team_member');
+                    formData.append('id', id);
+
+                    fetch('api.php', { method: 'POST', body: formData })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.fetchTeamMembers();
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(err => console.error(err));
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

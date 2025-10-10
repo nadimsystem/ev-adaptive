@@ -1,0 +1,559 @@
+
+/* ===========================
+Brand variables (from guide)
+=========================== */
+:root {
+    /* Perubahan 1: Menyesuaikan warna sesuai brand guide baru */
+    --bmw-coral: #F18701;
+    /* primary CTA (Sunrise Yellow -> Coral Orange) */
+    --bmw-sky: #A6DCEF;
+    /* soft accent (tetap) */
+    --bmw-brick: #B0413E;
+    /* strong emphasis (tetap) */
+    --bmw-yellow: #FBC252;
+    /* highlight (Sunrise Yellow) */
+    --bmw-off: #FAF8F0;
+    /* off white (tetap) */
+    --text: #222222;
+    --muted: #6b7280;
+    --max-width: 1100px;
+    --placeholder-img: url("https://images.unsplash.com/photo-1566205865731-51803de32a35?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=0&k=20&c=v0a_B58wPFNDPULSiw_BmPyhSNCyrP_d17i2BPPyDTk=");
+}
+
+/* ===========================
+Base & typography
+=========================== */
+html,
+body {
+    height: 100%;
+    background: #ffffff;
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.55;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.container-narrow {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* ===========================
+Navbar
+=========================== */
+.navbar {
+    background: transparent;
+    color: white !important;
+    transition: background-color 220ms ease, box-shadow 220ms ease;
+}
+
+/* 
+.navbar.scrolled {
+    background: #ffffff;
+    box-shadow: 0 6px 20px rgba(16, 24, 40, 0.06);
+} */
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: var(--bmw-brick);
+}
+
+.nav-link {
+    color: var(--muted);
+    margin-right: .5rem;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.btn-donate {
+    background: var(--bmw-coral);
+    color: #111827;
+    border: none;
+    font-weight: 600;
+    box-shadow: 0 6px 18px rgba(251, 194, 82, 0.14);
+}
+
+.btn-donate:focus {
+    box-shadow: 0 0 0 .2rem rgba(251, 194, 82, 0.2);
+}
+
+/* ===========================
+Hero
+=========================== */
+.hero {
+    padding: 6.5rem 0 4rem;
+    background: linear-gradient(180deg, #FFFFFF 60%, var(--bmw-off) 100%);
+    background-image: linear-gradient(rgba(34, 34, 34, 0.646), rgba(34, 34, 34, 0.531)), url(https://images.unsplash.com/photo-1550754706-432b118ee3d7?q=80&w=1916&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+    background-size: cover;
+    transition: background 1s linear;
+}
+
+.hero .eyebrow {
+    color: var(--bmw-brick);
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    font-size: 0.9rem;
+}
+
+.hero h1 {
+    font-size: clamp(1.6rem, 3.6vw, 3.2rem);
+    line-height: 1.05;
+    margin-bottom: .6rem;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.hero p.lead {
+    color: var(--muted);
+    font-size: 1.05rem;
+    margin-bottom: 1.2rem;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-visual {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-visual img {
+    width: 100%;
+    max-width: 900px;
+    border-radius: 12px;
+    box-shadow: 0 12px 36px rgba(16, 24, 40, 0.06);
+}
+
+/* ===========================
+Section spacing & utilities
+=========================== */
+section {
+    padding: 4.5rem 0;
+}
+
+.section-compact {
+    padding: 2.5rem 0;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.kicker {
+    font-weight: 600;
+    color: var(--bmw-brick);
+    margin-bottom: .6rem;
+    display: inline-block;
+}
+
+.section-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: .6rem;
+}
+
+.card-soft {
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 8px 28px rgba(16, 24, 40, 0.04);
+    border: none;
+}
+
+/* ===========================
+About grid (vision/mission/values)
+=========================== */
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    align-items: start;
+}
+
+.about-item {
+    padding: 1.6rem;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #fff 0%, #fff 100%);
+    min-height: 160px;
+}
+
+.about-item h3 {
+    font-size: 1.05rem;
+    color: var(--bmw-brick);
+    margin-bottom: .5rem;
+}
+
+.about-item p {
+    color: var(--muted);
+    margin: 0;
+}
+
+@media (max-width:992px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding-top: 5.5rem;
+    }
+}
+
+/* ===========================
+Programs
+=========================== */
+.program-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.program-card {
+    padding: 1rem;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 8px 28px rgba(16, 24, 40, 0.04);
+    border: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.program-card .imgwrap {
+    width: 100%;
+    padding-top: 56%;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 1rem;
+}
+
+.program-card h4 {
+    margin-bottom: .5rem;
+    color: var(--bmw-brick);
+}
+
+.program-card p {
+    color: var(--muted);
+    margin-bottom: auto;
+}
+
+@media (max-width:1200px) {
+    .program-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width:576px) {
+    .program-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===========================
+Impact (counters + progress)
+=========================== */
+.impact-counters {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.impact-card {
+    background: #fff;
+    padding: 1.6rem;
+    border-radius: 10px;
+    min-width: 180px;
+    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.04);
+    text-align: center;
+}
+
+.impact-num {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--bmw-brick);
+}
+
+.impact-label {
+    color: var(--muted);
+    margin-top: .4rem;
+}
+
+.progress-compact {
+    height: 14px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #eee;
+}
+
+.progress-compact .bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--bmw-coral), var(--bmw-yellow));
+    border-radius: 10px;
+}
+
+/* ===========================
+Testimonials
+=========================== */
+.testimonial-item {
+    padding: 2rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.testimonial-item img {
+    width: 86px;
+    height: 86px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    box-shadow: 0 8px 18px rgba(16, 24, 40, 0.06);
+}
+
+.testimonial-item blockquote {
+    font-style: italic;
+    color: var(--text);
+    margin: 0 0 0.6rem;
+}
+
+.testimonial-item .who {
+    color: var(--muted);
+    font-size: .95rem;
+}
+
+/* ===========================
+Partners grid
+=========================== */
+.partners-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    align-items: center;
+}
+
+.partner {
+    padding: 1rem;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid #f3f3f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.partner img {
+    max-width: 100%;
+    max-height: 48px;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: .9;
+    transition: filter .2s, opacity .2s;
+}
+
+.partner:hover img {
+    filter: none;
+    opacity: 1;
+}
+
+@media (max-width:992px) {
+    .partners-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width:576px) {
+    .partners-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ===========================
+Get involved cards
+=========================== */
+.involve-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.involve-card {
+    padding: 1.2rem;
+    border-radius: 12px;
+    text-align: center;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(16, 24, 40, 0.04);
+}
+
+.involve-card h5 {
+    color: var(--bmw-brick);
+    margin-top: .6rem;
+}
+
+@media (max-width:992px) {
+    .involve-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===========================
+FAQ list
+=========================== */
+.faq-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.faq-item {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 28px rgba(16, 24, 40, 0.04);
+}
+
+.faq-item h6 {
+    margin-bottom: .4rem;
+    color: var(--bmw-brick);
+}
+
+.faq-item p {
+    margin: 0;
+    color: var(--muted);
+}
+
+/* ===========================
+Contact & footer
+=========================== */
+.contact-card {
+    padding: 1.2rem;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #fff, #fff);
+    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.04);
+}
+
+iframe.map {
+    width: 100%;
+    height: 260px;
+    border: 0;
+    border-radius: 10px;
+}
+
+footer.site-footer {
+    background: var(--bmw-off);
+    padding: 3rem 0 2.5rem;
+    color: var(--muted);
+}
+
+footer .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.2rem;
+}
+
+footer h6 {
+    color: var(--bmw-brick);
+    margin-bottom: .6rem;
+}
+
+@media (max-width:768px) {
+    footer .footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* small helpers */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Perubahan 2: Menambahkan gaya untuk tabel data */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.data-table th {
+    background-color: var(--bmw-off);
+    font-weight: 600;
+}
+
+/* Perubahan 3: Menambahkan gaya untuk form donasi dua kolom */
+.donation-form .form-label {
+    font-weight: 600;
+    color: var(--bmw-brick);
+    margin-top: 1rem;
+}
+
+.donation-form .form-check-label {
+    font-weight: normal;
+}
+
+.donation-form .btn-primary {
+    background-color: var(--bmw-coral);
+    border-color: var(--bmw-coral);
+}
+
+.donation-form .btn-primary:hover {
+    background-color: #d07001;
+    border-color: #d07001;
+}
+
+/* Perubahan 4: Menambahkan gaya untuk daftar tim */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.team-member {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.team-member h5 {
+    margin: 0.5rem 0 0.25rem;
+    color: var(--bmw-brick);
+}
+
+.team-member p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+}

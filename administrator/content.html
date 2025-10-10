@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Manage Site Content — Admin BMW e.V.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../mod.css">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8f9fa; }
+        .admin-wrapper { display: flex; min-height: 100vh; }
+        .admin-sidebar { width: 260px; background-color: #1a1a1a; color: #fff; flex-shrink: 0; padding-top: 1rem; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+        .admin-sidebar .admin-logo { padding: 0 1.5rem 1rem 1.5rem; display: flex; align-items: center; gap: 10px; }
+        .admin-sidebar .admin-logo img { height: 40px; filter: brightness(0) invert(1); }
+        .admin-sidebar .admin-logo span { font-size: 0.9rem; font-weight: 600; opacity: 0.8; }
+        .admin-nav { padding: 0 1rem; }
+        .admin-nav .nav-link { color: rgba(255, 255, 255, 0.7); font-weight: 500; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 1rem; transition: all 0.2s ease; }
+        .admin-nav .nav-link:hover { color: #fff; background-color: rgba(255, 255, 255, 0.05); }
+        .admin-nav .nav-link.active { color: #fff; background-color: var(--bmw-sky, #007bff); font-weight: 700; border-radius: 8px; }
+        .nav-heading { text-transform: uppercase; font-size: 0.7rem; font-weight: 700; color: rgba(255, 255, 255, 0.4); padding: 2rem 1rem 0.5rem 1rem; }
+        .admin-content { flex-grow: 1; padding: 2rem; overflow-x: hidden; }
+    </style>
+</head>
+<body>
+    <div class="admin-wrapper">
+        <nav class="admin-sidebar">
+            <div class="admin-logo"><img src="../images/bmw logo.svg" alt="BmW e.V. Logo"><span>Admin Panel</span></div>
+            <hr class="text-secondary m-0">
+            <ul class="nav flex-column admin-nav pt-3">
+                <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-grid-fill"></i> Dashboard</a></li>
+                <li class="nav-heading">Keuangan</li>
+                <li class="nav-item"><a class="nav-link" href="donations.html"><i class="bi bi-cash-coin"></i> Donations</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="campaigns.html"><i class="bi bi-bullseye"></i> Campaigns</a></li> -->
+                <li class="nav-heading">Website Content</li>
+                <li class="nav-item"><a class="nav-link" href="programs.html"><i class="bi bi-layout-text-window-reverse"></i> Programs</a></li>
+                <li class="nav-item"><a class="nav-link" href="team-partners.html"><i class="bi bi-people-fill"></i> Team & Partners</a></li>
+                <li class="nav-item"><a class="nav-link" href="gallery.html"><i class="bi bi-images"></i> Gallery</a></li>
+                <li class="nav-item"><a class="nav-link active" href="content.html"><i class="bi bi-pencil-square"></i> Site Text & Impact</a></li>
+                <li class="nav-heading">Submissions</li>
+                <li class="nav-item"><a class="nav-link" href="messages.html"><i class="bi bi-envelope-fill"></i> Messages</a></li>
+                <li class="nav-heading">System</li>
+                <li class="nav-item"><a class="nav-link" href="users.html"><i class="bi bi-person-gear"></i> Manage Admins</a></li>
+                <li class="nav-item"><a class="nav-link" href="../index.html" target="_blank"><i class="bi bi-box-arrow-up-right"></i> View Public Site</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-door-closed-fill"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="admin-content" id="app">
+            <div class="container-fluid">
+                <div class="mb-4">
+                    <span class="kicker">Website Content</span>
+                    <h1 class="display-5 fw-bold">Manage Site Text & Impact</h1>
+                    <p class="text-muted">Edit konten teks utama dan angka statistik di seluruh website.</p>
+                </div>
+
+                <div v-if="loading" class="text-center py-5">
+                    <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
+                </div>
+
+                <form v-if="!loading" @submit.prevent="saveSettings">
+                    <div v-if="error" class="alert alert-danger">{{ error }}</div>
+                    <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                    
+                    <div class="row g-4">
+                        <div class="col-lg-7">
+                            <div class="card shadow-sm mb-4">
+                                <div class="card-header bg-white"><h5 class="mb-0 fw-bold">Main Page Content (Hero & About)</h5></div>
+                                <div class="card-body p-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Hero Title & Slogan (HTML allowed)</label>
+                                        <textarea class="form-control" v-model="settings.hero_title" rows="2"></textarea>
+                                    </div>
+                                     <div class="mb-3">
+                                        <label class="form-label">Hero Description</label>
+                                        <textarea class="form-control" v-model="settings.hero_description" rows="3"></textarea>
+                                    </div>
+                                    <hr>
+                                    <div class="mb-3">
+                                        <label class="form-label">About Us Paragraph 1</label>
+                                        <textarea class="form-control" v-model="settings.about_us_paragraph1" rows="4"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">About Us Paragraph 2</label>
+                                        <textarea class="form-control" v-model="settings.about_us_paragraph2" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-white"><h5 class="mb-0 fw-bold">FAQ Section</h5></div>
+                                <div class="card-body p-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">FAQ 1 Question</label>
+                                        <input type="text" class="form-control" v-model="settings.faq_1_q">
+                                        <label class="form-label mt-1 small">FAQ 1 Answer</label>
+                                        <textarea class="form-control" v-model="settings.faq_1_a" rows="2"></textarea>
+                                    </div>
+                                    <hr>
+                                    <div class="mb-3">
+                                        <label class="form-label">FAQ 2 Question</label>
+                                        <input type="text" class="form-control" v-model="settings.faq_2_q">
+                                        <label class="form-label mt-1 small">FAQ 2 Answer</label>
+                                        <textarea class="form-control" v-model="settings.faq_2_a" rows="2"></textarea>
+                                    </div>
+                                    <hr>
+                                    <div class="mb-3">
+                                        <label class="form-label">FAQ 3 Question</label>
+                                        <input type="text" class="form-control" v-model="settings.faq_3_q">
+                                        <label class="form-label mt-1 small">FAQ 3 Answer</label>
+                                        <textarea class="form-control" v-model="settings.faq_3_a" rows="2"></textarea>
+                                    </div>
+                                    <hr>
+                                    <div class="mb-3">
+                                        <label class="form-label">FAQ 4 Question</label>
+                                        <input type="text" class="form-control" v-model="settings.faq_4_q">
+                                        <label class="form-label mt-1 small">FAQ 4 Answer</label>
+                                        <textarea class="form-control" v-model="settings.faq_4_a" rows="2"></textarea>
+                                    </div>
+                                    <hr>
+                                     <div class="mb-3">
+                                        <label class="form-label">FAQ 5 Question</label>
+                                        <input type="text" class="form-control" v-model="settings.faq_5_q">
+                                        <label class="form-label mt-1 small">FAQ 5 Answer</label>
+                                        <textarea class="form-control" v-model="settings.faq_5_a" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-5">
+                            <div class="card shadow-sm mb-4">
+                                <div class="card-header bg-white"><h5 class="mb-0 fw-bold">Impact Numbers (Homepage)</h5></div>
+                                <div class="card-body p-4">
+                                    <div class="mb-2">
+                                        <label class="form-label small text-muted">Children Supported</label>
+                                        <input type="number" class="form-control" v-model.number="settings.impact_children_supported">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label small text-muted">Elderly Cared For</label>
+                                        <input type="number" class="form-control" v-model.number="settings.impact_elderly_cared_for">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label small text-muted">Communities Reached</label>
+                                        <input type="number" class="form-control" v-model.number="settings.impact_communities_reached">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-success btn-lg p-3" :disabled="isSaving">
+                                    <span v-if="isSaving" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <i v-if="!isSaving" class="bi bi-check-circle-fill me-2"></i> 
+                                    {{ isSaving ? 'Saving...' : 'Save All Content Changes' }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    settings: {},
+                    loading: true,
+                    isSaving: false,
+                    error: null,
+                    successMessage: null
+                }
+            },
+            mounted() {
+                this.fetchSettings();
+            },
+            methods: {
+                fetchSettings() {
+                    this.loading = true;
+                    fetch('api.php?action=get_site_settings')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.settings = data.data;
+                            } else {
+                                this.error = "Failed to load site settings: " + data.message;
+                            }
+                        })
+                        .catch(err => {
+                            this.error = "A network error occurred. Please check the console.";
+                            console.error(err);
+                        })
+                        .finally(() => {
+                            this.loading = false;
+                        });
+                },
+                saveSettings() {
+                    this.isSaving = true;
+                    this.error = null;
+                    this.successMessage = null;
+
+                    const formData = new FormData();
+                    formData.append('action', 'update_site_settings');
+
+                    // Tambahkan semua data dari objek settings ke formData
+                    for (const key in this.settings) {
+                        formData.append(key, this.settings[key]);
+                    }
+
+                    fetch('api.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            this.successMessage = data.message;
+                            // Sembunyikan pesan sukses setelah beberapa detik
+                            setTimeout(() => { this.successMessage = null; }, 3000);
+                        } else {
+                            this.error = "Failed to save settings: " + data.message;
+                        }
+                    })
+                    .catch(err => {
+                        this.error = "An error occurred while saving. Please check the console.";
+                        console.error(err);
+                    })
+                    .finally(() => {
+                        this.isSaving = false;
+                    });
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

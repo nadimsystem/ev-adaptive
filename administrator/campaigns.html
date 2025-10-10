@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Manage Campaigns — Admin BMW e.V.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../mod.css">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8f9fa; } .admin-wrapper { display: flex; min-height: 100vh; } .admin-sidebar { width: 260px; background-color: #1a1a1a; color: #fff; flex-shrink: 0; padding-top: 1rem; position: sticky; top: 0; height: 100vh; overflow-y: auto; } .admin-sidebar .admin-logo { padding: 0 1.5rem 1rem 1.5rem; display: flex; align-items: center; gap: 10px; } .admin-sidebar .admin-logo img { height: 40px; filter: brightness(0) invert(1); } .admin-sidebar .admin-logo span { font-size: 0.9rem; font-weight: 600; opacity: 0.8; } .admin-nav { padding: 0 1rem; } .admin-nav .nav-link { color: rgba(255, 255, 255, 0.7); font-weight: 500; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 1rem; transition: all 0.2s ease; } .admin-nav .nav-link:hover { color: #fff; background-color: rgba(255, 255, 255, 0.05); } .admin-nav .nav-link.active { color: #fff; background-color: var(--bmw-sky, #007bff); font-weight: 700; border-radius: 8px; } .nav-heading { text-transform: uppercase; font-size: 0.7rem; font-weight: 700; color: rgba(255, 255, 255, 0.4); padding: 2rem 1rem 0.5rem 1rem; } .admin-content { flex-grow: 1; padding: 2rem; overflow-x: hidden; }
+    </style>
+</head>
+<body>
+    <div class="admin-wrapper">
+        <nav class="admin-sidebar">
+            <div class="admin-logo"><img src="../images/bmw logo.svg" alt="BmW e.V. Logo"><span>Admin Panel</span></div>
+            <hr class="text-secondary m-0">
+            <ul class="nav flex-column admin-nav pt-3">
+                <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-grid-fill"></i> Dashboard</a></li>
+                <li class="nav-heading">Keuangan</li>
+                <li class="nav-item"><a class="nav-link" href="donations.html"><i class="bi bi-cash-coin"></i> Donations</a></li>
+                <li class="nav-item"><a class="nav-link active" href="campaigns.html"><i class="bi bi-bullseye"></i> Campaigns</a></li> <li class="nav-heading">Website Content</li>
+                <li class="nav-item"><a class="nav-link" href="programs.html"><i class="bi bi-layout-text-window-reverse"></i> Programs</a></li>
+                <li class="nav-item"><a class="nav-link" href="team-partners.html"><i class="bi bi-people-fill"></i> Team & Partners</a></li>
+                <li class="nav-item"><a class="nav-link" href="gallery.html"><i class="bi bi-images"></i> Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="content.html"><i class="bi bi-pencil-square"></i> Site Text & Impact</a></li>
+                <li class="nav-heading">Submissions</li>
+                <li class="nav-item"><a class="nav-link" href="messages.html"><i class="bi bi-envelope-fill"></i> Messages</a></li>
+                <li class="nav-heading">System</li>
+                <li class="nav-item"><a class="nav-link" href="users.html"><i class="bi bi-person-gear"></i> Manage Admins</a></li>
+                <li class="nav-item"><a class="nav-link" href="../index.html" target="_blank"><i class="bi bi-box-arrow-up-right"></i> View Public Site</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-door-closed-fill"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="admin-content">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <span class="kicker">Keuangan</span>
+                        <h1 class="display-5 fw-bold">Manage Campaigns</h1>
+                        <p class="text-muted">Kelola progress bar kampanye donasi di halaman utama.</p>
+                    </div>
+                     <div>
+                        <a href="#" class="btn btn-lg btn-primary">
+                            <i class="bi bi-plus-circle-fill me-2"></i> Create New Campaign
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-white border-0 py-3">
+                                <h5 class="mb-0 fw-bold">Active Campaign: Building Learning Hubs</h5>
+                            </div>
+                            <div class="card-body p-4">
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="campaignTitle" class="form-label">Campaign Title</label>
+                                        <input type="text" class="form-control" id="campaignTitle" value="Building Learning Hubs Campaign">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="campaignDesc" class="form-label">Description</label>
+                                        <textarea class="form-control" id="campaignDesc" rows="3">Help us establish 5 new community learning centers in Alor Island, reaching 250 additional children.</textarea>
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="campaignGoal" class="form-label">Goal Amount (€)</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">€</span>
+                                                <input type="number" class="form-control" id="campaignGoal" value="30000">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="campaignRaised" class="form-label">Amount Raised (€) - (Update Manually)</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">€</span>
+                                                <input type="number" class="form-control" id="campaignRaised" value="24750">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <button type="submit" class="btn btn-success btn-lg">Update Campaign</button>
+                                    <button type="button" class="btn btn-outline-danger btn-lg ms-2">Archive Campaign</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card bg-light shadow-sm border-0">
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold">Campaign Preview</h5>
+                                <p class="small text-muted">Beginilah tampilan progress bar di halaman utama Anda dengan data saat ini.</p>
+                                
+                                <hr>
+                                <h5 class="text-bmw-brick mb-3">Building Learning Hubs Campaign</h5>
+                                <div class="progress" style="height: 14px;">
+                                    <div class="progress-bar bg-gradient" role="progressbar" style="width:82.5%"></div>
+                                </div>
+                                <div class="d-flex justify-content-between text-muted small mt-2">
+                                    <div>€24,750 raised of €30,000 goal</div>
+                                    <div>82.5% funded</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

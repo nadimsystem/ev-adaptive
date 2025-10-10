@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Manage Programs — Admin BMW e.V.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../mod.css">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8f9fa; } .admin-wrapper { display: flex; min-height: 100vh; } .admin-sidebar { width: 260px; background-color: #1a1a1a; color: #fff; flex-shrink: 0; padding-top: 1rem; position: sticky; top: 0; height: 100vh; overflow-y: auto; } .admin-sidebar .admin-logo { padding: 0 1.5rem 1rem 1.5rem; display: flex; align-items: center; gap: 10px; } .admin-sidebar .admin-logo img { height: 40px; filter: brightness(0) invert(1); } .admin-sidebar .admin-logo span { font-size: 0.9rem; font-weight: 600; opacity: 0.8; } .admin-nav { padding: 0 1rem; } .admin-nav .nav-link { color: rgba(255, 255, 255, 0.7); font-weight: 500; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 1rem; transition: all 0.2s ease; } .admin-nav .nav-link:hover { color: #fff; background-color: rgba(255, 255, 255, 0.05); } .admin-nav .nav-link.active { color: #fff; background-color: var(--bmw-sky, #007bff); font-weight: 700; border-radius: 8px; } .nav-heading { text-transform: uppercase; font-size: 0.7rem; font-weight: 700; color: rgba(255, 255, 255, 0.4); padding: 2rem 1rem 0.5rem 1rem; } .admin-content { flex-grow: 1; padding: 2rem; overflow-x: hidden; }
+        .program-img-thumb { width: 150px; height: 80px; object-fit: cover; border-radius: 5px; }
+        .image-preview { max-width: 100%; height: 150px; object-fit: cover; border-radius: 5px; margin-top: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="admin-wrapper">
+        <nav class="admin-sidebar">
+            <div class="admin-logo"><img src="../images/bmw logo.svg" alt="BmW e.V. Logo"><span>Admin Panel</span></div>
+            <hr class="text-secondary m-0">
+            <ul class="nav flex-column admin-nav pt-3">
+                <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-grid-fill"></i> Dashboard</a></li>
+                <li class="nav-heading">Keuangan</li>
+                <li class="nav-item"><a class="nav-link" href="donations.html"><i class="bi bi-cash-coin"></i> Donations</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="campaigns.html"><i class="bi bi-bullseye"></i> Campaigns</a></li> -->
+                <li class="nav-heading">Website Content</li>
+                <li class="nav-item"><a class="nav-link active" href="programs.html"><i class="bi bi-layout-text-window-reverse"></i> Programs</a></li> <li class="nav-item"><a class="nav-link" href="team-partners.html"><i class="bi bi-people-fill"></i> Team & Partners</a></li>
+                <li class="nav-item"><a class="nav-link" href="gallery.html"><i class="bi bi-images"></i> Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="content.html"><i class="bi bi-pencil-square"></i> Site Text & Impact</a></li>
+                <li class="nav-heading">Submissions</li>
+                <li class="nav-item"><a class="nav-link" href="messages.html"><i class="bi bi-envelope-fill"></i> Messages</a></li>
+                <li class="nav-heading">System</li>
+                <li class="nav-item"><a class="nav-link" href="users.html"><i class="bi bi-person-gear"></i> Manage Admins</a></li>
+                <li class="nav-item"><a class="nav-link" href="../index.html" target="_blank"><i class="bi bi-box-arrow-up-right"></i> View Public Site</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-door-closed-fill"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="admin-content" id="app">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <span class="kicker">Website Content</span>
+                        <h1 class="display-5 fw-bold">Manage Programs</h1>
+                        <p class="text-muted">Kelola semua program yang ditampilkan di website.</p>
+                    </div>
+                     <div>
+                        <button @click="showAddModal" class="btn btn-lg btn-primary">
+                            <i class="bi bi-plus-circle-fill me-2"></i> Add New Program
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Program Title</th>
+                                        <th>Short Description</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="program in programs" :key="program.id">
+                                        <td><img :src="'../' + program.image_url" class="program-img-thumb" @error="handleImageError"></td>
+                                        <td><strong>{{ program.title }}</strong></td>
+                                        <td>{{ program.short_description }}</td>
+                                        <td>
+                                            <button @click="showEditModal(program)" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-fill"></i> Edit</button>
+                                            <button @click="deleteProgram(program.id)" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr v-if="programs.length === 0">
+                                        <td colspan="4" class="text-center text-muted">Loading data or no programs found.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="programModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ isEditing ? 'Edit Program' : 'Add New Program' }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form @submit.prevent="submitForm" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Program Title</label>
+                                    <input type="text" class="form-control" v-model="currentProgram.title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="short_description" class="form-label">Short Description</label>
+                                    <textarea class="form-control" v-model="currentProgram.short_description" rows="3" required></textarea>
+                                </div>
+                                <hr>
+                                <h5>Program Facts</h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="location" class="form-label">Location</label>
+                                        <input type="text" class="form-control" v-model="currentProgram.location" placeholder="e.g., Remote villages">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="focus" class="form-label">Focus</label>
+                                        <input type="text" class="form-control" v-model="currentProgram.focus" placeholder="e.g., Children & Elderly">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="key_areas" class="form-label">Key Areas</label>
+                                        <input type="text" class="form-control" v-model="currentProgram.key_areas" placeholder="e.g., Infrastructure, Aid">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="mb-3">
+                                    <label for="full_content" class="form-label">Full Content (HTML allowed)</label>
+                                    <textarea class="form-control" v-model="currentProgram.full_content" rows="10" placeholder="e.g., <h2>The Challenge</h2><p>Description here...</p><ul><li>Point 1</li></ul>"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="image" class="form-label">Program Image</label>
+                                    <input type="file" class="form-control" @change="handleImageUpload" ref="imageInput" accept="image/png, image/jpeg, image/gif">
+                                    <small class="form-text text-muted" v-if="isEditing">Leave blank to keep the current image.</small>
+                                    <img v-if="imagePreview" :src="imagePreview" class="image-preview" alt="Image Preview"/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">{{ isEditing ? 'Update Program' : 'Save Program' }}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    programs: [],
+                    currentProgram: { id: null, title: '', short_description: '', full_content: '', image_url: '', location: '', focus: '', key_areas: '' },
+                    isEditing: false,
+                    programModal: null,
+                    selectedFile: null,
+                    imagePreview: null
+                }
+            },
+            mounted() {
+                this.fetchPrograms();
+                this.programModal = new bootstrap.Modal(document.getElementById('programModal'));
+            },
+            methods: {
+                fetchPrograms() {
+                    fetch('api.php?action=get_programs')
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success') { this.programs = data.data; }
+                        }).catch(err => console.error(err));
+                },
+                resetModalState() {
+                    this.isEditing = false;
+                    this.currentProgram = { id: null, title: '', short_description: '', full_content: '', image_url: '', location: '', focus: '', key_areas: '' };
+                    this.selectedFile = null;
+                    this.imagePreview = null;
+                    if (this.$refs.imageInput) { this.$refs.imageInput.value = ''; }
+                },
+                showAddModal() {
+                    this.resetModalState();
+                    this.programModal.show();
+                },
+                showEditModal(program) {
+                    this.resetModalState();
+                    this.isEditing = true;
+                    fetch(`api.php?action=get_program_detail&id=${program.id}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.currentProgram = { ...data.data };
+                                this.imagePreview = data.data.image_url ? '../' + data.data.image_url : null;
+                                this.programModal.show();
+                            } else { alert('Could not fetch program details.'); }
+                        });
+                },
+                handleImageUpload(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        this.selectedFile = file;
+                        const reader = new FileReader();
+                        reader.onload = (e) => { this.imagePreview = e.target.result; };
+                        reader.readAsDataURL(file);
+                    }
+                },
+                submitForm() {
+                    const formData = new FormData();
+                    // Append all fields
+                    formData.append('title', this.currentProgram.title);
+                    formData.append('short_description', this.currentProgram.short_description);
+                    formData.append('full_content', this.currentProgram.full_content);
+                    formData.append('location', this.currentProgram.location);
+                    formData.append('focus', this.currentProgram.focus);
+                    formData.append('key_areas', this.currentProgram.key_areas);
+
+                    if (this.selectedFile) { formData.append('image', this.selectedFile); }
+                    if (this.isEditing) {
+                        formData.append('action', 'update_program');
+                        formData.append('id', this.currentProgram.id);
+                        formData.append('existing_image_url', this.currentProgram.image_url);
+                    } else {
+                        formData.append('action', 'add_program');
+                    }
+                    fetch('api.php', { method: 'POST', body: formData })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.fetchPrograms();
+                                this.programModal.hide();
+                            } else { alert('Error: ' + data.message); }
+                        }).catch(err => console.error(err));
+                },
+                deleteProgram(id) {
+                    if (!confirm('Are you sure?')) return;
+                    const formData = new FormData();
+                    formData.append('action', 'delete_program');
+                    formData.append('id', id);
+                    fetch('api.php', { method: 'POST', body: formData })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success') { this.fetchPrograms(); } 
+                            else { alert('Error: ' + data.message); }
+                        }).catch(err => console.error(err));
+                },
+                handleImageError(event) {
+                    event.target.src = '../images/bg-logo-light.jpg';
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

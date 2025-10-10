@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bildung mit Wirkung e.V. — Education with Impact</title>
+    <meta name="description"
+        content="Bildung mit Wirkung e.V. — bridging Germany and Indonesia to provide education and dignified care for elders in remote communities." />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mod.css">
+    <script defer src="app.js"></script>
+
+    <script type="application/ld+json">
+     {
+       "@context": "https://schema.org",
+       "@type": "Organization",
+       "name": "Bildung mit Wirkung e.V.",
+       "url": "https://bildungmitwirkung.example",
+       "logo": "https://via.placeholder.com/300x80?text=BMW+e.V",
+       "sameAs": [],
+       "address": {
+         "@type": "PostalAddress",
+         "streetAddress": "Hirsch-Gereuth-Straße 55",
+         "addressLocality": "München",
+         "postalCode": "81369",
+         "addressCountry": "DE"
+       },
+       "contactPoint": [{
+         "@type":"ContactPoint",
+         "telephone":"+47 401 80 151",
+         "contactType":"customer service",
+         "availableLanguage":["German","English","Indonesian"]
+       }]
+     }
+     </script>
+</head>
+
+
+<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="90" tabindex="0">
+    <nav class="navbar navbar-expand-lg mt-3 navbar-light fixed-top">
+        <div class="container bg-white px-3 py-2 rounded-5">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="images/bmw logo.svg" alt="Bildung mit Wirkung e.V. Logo" height="50px" class="me-2">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav m-auto align-items-lg-center mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#impact">Impact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#programs">Programs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#getinvolved">Get Involved</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+                <div class="d-flex ms-3">
+                    <a href="#donate" class="btn btn-donate">Donate</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Enable Bootstrap scrollspy
+        document.addEventListener("DOMContentLoaded", function () {
+            var scrollSpy = new bootstrap.ScrollSpy(document.body, {
+                target: '.navbar',
+                offset: 90 // adjust if needed for your navbar height
+            });
+            // Add fw-bold to active nav-link
+            function updateActiveBold() {
+                document.querySelectorAll('.navbar .nav-link').forEach(function (link) {
+                    if (link.classList.contains('active')) {
+                        link.classList.add('fw-bold');
+                    } else {
+                        link.classList.remove('fw-bold');
+                    }
+                });
+            }
+            // Initial call and on scrollspy event
+            updateActiveBold();
+            document.body.addEventListener('activate.bs.scrollspy', updateActiveBold);
+        });
+    </script>
+
+    <main id="home" class="hero text-white rounded-bottom-5">
+        <div class="container container-narrow text-start">
+            <div class="row  member justify-content-center align-items-center">
+                <div class="col member hidden">
+                    <div class="fw-bold my-5 hidden">Bildung mit Wirkung e.V.</div>
+                    <h1 class="mt-2 text-white hidden">Education with Impact <br> Dignity for All</h1>
+                    <div class="hidden  my-4 ">Bildung mit Wirkung e.V. is a non-profit organization based in Munich,
+                        Germany. We focus on fundraising for children's education in remote areas and aid
+                        for elderly individuals without pensions.</div>
+                    <div class="d-flex  gap-3 mt-3">
+                        <a href="#donate" class="btn btn-donate btn-warning hidden "><i
+                                class="bi bi-people-fill me-2"></i> Donate Now</a>
+                        <a href="#programs" class="btn btn-outline-secondary hidden"><i
+                                class="bi bi-compass-fill me-2"></i>
+                            Explore Programs</a>
+                    </div>
+                </div>
+                <div class="col hidden">
+                    <figure class="warp mt-5"> <img src="images/bg-logo-transparent.svg" class="" width="100%"
+                            alt="placeholder visual representing sunrise and community">
+                    </figure>
+                    <style>
+                        .wrap {
+                            position: relative;
+                            display: inline-block;
+                        }
+
+                        .wrap img {
+                            display: block;
+                        }
+
+                        .wrap::after {
+                            content: "";
+                            position: absolute;
+                            top: -20%;
+                            left: -40%;
+                            width: 40%;
+                            height: 140%;
+                            background: linear-gradient(90deg,
+                                    transparent,
+                                    rgba(255, 255, 255, 0.98),
+                                    rgba(255, 255, 255, 0.85),
+                                    transparent);
+                            box-shadow: 0 0 40px 20px rgba(255, 255, 255, 0.7);
+                            transform: rotate(-20deg);
+                            animation: shine 2s linear infinite;
+                            mix-blend-mode: screen;
+                            pointer-events: none;
+                        }
+
+                        @keyframes shine {
+                            to {
+                                left: 140%;
+                            }
+                        }
+                    </style>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="google_translate_element" class="position-fixed bottom-0 end-0 mb-5 me-5"></div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                {
+                    pageLanguage: 'en',
+                    includedLanguages: 'en,de,id', // English, German, Indonesian
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                    autoDisplay: false
+                },
+                'google_translate_element'
+            );
+        }
+    </script>
+
+    <script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <style>
+        /* Style the Google Translate widget */
+        #google_translate_element {
+            z-index: 1000;
+        }
+
+        #google_translate_element select {
+            background: #fff;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* Hide Google Translate attribution */
+        .goog-logo-link {
+            display: none !important;
+        }
+
+        .goog-te-gadget {
+            color: transparent !important;
+        }
+    </style>
+
+    <section class="container container-narrow text-dark">
+        <dl class="mt-5 about-grid member" role="list">
+            <div class="about-item member" role="listitem">
+                <dt>Vision</dt>
+                <dd>Proper education facilities + dignified healthcare support for the elderly.</dd>
+            </div>
+            <div class="about-item member" role="listitem">
+                <dt>Mission</dt>
+                <dd>Provide proper learning spaces in remote villages. Education is a human right and the key to
+                    improving living standards. The program also targets elderly individuals who rely on family support.
+                </dd>
+            </div>
+            <div class="about-item member" role="listitem">
+                <dt>Our Values</dt>
+                <dd><b>Compassionate · Empowering · Trustworthy · Inclusive · Connected & Global-Minded</b>, we
+                    respect local culture and work with communities for long-term impact.</dd>
+            </div>
+        </dl>
+    </section>
+
+    <section class="programs py-5">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center gap-2 mb-4 py-5">
+                <div class="w-75">
+                    <div class="text-uppercase text-muted small fw-semibold">Impact</div>
+                    <p class="fw-bold display-4 mb-0 ls-2">Our programs focus on :</p>
+                    <p class=" fs-2 mb-0 ls-1"> children's education, elderly care,
+                        community empowerment, and cross-cultural knowledge exchange.</p>
+                </div>
+                <div class="d-flex gap-2 flex-column">
+                    <button class="btn btn-dark rounded-circle px-4 py-3" type="button"
+                        data-bs-target="#programCarousel" data-bs-slide="prev">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                    <button class="btn btn-dark rounded-circle px-4 py-3" type="button"
+                        data-bs-target="#programCarousel" data-bs-slide="next">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="programCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+
+                    <div class="carousel-item active">
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-3">
+                                <article class="card position-relative h-100 rounded-4 border-0"
+                                    style="background-color:#C6FF00;">
+                                    <div class="card-body p-4 d-flex flex-column">
+                                        <div class="mb-2 d-flex justify-content-between">
+                                            <small class="fw-semibold">Education</small>
+                                            <span class="badge bg-light text-dark ms-2">For Children</span>
+                                        </div>
+                                        <h5 class="fw-bold">Education Aid</h5>
+                                        <p class="mb-3">Supporting access to education through schoolbooks, uniforms,
+                                            and safe learning spaces in remote areas of Indonesia.</p>
+                                        <div class="mt-auto position-absolute bottom-0 mb-3">
+                                            <a href="#" class="btn btn-light btn-sm rounded-3 px-3 py-2"
+                                                style="backdrop-filter: blur(10px); background: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 8px rgba(0,0,0,0.07);">Read
+                                                More →</a>
+                                        </div>
+                                    </div>
+                                    <img src="https://images.unsplash.com/photo-1566205865731-51803de32a35?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                        alt="Children Education" class="img-fluid rounded-4">
+                                </article>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <article class="card position-relative h-100 rounded-4 border-0"
+                                    style="background-color:#ebffa4;">
+                                    <div class="card-body p-4 d-flex flex-column">
+                                        <div class="mb-2 d-flex justify-content-between">
+                                            <small class="fw-semibold">Care</small>
+                                            <span class="badge bg-light text-dark ms-2">For Elderly</span>
+                                        </div>
+                                        <h5 class="fw-bold">Elderly Support</h5>
+                                        <p class="mb-3">Providing health checks, food donations, and dignity for elderly
+                                            people without retirement income or family support.</p>
+                                        <div class="mt-auto position-absolute bottom-0 mb-3">
+                                            <a href="#" class="btn btn-light btn-sm rounded-3 px-3 py-2"
+                                                style="backdrop-filter: blur(10px); background: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 8px rgba(0,0,0,0.07);">Read
+                                                More →</a>
+                                        </div>
+                                    </div>
+                                    <img src="https://images.unsplash.com/photo-1560695089-e62895b784fe?q=80&w=985&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                        alt="Elderly Support" class="img-fluid rounded-4">
+                                </article>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <article class="card position-relative h-100 rounded-4 border-0"
+                                    style="background-color:#ebffa4;">
+                                    <div class="card-body p-4 d-flex flex-column">
+                                        <div class="mb-2 d-flex justify-content-between">
+                                            <small class="fw-semibold">Relief</small>
+                                            <span class="badge bg-light text-dark ms-2">For Communities</span>
+                                        </div>
+                                        <h5 class="fw-bold">Disaster Relief</h5>
+                                        <p class="mb-3">Helping families affected by floods, fires, earthquakes, and
+                                            other natural disasters with emergency aid.</p>
+                                        <div class="mt-auto position-absolute bottom-0 mb-3">
+                                            <a href="#" class="btn btn-light btn-sm rounded-3 px-3 py-2"
+                                                style="backdrop-filter: blur(10px); background: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 8px rgba(0,0,0,0.07);">Read
+                                                More →</a>
+                                        </div>
+                                    </div>
+                                    <img src="https://images.unsplash.com/photo-1641648542375-ed3f5c6dd052?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                        alt="Disaster Relief" class="img-fluid rounded-4">
+                                </article>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <article class="card position-relative h-100 rounded-4 border-0"
+                                    style="background-color:#ebffa4;">
+                                    <div class="card-body p-4 d-flex flex-column">
+                                        <div class="mb-2 d-flex justify-content-between">
+                                            <small class="fw-semibold">Infrastructure</small>
+                                            <span class="badge bg-light text-dark ms-2">For Schools</span>
+                                        </div>
+                                        <h5 class="fw-bold">School Renovation</h5>
+                                        <p class="mb-3">Repairing damaged classrooms, providing internet access, and
+                                            improving facilities so children can learn safely.</p>
+                                        <div class="mt-auto position-absolute bottom-0 mb-3">
+                                            <a href="#" class="btn btn-light btn-sm rounded-3 px-3 py-2"
+                                                style="backdrop-filter: blur(10px); background: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 8px rgba(0,0,0,0.07);">Read
+                                                More →</a>
+                                        </div>
+                                    </div>
+                                    <img src="https://images.unsplash.com/photo-1667893185343-9e869ae6e1bd?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                        alt="School Renovation" class="img-fluid rounded-4">
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="carousel-item">
+                        <div class="row g-4">
+                            <div class="col-md-6 ms-3 col-lg-3">
+                                <article class="card position-relative h-100 rounded-4 border-0"
+                                    style="background-color:#a4e7ff;">
+                                    <div class="card-body p-4 d-flex flex-column">
+                                        <div class="mb-2 d-flex justify-content-between">
+                                            <small class="fw-semibold">Infrastructure</small>
+                                            <span class="badge bg-light text-dark ms-2">For Schools</span>
+                                        </div>
+                                        <h5 class="fw-bold">School Renovation</h5>
+                                        <p class="mb-3">Repairing damaged classrooms, providing internet access, and
+                                            improving facilities so children can learn safely.</p>
+                                        <div class="mt-auto position-absolute bottom-0 mb-3">
+                                            <a href="#" class="btn btn-light btn-sm rounded-3 px-3 py-2"
+                                                style="backdrop-filter: blur(10px); background: rgba(255,255,255,0.45); border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 8px rgba(0,0,0,0.07);">Read
+                                                More →</a>
+                                        </div>
+                                    </div>
+                                    <img src="https://images.unsplash.com/photo-1566205865731-51803de32a35?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                        alt="School Renovation" class="img-fluid rounded-4">
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="impact" class="bg-light" aria-labelledby="impact-title">
+        <div class="container container-narrow ">
+            <div class="d-flex flex-row gap-5 justify-content-between align-items-center">
+            </div>
+            <div class="d-flex flex-row justify-content-between gap-3 align-items-center mb-4">
+                <p id="impact-title" class="fw-bold ls-2 display-3">Impact</p>
+                <ul class="d-flex flex-row gap-3 list-unstyled" role="list">
+                    <li class="impact-card" role="listitem" aria-label="Children supported">
+                        <div class="impact-num" data-target="1200">0</div>
+                        <div class="impact-label">Children Supported</div>
+                    </li>
+                    <li class="impact-card" role="listitem" aria-label="Elderly cared for">
+                        <div class="impact-num" data-target="800">0</div>
+                        <div class="impact-label">Elderly Cared For</div>
+                    </li>
+                    <li class="impact-card" role="listitem" aria-label="Communities reached">
+                        <div class="impact-num" data-target="50">0</div>
+                        <div class="impact-label">Communities Reached</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="row justify-content-center mt-5">
+                <h3 class="section-title">Why Indonesia?</h3>
+                <p class="muted">Data shows the urgency of our intervention in Indonesia:</p>
+
+                <div class="col">
+                    <h4 class="mt-4">Education Data (2023)</h4>
+                    <table class="data-table">
+                        <tr>
+                            <td>Severely underdeveloped villages</td>
+                            <td><strong>4,850</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Children without education access</td>
+                            <td><strong>4 million</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Schools without internet</td>
+                            <td><strong>42,000</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Schools without electricity</td>
+                            <td><strong>8,500</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Damaged primary school buildings</td>
+                            <td><strong>60%</strong></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col">
+                    <h4 class="mt-4">Elderly Data (2023–2025)</h4>
+                    <table class="data-table ">
+                        <tr>
+                            <td>Elderly population (2023)</td>
+                            <td><strong class="text-end">11.75% (±32 million)</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Projection 2045</td>
+                            <td><strong class="text-end">50–65 million (20%)</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Age 60–69</td>
+                            <td><strong class="text-end">63.6%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Age 70–79</td>
+                            <td><strong class="text-end">26.8%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Age 80+</td>
+                            <td><strong class="text-end">8.65%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Female</td>
+                            <td><strong class="text-end">52.3%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Suffer from hypertension</td>
+                            <td><strong class="text-end">69.5%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Dependent on family</td>
+                            <td><strong class="text-end">80%</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" aria-labelledby="about-title">
+        <div class="container ">
+            <div class="row align-items-center">
+                <figure class="col-lg-6 hidden text-center">
+                    <img src="images/bg-logo-light.jpg" alt="about visual"
+                        style="max-width:420px;border-radius:10px;box-shadow:0 12px 36px rgba(16,24,40,0.06)">
+                </figure>
+
+                <div class="col-lg-6 member">
+                    <span class="kicker hidden">About Us</span>
+                    <h2 id="about-title" class="section-title hidden">Bildung mit Wirkung e.V. - A bridge between
+                        Germany
+                        and Indonesia</h2>
+                    <div class="my-5">
+                        <p class=" hidden">Bildung mit Wirkung e.V. is a non-profit organization officially
+                            registered in Munich, Germany. We are dedicated to bringing equitable education and
+                            dignified
+                            care to communities in remote areas of Indonesia through sustainable programs and
+                            cross-cultural collaboration.</p>
+                        <p class=" hidden">With experience from Germany's structured social system and the spirit of
+                            Indonesian community, we build bridges of solidarity to provide access, independence, and
+                            dignity.</p>
+                    </div>
+                    <blockquote class="mt-4 fst-italic small hidden"
+                        style="border-left: 3px solid var(--bmw-coral); padding-left: 1rem;">
+                        “Education is the passport to the future, for tomorrow <br> belongs to those who prepare for it
+                        today.”<br>
+                        <br><cite class="">— Malcolm X</cite>
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="my-5">
+                <p>Core teams</p>
+                <p class="display-1 fw-bold ls-5">Meet Our Team</p>
+                <p class="w-50">Meet our dedicated team of passionate change-makers who bring expertise, commitment, and
+                    heart to our mission. Together, we're building bridges between Germany and Indonesia for sustainable
+                    impact in education and elderly care.</p>
+            </div>
+
+            <div class="mt-4 d-flex flex-row  gap-3 overflow-x-scroll">
+                <figure class="d-flex flex-column" id="person">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D"
+                        width="300px" class="rounded-4" alt="Profile photo Full Name">
+                    <figcaption class="mt-2">
+                        <p class="fs-4 p-0 m-0 ls-1 fw-bold">Full Name</p>
+                        <p class="text-muted p-0 m-0 ">Position</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="d-flex flex-column" id="person">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D"
+                        width="300px" class="rounded-4" alt="Profile photo Full Name">
+                    <figcaption class="mt-2">
+                        <p class="fs-4 p-0 m-0 ls-1 fw-bold">Full Name</p>
+                        <p class="text-muted p-0 m-0 ">Position</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="d-flex flex-column" id="person">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D"
+                        width="300px" class="rounded-4" alt="Profile photo Full Name">
+                    <figcaption class="mt-2">
+                        <p class="fs-4 p-0 m-0 ls-1 fw-bold">Full Name</p>
+                        <p class="text-muted p-0 m-0 ">Position</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="d-flex flex-column" id="person">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D"
+                        width="300px" class="rounded-4" alt="Profile photo Full Name">
+                    <figcaption class="mt-2">
+                        <p class="fs-4 p-0 m-0 ls-1 fw-bold">Full Name</p>
+                        <p class="text-muted p-0 m-0 ">Position</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="d-flex flex-column" id="person">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D"
+                        width="300px" class="rounded-4" alt="Profile photo Full Name">
+                    <figcaption class="mt-2">
+                        <p class="fs-4 p-0 m-0 ls-1 fw-bold">Full Name</p>
+                        <p class="text-muted p-0 m-0 ">Position</p>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="section-compact bg-light" aria-labelledby="gallery-title">
+        <div class="container container-narrow">
+            <span class="kicker">Gallery</span>
+            <h2 id="gallery-title" class="section-title mb-4">Activity Gallery</h2>
+            <p class="muted mb-4">Documentation of education, training, and social action activities with communities in
+                Indonesia.</p>
+
+            <div class="waterfall-gallery member" style="column-count:3; column-gap:1rem;">
+                <figure class="hidden">
+                    <img src="https://images.unsplash.com/photo-1698815764708-8106ca8a233b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2hpbGQlMjBsZWFybmluZ3xlbnwwfDF8MHx8fDI%3D"
+                        alt="Elderly health check-up in Semper, North Jakarta"
+                        style="width:100%;margin-bottom:1rem;border-radius:10px;box-shadow:0 4px 18px rgba(16,24,40,0.06)">
+                </figure>
+                <figure class="hidden">
+                    <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80"
+                        alt="Food aid donation on Alor Island, May 2025"
+                        style="width:100%;margin-bottom:1rem;border-radius:10px;box-shadow:0 4px 18px rgba(16,24,40,0.06)">
+                </figure>
+                <figure class="hidden">
+                    <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80"
+                        alt="Children studying in a village school in Alor"
+                        style="width:100%;margin-bottom:1rem;border-radius:10px;box-shadow:0 4px 18px rgba(16,24,40,0.06)">
+                </figure>
+                <figure class="hidden">
+                    <img src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?auto=format&fit=crop&w=600&q=80"
+                        alt="Community activities"
+                        style="width:100%;margin-bottom:1rem;border-radius:10px;box-shadow:0 4px 18px rgba(16,24,40,0.06)">
+                </figure>
+                <figure class="hidden">
+                    <img src="https://images.unsplash.com/photo-1609835787318-d8a2882efd36?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjB8fGNoaWxkJTIwbGVhcm5pbmd8ZW58MHwxfDB8fHwy"
+                        alt="Training and discussion session"
+                        style="width:100%;margin-bottom:1rem;border-radius:10px;box-shadow:0 4px 18px rgba(16,24,40,0.06)">
+                </figure>
+                <figure class="hidden">
+                    <img src="https://images.unsplash.com/photo-1539920951450-2b2d59cff66d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGFyZW50aW5nfGVufDB8MXwwfHx8Mg%3D%3D"
+                        alt="Training and discussion session"
+                        style="width:100%;margin-bottom:1rem;border-radius:10px;box-shadow:0 4px 18px rgba(16,24,40,0.06)">
+                </figure>
+            </div>
+        </div>
+        <style>
+            @media (max-width:992px) {
+                .waterfall-gallery {
+                    column-count: 2;
+                }
+            }
+
+            @media (max-width:576px) {
+                .waterfall-gallery {
+                    column-count: 1;
+                }
+            }
+        </style>
+    </section>
+
+    <section id="programs" class="section-compact" aria-labelledby="programs-title">
+        <div class="container container-narrow ">
+            <span class="kicker">What we do</span>
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="w-50">
+                    <h2 id="programs-title" class="section-title">Programs</h2>
+                    <p class="muted mb-4">Our programs focus on children's education, elderly care, community
+                        empowerment,
+                        and
+                        cross-cultural knowledge exchange.</p>
+                </div>
+                <a href="program.html   " class="btn btn-primary">Show All</a>
+                
+            </div>
+
+            <div class="program-grid">
+                <article class="program-card text-start shadow-lg" aria-labelledby="p1">
+                    <div class="imgwrap" style="background-image:var(--placeholder-img);"></div>
+                    <h4 id="p1">Education Access</h4>
+                    <p class="my-3">Providing proper learning spaces in remote villages. Challenges: damaged buildings,
+                        teacher shortages,
+                        minimal electricity & internet.</p>
+                    <div class="mt-3">
+                        <a class="btn btn-outline-secondary btn-sm" href="program-detail.html">See details</a>
+                    </div>
+                </article>
+                <article class="program-card text-start shadow-lg" aria-labelledby="p1">
+                    <div class="imgwrap" style="background-image:var(--placeholder-img);"></div>
+                    <h4 id="p1">Education Access</h4>
+                    <p class="my-3">Providing proper learning spaces in remote villages. Challenges: damaged buildings,
+                        teacher shortages,
+                        minimal electricity & internet.</p>
+                    <div class="mt-3">
+                        <a class="btn btn-outline-secondary btn-sm" href="program-detail.html">See details</a>
+                    </div>
+                </article>
+                <article class="program-card text-start shadow-lg" aria-labelledby="p1">
+                    <div class="imgwrap" style="background-image:var(--placeholder-img);"></div>
+                    <h4 id="p1">Education Access</h4>
+                    <p class="my-3">Providing proper learning spaces in remote villages. Challenges: damaged buildings,
+                        teacher shortages,
+                        minimal electricity & internet.</p>
+                    <div class="mt-3">
+                        <a class="btn btn-outline-secondary btn-sm" href="program-detail.html">See details</a>
+                    </div>
+                </article>
+                <article class="program-card text-start shadow-lg" aria-labelledby="p1">
+                    <div class="imgwrap" style="background-image:var(--placeholder-img);"></div>
+                    <h4 id="p1">Education Access</h4>
+                    <p class="my-3">Providing proper learning spaces in remote villages. Challenges: damaged buildings,
+                        teacher shortages,
+                        minimal electricity & internet.</p>
+                    <div class="mt-3">
+                        <a class="btn btn-outline-secondary btn-sm" href="program-detail.html">See details</a>
+                    </div>
+                </article>
+                <article class="program-card text-start shadow-lg" aria-labelledby="p1">
+                    <div class="imgwrap" style="background-image:var(--placeholder-img);"></div>
+                    <h4 id="p1">Education Access</h4>
+                    <p class="my-3">Providing proper learning spaces in remote villages. Challenges: damaged buildings,
+                        teacher shortages,
+                        minimal electricity & internet.</p>
+                    <div class="mt-3">
+                        <a class="btn btn-outline-secondary btn-sm" href="program-detail.html">See details</a>
+                    </div>
+                </article>
+                <article class="program-card text-start shadow-lg" aria-labelledby="p1">
+                    <div class="imgwrap" style="background-image:var(--placeholder-img);"></div>
+                    <h4 id="p1">Education Access</h4>
+                    <p class="my-3">Providing proper learning spaces in remote villages. Challenges: damaged buildings,
+                        teacher shortages,
+                        minimal electricity & internet.</p>
+                    <div class="mt-3">
+                        <a class="btn btn-outline-secondary btn-sm" href="program-detail.html">See details</a>
+                    </div>
+                </article>
+                <article class="program-card text-start shadow-lg" aria-labelledby="p1">
+                    <div class="imgwrap" style="background-image:var(--placeholder-img);"></div>
+                    <h4 id="p1">Education Access</h4>
+                    <p class="my-3">Providing proper learning spaces in remote villages. Challenges: damaged buildings,
+                        teacher shortages,
+                        minimal electricity & internet.</p>
+                    <div class="mt-3">
+                        <a class="btn btn-outline-secondary btn-sm" href="program-detail.html">See details</a>
+                    </div>
+                </article>
+                <article class="program-card text-start shadow-lg" aria-labelledby="p1">
+                    <div class="imgwrap" style="background-image:var(--placeholder-img);"></div>
+                    <h4 id="p1">Education Access</h4>
+                    <p class="my-3">Providing proper learning spaces in remote villages. Challenges: damaged buildings,
+                        teacher shortages,
+                        minimal electricity & internet.</p>
+                    <div class="mt-3">
+                        <a class="btn btn-outline-secondary btn-sm" href="program-detail.html">See details</a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" aria-labelledby="testimonials-title">
+        <div class="container container-narrow text-center">
+            <span class="kicker">Voices</span>
+            <h2 id="testimonials-title" class="section-title">Voices of Impact</h2>
+            <p class="muted mb-4">Short stories from the communities we've assisted — their words remind
+                us why this work is important.</p>
+            <div id="carouselTestimonials" class="carousel slide" data-bs-ride="carousel"
+                aria-label="Testimonials carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <figure class="testimonial-item">
+                            <img src="https://images.unsplash.com/photo-1566205865731-51803de32a35?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                alt="community member photo">
+                            <blockquote>“Because of Bildung mit Wirkung e.V.., my children can finally study closer to
+                                home without walking hours to school.”</blockquote>
+                            <figcaption class="who">— Community Member, West Sumatra</figcaption>
+                        </figure>
+                    </div>
+                    <div class="carousel-item">
+                        <figure class="testimonial-item">
+                            <img src="https://images.unsplash.com/photo-1566205865731-51803de32a35?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                alt="elderly beneficiary photo">
+                            <blockquote>“We receive care with dignity — volunteers visit weekly and help with basic
+                                needs.”</blockquote>
+                            <figcaption class="who">— Elderly Beneficiary, Rural Village</figcaption>
+                        </figure>
+                    </div>
+                    <div class="carousel-item">
+                        <figure class="testimonial-item">
+                            <img src="https://images.unsplash.com/photo-1566205865731-51803de32a35?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                alt="partner photo">
+                            <blockquote>“Partnering with BMW e.V. helped our institution build sustainable local
+                                solutions.”</blockquote>
+                            <figcaption class="who">— Institutional Partner</figcaption>
+                        </figure>
+                    </div>
+                </div>
+                <button class="text-dark carousel-control-prev" type="button" data-bs-target="#carouselTestimonials"
+                    data-bs-slide="prev" aria-label="Previous testimonial">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="text-dark carousel-control-next" type="button" data-bs-target="#carouselTestimonials"
+                    data-bs-slide="next" aria-label="Next testimonial">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="partners" class="section-compact bg-light" aria-labelledby="partners-title">
+        <div class="container container-narrow text-center">
+            <span class="kicker">Partners</span>
+            <h2 id="partners-title" class="section-title">Partners & Sponsors</h2>
+            <p class="muted mb-3">We work with organizations and sponsors who support our vision for education and
+                dignified care.</p>
+
+            <ul class="partners-grid list-unstyled">
+                <li class="partner"><img
+                        src="https://img.freepik.com/vektor-gratis/logo-vektor-gradien-warna-warni-burung_343694-1365.jpg?semt=ais_incoming&w=740&q=80"
+                        alt="partner logo 1"></li>
+                <li class="partner"><img
+                        src="https://img.freepik.com/vektor-gratis/logo-vektor-gradien-warna-warni-burung_343694-1365.jpg?semt=ais_incoming&w=740&q=80"
+                        alt="partner logo 2"></li>
+                <li class="partner"><img
+                        src="https://img.freepik.com/vektor-gratis/logo-vektor-gradien-warna-warni-burung_343694-1365.jpg?semt=ais_incoming&w=740&q=80"
+                        alt="partner logo 3"></li>
+                <li class="partner"><img
+                        src="https://img.freepik.com/vektor-gratis/logo-vektor-gradien-warna-warni-burung_343694-1365.jpg?semt=ais_incoming&w=740&q=80"
+                        alt="partner logo 4"></li>
+                <li class="partner"><img
+                        src="https://img.freepik.com/vektor-gratis/logo-vektor-gradien-warna-warni-burung_343694-1365.jpg?semt=ais_incoming&w=740&q=80"
+                        alt="partner logo 5"></li>
+                <li class="partner"><img
+                        src="https://img.freepik.com/vektor-gratis/logo-vektor-gradien-warna-warni-burung_343694-1365.jpg?semt=ais_incoming&w=740&q=80"
+                        alt="partner logo 6"></li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="getinvolved" class="bg-warning-subtle" aria-labelledby="getinvolved-title">
+        <div class="container container-narrow text-center">
+            <span class="kicker">Take Part</span>
+            <h2 id="getinvolved-title" class="section-title">Get involved</h2>
+            <p class="muted mb-4">Join as a donor, volunteer, or partner — every role is important for building
+                long-term change.</p>
+
+            <ul class="involve-grid mb-4 list-unstyled">
+                <li class="involve-card">
+                    <i class="bi bi-cash-stack" style="font-size:28px;color:var(--bmw-coral)"></i>
+                    <h5>Donate</h5>
+                    <p class="muted">Financial support helps purchase teaching materials, equipment, and fund
+                        program operations. Full transparency with fund usage reports.</p>
+                    <div class="mt-2"><a class="btn btn-donate btn-sm" href="#donate">Donate</a></div>
+                </li>
+                <li class="involve-card">
+                    <i class="bi bi-people" style="font-size:28px;color:var(--bmw-sky)"></i>
+                    <h5>Volunteer</h5>
+                    <p class="muted">Become a facilitator, trainer, or community mentor. We provide guidance
+                        and coordination so your contribution makes a real impact.</p>
+                    <div class="mt-2"><a class="btn btn-outline-secondary btn-sm" href="#contact">Join as Volunteer</a>
+                    </div>
+                </li>
+                <li class="involve-card">
+                    <i class="bi bi-briefcase" style="font-size:28px;color:var(--bmw-brick)"></i>
+                    <h5>Partner</h5>
+                    <p class="muted">We are open to institutional cooperation and sponsorship opportunities for
+                        larger-scale
+                        and sustainable programs.</p>
+                    <div class="mt-2"><a class="btn btn-outline-secondary btn-sm" href="#contact">Partner with us</a>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="mt-5">
+                <h3 class="section-title">Join Us – Donation Options</h3>
+                <ul class="involve-grid mb-4 list-unstyled">
+                    <li class="involve-card">
+                        <i class="bi bi-person-badge" style="font-size:28px;color:var(--bmw-yellow)"></i>
+                        <h5>Become a Member</h5>
+                        <p class="muted">Annual donation starting from €75. Reward: certificate + digital postcard.</p>
+                    </li>
+                    <li class="involve-card">
+                        <i class="bi bi-heart" style="font-size:28px;color:var(--bmw-coral)"></i>
+                        <h5>Become a Donator</h5>
+                        <p class="muted">One-time or recurring donation, directly to projects. Tax-deductible.</p>
+                    </li>
+                    <li class="involve-card">
+                        <i class="bi bi-display" style="font-size:28px;color:var(--bmw-sky)"></i>
+                        <h5>Support with Free Ads</h5>
+                        <p class="muted">Free banners on social media, websites, magazines. Email our support team.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <p class="muted small">We value all forms of support — dignity, community participation, and
+                accountability are at the core of every collaboration.</p>
+        </div>
+    </section>
+
+    <section id="faq" class="bg-light section-compact" aria-labelledby="faq-title">
+        <div class="container container-narrow">
+            <span class="kicker">Questions</span>
+            <h2 id="faq-title" class="section-title">Frequently Asked Questions</h2>
+
+            <dl class="faq-list mt-3">
+                <div class="faq-item">
+                    <dt>Are all donations channeled transparently?</dt>
+                    <dd>Yes. We apply the principle of transparency: concise reports for each campaign are available and
+                        full
+                        annual reports can be downloaded on the Transparency page.</dd>
+                </div>
+                <div class="faq-item">
+                    <dt>How can I become a volunteer?</dt>
+                    <dd>Fill out the contact form, mentioning your interests and availability. Our team will contact you
+                        for the
+                        selection process and a brief orientation.</dd>
+                </div>
+                <div class="faq-item">
+                    <dt>Is this organization officially registered in Germany?</dt>
+                    <dd>Yes — Bildung mit Wirkung e.V. is a registered organization (registered e.V.) in Munich,
+                        Germany.
+                    </dd>
+                </div>
+                <div class="faq-item">
+                    <dt>Can I donate from outside Germany?</dt>
+                    <dd>Yes. We accept international donations. Information on donation methods and bank accounts is
+                        available on the
+                        Donation / Contact page.</dd>
+                </div>
+            </dl>
+        </div>
+    </section>
+
+     <section id="donate" class="py-5 bg-warning-subtle">
+        <div class="container container-narrow">
+            <div class="text-center mb-5">
+                <div class="text-bmw-brick fw-semibold">Support Our Mission</div>
+                <h2 class="h3 fw-bold">Make a Difference in a Child's Education</h2>
+                <p class="text-muted mx-auto" style="max-width: 700px;">Your donation directly supports children in
+                    remote Indonesian communities by providing quality education, safe learning spaces, and essential
+                    learning materials.</p>
+            </div>
+            <div class="bg-white rounded-4 shadow-sm p-4 p-md-5">
+                <div class="row">
+                    <div class="col-lg-8">
+
+                        <div class="mb-4">
+                            <label for="programSelect" class="form-label fw-bold text-bmw-brick">1. Choose Program to
+                                Support</label>
+                            <select class="form-select form-select-lg" id="programSelect" required>
+                                <option value="" selected disabled>Select a program...</option>
+                                <option value="Education Access Program">Education Access Program</option>
+                                <option value="Elderly Care Program">Elderly Care Program</option>
+                                <option value="Disaster Relief">Disaster Relief</option>
+                                <option value="Community Building">Community Building</option>
+                            </select>
+                        </div>
+
+                        <h3 class="text-bmw-brick mb-4">Your Donation at Work</h3>
+                        <p class="text-muted mb-4">See exactly how your contribution makes an impact:</p>
+
+                        <div class="d-flex flex-wrap gap-2 mb-4">
+                            <div class="donation-option p-3 border rounded-2 text-center" data-amount="25">
+                                <div class="fw-bold">€25</div>
+                                <div class="text-muted small">School supplies for one child</div>
+                            </div>
+                            <div class="donation-option p-3 border rounded-2 text-center" data-amount="50">
+                                <div class="fw-bold">€50</div>
+                                <div class="text-muted small">Textbooks for a small classroom</div>
+                            </div>
+                            <div class="donation-option p-3 border rounded-2 text-center bg-light border-primary"
+                                data-amount="100">
+                                <div class="fw-bold">€100</div>
+                                <div class="text-muted small">One month teacher training</div>
+                            </div>
+                            <div class="donation-option p-3 border rounded-2 text-center" data-amount="250">
+                                <div class="fw-bold">€250</div>
+                                <div class="text-muted small">Materials for entire classroom</div>
+                            </div>
+                            <div class="donation-option p-3 border rounded-2 text-center">
+                                <div class="fw-bold">Other</div>
+                                <input type="number" id="customDonation" placeholder="Amount" min="10"
+                                    class="form-control form-control-sm mt-2">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-bmw-brick">Donation Frequency</label>
+                            <div class="d-flex flex-wrap gap-2">
+                                <button class="btn btn-outline-secondary active"
+                                    data-frequency="one-time">One-time</button>
+                                <button class="btn btn-outline-secondary" data-frequency="monthly">Monthly</button>
+                                <button class="btn btn-outline-secondary" data-frequency="yearly">Yearly</button>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info d-flex align-items-center mb-4">
+                            <i class="bi bi-info-circle-fill me-2"></i>
+                            <div>
+                                <strong>Transparency Promise:</strong> 85% of every donation goes directly to program
+                                implementation.
+                            </div>
+                        </div>
+                        <div class="donation-progress mt-5">
+                            <h5 class="text-bmw-brick mb-3">Building Learning Hubs Campaign</h5>
+                            <p class="text-muted mb-3">Help us establish 5 new community learning centers in Alor
+                                Island, reaching 250 additional children.</p>
+                            <div class="progress" style="height: 14px;">
+                                <div class="progress-bar bg-gradient" role="progressbar" style="width:82.5%"></div>
+                            </div>
+                            <div class="d-flex justify-content-between text-muted small mt-2">
+                                <div>€24,750 raised of €30,000 goal</div>
+                                <div>82.5% funded</div>
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="col-lg-4 mt-4 mt-lg-0">
+                        <div class="sticky-top" style="top: 100px;">
+                            <div class="card border-0 shadow-sm p-4 mb-4">
+                                <h5 class="text-bmw-brick mb-3">Quick Donation</h5>
+                                <div class="mb-3">
+                                    <label class="form-label">Amount</label>
+                                    <div class="input-group">
+                                        <select class="form-select" id="currencySelect">
+                                            <option value="EUR">€</option>
+                                            <option value="USD">$</option>
+                                            <option value="IDR">Rp</option>
+                                        </select>
+                                        <input type="number" class="form-control" id="quickDonationAmount" value="100"
+                                            min="10">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Frequency</label>
+                                    <select class="form-select" id="quickDonationFrequency">
+                                        <option value="one-time">One-time donation</option>
+                                        <option value="monthly">Monthly donation</option>
+                                        <option value="yearly">Yearly donation</option>
+                                    </select>
+                                </div>
+
+                                <button class="btn btn-donate w-100 mb-3" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#donationDataModal">
+                                    Donate Now & Fill Details
+                                </button>
+
+                                <div class="text-center">
+                                    <img src="images/Bildung mit Wirkung qr_code.svg" width="150"
+                                        alt="QR Code for donation" class="img-fluid mb-3">
+                                    <p class="text-muted small">Scan to donate via banking app</p>
+                                </div>
+                                <hr>
+                                <div class="text-center">
+                                    <p class="text-muted small mb-1">Bank Transfer Details</p>
+                                    <p class="small fw-bold mb-1">DE91721608180005331005</p>
+                                    <p class="small mb-0">GENODEF1INP</p>
+                                    <p class="small">Volksbank Raiffeisenbank Bayern Mitte eG</p>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="modal fade" id="donationDataModal" tabindex="-1" aria-labelledby="donationDataModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="donationDataModalLabel">Complete Your Donation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body p-4 p-md-5">
+
+                    <div id="donationSummaryPreview" class="alert alert-info mb-4" role="alert">
+                        Loading donation details...
+                    </div>
+
+                    <form class="donation-form row g-3" id="mainDonationForm">
+
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between text-success mb-4 align-items-center">
+                                <p class="display-6 ls-3 fw-bold text-dark mb-0"> Your Details</p>
+                                <div class="position-relative d-inline-block">
+                                    <img src="images/Bildung mit Wirkung qr_code.svg" width="80px"
+                                        alt="Donation QR Code" style="cursor:pointer" data-bs-toggle="modal"
+                                        data-bs-target="#qrModal" id="qrThumbnail">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <h5 class="form-label">Personal Details</h5>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <label for="salutation" class="form-label">Salutation</label>
+                                    <select class="form-select" id="salutation">
+                                        <option selected>Choose...</option>
+                                        <option>Mr.</option>
+                                        <option>Ms.</option>
+                                        <option>Dr.</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label for="academicDegree" class="form-label">Academic Degree</label>
+                                    <input type="text" class="form-control" id="academicDegree"
+                                        placeholder="e.g., M.Sc.">
+                                </div>
+                                <div class="col-6">
+                                    <label for="firstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" required>
+                                </div>
+                                <div class="col-6">
+                                    <label for="lastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row g-2">
+                                <div class="col-12">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="address" required>
+                                </div>
+                                <div class="col-4">
+                                    <label for="houseNumber" class="form-label">No.</label>
+                                    <input type="text" class="form-control" id="houseNumber" required>
+                                </div>
+                                <div class="col-4">
+                                    <label for="postalCode" class="form-label">Postal Code</label>
+                                    <input type="text" class="form-control" id="postalCode" required>
+                                </div>
+                                <div class="col-4">
+                                    <label for="city" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="city" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <label for="country" class="form-label">Country</label>
+                                    <select class="form-select" id="country" required>
+                                        <option selected>Choose...</option>
+                                        <option>Germany</option>
+                                        <option>Indonesia</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="col-12">
+                            <h5 class="form-label"> Contact Info</h5>
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <label for="telephone" class="form-label">Telephone</label>
+                                    <input type="tel" class="form-control" id="telephone" placeholder="+49...">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="emailDonation" class="form-label">Email (for receipt)</label>
+                                    <input type="email" class="form-control" id="emailDonation" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="messageDonation" class="form-label">Message (Optional)</label>
+                                    <textarea class="form-control" id="messageDonation" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="col-md-6">
+                            <h5 class="form-label"> Extras</h5>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="annualReceipt">
+                                <label class="form-check-label" for="annualReceipt">Annual donation receipt</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="digitalPostcard">
+                                <label class="form-check-label" for="digitalPostcard">Digital postcard link</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="memberCertificate">
+                                <label class="form-check-label" for="memberCertificate">Member certificate link</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h5 class="form-label"> Payment Method</h5>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="payment" id="bankTransfer" checked>
+                                <label class="form-check-label" for="bankTransfer">Online Bank Transfer</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="payment" id="paypal" disabled>
+                                <label class="form-check-label" for="paypal">PayPal (Coming Soon)</label>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="selected_program" id="modalProgramValue">
+                        <input type="hidden" name="selected_amount" id="modalAmountValue">
+                        <input type="hidden" name="selected_currency" id="modalCurrencyValue">
+                        <input type="hidden" name="selected_frequency" id="modalFrequencyValue">
+
+                        <div class="col-12 mt-5 text-end border-top pt-4">
+                            <button type="button" class="btn btn-outline-secondary"
+                                data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary btn-lg btn-donate">Submit Donation</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true"
+        style="z-index: 1060;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-white">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="qrModalLabel">Scan QR Code</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="images/Bildung mit Wirkung qr_code.svg" alt="Donation Payment QR Code"
+                        style="max-width: 100%; width: 520px;">
+                    <p class="muted mt-3 fw-bold text-dark">Bildung mit Wirkung e.V..</p>
+                    <p>DE91721608180005331005 </p>
+                    <p> GENODEF1INP</p>
+                    <p>Volksbank Raiffeisenbank Bayern Mitte eG</p>
+                    <p class="muted mt-3 small">Scan this code to donate via your banking app.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // --- BAGIAN 1: LOGIKA WIDGET DONASI (Kode Anda yang sudah ada) ---
+
+            const rates = {
+                EUR: 1,
+                USD: 1.1,
+                IDR: 17000
+            };
+            const donationOptionsEUR = [
+                { amount: 25, label: "School supplies for one child for a month" },
+                { amount: 50, label: "Textbooks for a small classroom" },
+                { amount: 100, label: "One month of teacher training for one educator" },
+                { amount: 250, label: "Learning materials for an entire classroom" }
+            ];
+
+            function formatCurrency(amount, currency) {
+                if (currency === "IDR") {
+                    return "Rp" + amount.toLocaleString('id-ID');
+                }
+                if (currency === "USD") {
+                    return "$" + amount.toLocaleString('en-US');
+                }
+                return "€" + amount.toLocaleString('de-DE');
+            }
+
+            function updateDonationOptions(currency) {
+                const options = document.querySelectorAll('.donation-option');
+                options.forEach((option, idx) => {
+                    if (option.querySelector('input')) return;
+                    if (idx >= donationOptionsEUR.length) return; // Pastikan tidak error jika ada opsi lain
+                    const data = donationOptionsEUR[idx];
+                    let converted = data.amount;
+                    if (currency === "USD") {
+                        converted = Math.round(data.amount * rates.USD);
+                    } else if (currency === "IDR") {
+                        converted = Math.round(data.amount * rates.IDR / 5000) * 5000;
+                    }
+                    option.setAttribute('data-amount', converted);
+                    option.querySelector('.fw-bold').textContent = formatCurrency(converted, currency);
+                });
+            }
+
+            // IIFE untuk Logika Seleksi Opsi Donasi
+            (function () {
+                const options = document.querySelectorAll('.donation-option');
+                const quickDonationAmount = document.getElementById('quickDonationAmount');
+                options.forEach(option => {
+                    option.addEventListener('click', function () {
+                        options.forEach(opt => opt.classList.remove('bg-light', 'border-primary'));
+                        this.classList.add('bg-light', 'border-primary');
+                        const amount = this.getAttribute('data-amount');
+                        if (amount && quickDonationAmount) {
+                            quickDonationAmount.value = amount;
+                        }
+                        // Kosongkan input kustom jika opsi preset dipilih
+                        const customInput = document.getElementById('customDonation');
+                        if (customInput && this.getAttribute('data-amount')) {
+                            customInput.value = '';
+                        }
+                    });
+                });
+
+                const customInput = document.getElementById('customDonation');
+                if (customInput) {
+                    function updateCustom() {
+                        if (customInput.value && quickDonationAmount) {
+                            options.forEach(opt => opt.classList.remove('bg-light', 'border-primary'));
+                            customInput.closest('.donation-option').classList.add('bg-light', 'border-primary');
+                            quickDonationAmount.value = customInput.value;
+                        }
+                    }
+                    customInput.addEventListener('change', updateCustom);
+                    customInput.addEventListener('keyup', updateCustom);
+                }
+
+                const frequencyButtons = document.querySelectorAll('[data-frequency]');
+                const quickDonationFrequency = document.getElementById('quickDonationFrequency');
+                frequencyButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        frequencyButtons.forEach(btn => btn.classList.remove('active'));
+                        this.classList.add('active');
+                        if (quickDonationFrequency) {
+                            quickDonationFrequency.value = this.getAttribute('data-frequency');
+                        }
+                    });
+                });
+            })();
+
+            // IIFE untuk Logika Seleksi Mata Uang
+            (function () {
+                const currencySelect = document.getElementById('currencySelect');
+                const quickDonationAmount = document.getElementById('quickDonationAmount');
+                const customInput = document.getElementById('customDonation');
+                if (!currencySelect) return;
+
+                currencySelect.addEventListener('change', function () {
+                    const currency = this.value;
+                    updateDonationOptions(currency);
+
+                    let matched = false;
+                    document.querySelectorAll('.donation-option').forEach(option => {
+                        if (option.classList.contains('bg-light') && option.getAttribute('data-amount')) {
+                            quickDonationAmount.value = option.getAttribute('data-amount');
+                            matched = true;
+                        }
+                    });
+
+                    if (!matched && customInput && customInput.value) {
+                        // Jika input kustom yang aktif, biarkan nilainya (jangan dikonversi otomatis)
+                        quickDonationAmount.value = customInput.value;
+                    }
+                });
+
+                updateDonationOptions(currencySelect.value); // Panggil saat dimuat
+            })();
+
+            // Logika Toast QR Code (dari kode Anda)
+            (function () {
+                var thumb = document.getElementById('qrThumbnail');
+                var toast = document.getElementById('qrToast');
+                if (thumb && toast) {
+                    function showToast() { toast.style.opacity = '1'; }
+                    function hideToast() { toast.style.opacity = '0'; }
+                    thumb.addEventListener('mouseenter', showToast);
+                    thumb.addEventListener('mouseleave', hideToast);
+                    thumb.addEventListener('focus', showToast);
+                    thumb.addEventListener('blur', hideToast);
+                }
+            })();
+
+
+            // --- BAGIAN 2: LOGIKA MODAL BARU (Untuk ditambahkan) ---
+
+            const donationModal = document.getElementById('donationDataModal');
+            if (donationModal) {
+
+                donationModal.addEventListener('show.bs.modal', function (event) {
+
+                    // 1. Ambil semua nilai dari WIDGET
+                    const programEl = document.getElementById('programSelect');
+                    const amountEl = document.getElementById('quickDonationAmount');
+                    const currencyEl = document.getElementById('currencySelect');
+                    const frequencyEl = document.getElementById('quickDonationFrequency');
+
+                    const selectedProgram = (programEl && programEl.value) ? programEl.value : '';
+                    const selectedAmount = amountEl ? amountEl.value : '0';
+                    const selectedCurrencyText = currencyEl ? currencyEl.options[currencyEl.selectedIndex].text : ''; // Teks (misal '€')
+                    const selectedCurrencyValue = currencyEl ? currencyEl.value : 'EUR'; // Kode (misal 'EUR')
+                    const selectedFrequency = frequencyEl ? frequencyEl.value : 'one-time';
+
+                    // 2. Validasi: Jangan buka modal jika program (di homepage) belum dipilih
+                    if (!selectedProgram && programEl && programEl.tagName === 'SELECT') { // Hanya validasi jika ini adalah dropdown (bukan hidden input)
+                        alert('Please select a program to support first!');
+                        event.preventDefault(); // Hentikan modal agar tidak terbuka
+                        return;
+                    }
+
+                    // 3. Temukan elemen di dalam MODAL
+                    const summaryPreview = donationModal.querySelector('#donationSummaryPreview');
+                    const modalProgramInput = donationModal.querySelector('#modalProgramValue');
+                    const modalAmountInput = donationModal.querySelector('#modalAmountValue');
+                    const modalCurrencyInput = donationModal.querySelector('#modalCurrencyValue');
+                    const modalFrequencyInput = donationModal.querySelector('#modalFrequencyValue');
+
+                    // 4. Masukkan data ke dalam MODAL
+
+                    // Buat ringkasan visual
+                    if (summaryPreview) {
+                        summaryPreview.innerHTML = `
+                    <h5 class="fw-bold mb-0">Donation Summary</h5>
+                    <p class="mb-0 mt-2">
+                        <span class="fs-4 fw-bold text-bmw-coral">${selectedCurrencyText} ${selectedAmount}</span>
+                        <span class="text-muted">(${selectedFrequency})</span>
+                    </p>
+                    <p class="mb-0"><strong>Supporting:</strong> ${selectedProgram}</p>
+                `;
+                    }
+
+                    // Masukkan data ke input tersembunyi untuk formulir
+                    if (modalProgramInput) modalProgramInput.value = selectedProgram;
+                    if (modalAmountInput) modalAmountInput.value = selectedAmount;
+                    if (modalCurrencyInput) modalCurrencyInput.value = selectedCurrencyValue;
+                    if (modalFrequencyInput) modalFrequencyInput.value = selectedFrequency;
+                });
+            }
+
+        }); // AKHIR DARI DOMContentLoaded
+    </script>
+
+    <section id="contact" aria-labelledby="contact-title">
+        <div class="container container-narrow">
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <span class="kicker">Contact</span>
+                    <h2 id="contact-title" class="section-title">Get in touch</h2>
+                    <p class="muted">Registered office address and official contact. For partnership inquiries, reports,
+                        or
+                        donations, contact us via the form or email address.</p>
+
+                    <div class="contact-card mt-3">
+                        <address>
+                            <p><strong>Address</strong><br>Hirsch-Gereuth-Straße 55, 81369 München, Deutschland</p>
+                            <p><strong>Email</strong><br><a
+                                    href="mailto:info@bildungmitwirkung.de">info@bildungmitwirkung.de</a></p>
+                            <p><strong>Phone</strong><br><a href="tel:+4740180151">+47 401 80 151</a></p>
+                        </address>
+                        <hr>
+                        <p class="muted small">Note: All communication via email and forms will be answered within 3–7
+                            business days.</p>
+                    </div>
+                    <div class="mt-3">
+                        <iframe class="map" loading="lazy" title="Map to Hirsch-Gereuth-Straße 55, München"
+                            src="https://www.google.com/maps?q=Hirsch-Gereuth-Straße%2055%2C%2081369%20M%C3%BCnchen%2C%20Deutschland&output=embed"></iframe>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="contact-card">
+                        <h3 class="mb-3">Contact Form</h3>
+                        <form id="contactForm" novalidate>
+                            <div class="mb-3">
+                                <label for="name" class="form-label visually-hidden">Full name</label>
+                                <input id="name" name="name" class="form-control" placeholder="Your full name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label visually-hidden">Email</label>
+                                <input id="email" name="email" type="email" class="form-control"
+                                    placeholder="Your email address" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label visually-hidden">Message</label>
+                                <textarea id="message" name="message" rows="6" class="form-control"
+                                    placeholder="How can we help?" required></textarea>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-donate">Send Message</button>
+                                <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                            </div>
+                            <div id="formAlert" class="mt-3" style="display:none;"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+           
+        </div>
+    </section>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="container container-narrow">
+            <div class="footer-grid">
+                <div>
+                    <h6>Bildung mit Wirkung e.V.</h6>
+                    <p class="muted small">Registered association based in München. Our work connects German donors and
+                        institutions with remote communities across Indonesia to build sustainable education and elderly
+                        care.</p>
+                    <p class="muted small">Hirsch-Gereuth-Straße 55, 81369 München, Deutschland</p>
+                </div>
+                <div>
+                    <h6>Quick Links</h6>
+                    <ul class="list-unstyled muted small">
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#impact">Impact</a></li>
+                        <li><a href="#partners">Partners</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h6>Stay in touch</h6>
+                    <p class="muted small mb-2">Subscribe to our newsletter for updates and impact stories.</p>
+                    <form id="newsletterForm" class="d-flex gap-2">
+                        <input id="newsletterEmail" type="email" class="form-control form-control-sm"
+                            placeholder="Your email" required>
+                        <button class="btn btn-donate btn-sm" type="submit">Subscribe</button>
+                    </form>
+                    <div class="mt-3">
+                        <a href="#" class="me-2 muted"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="me-2 muted"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="me-2 muted"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr style="margin:1.5rem 0;border-color:rgba(0,0,0,0.05)">
+            <div class="d-flex justify-content-between flex-wrap muted small">
+                <div>© 2025 Bildung mit Wirkung e.V.. All rights reserved.</div>
+                <div>Privacy · Terms · Transparency</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // NAVBAR background on scroll
+        (function () {
+            const nav = document.querySelector('.navbar');
+            const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 50);
+            document.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        })();
+        // COUNTERS (IntersectionObserver + counting)
+        (function () {
+            const counters = document.querySelectorAll('.impact-num');
+            const options = { root: null, rootMargin: '0px', threshold: 0.4 };
+            const animateCount = (el) => {
+                const target = +el.getAttribute('data-target') || +el.textContent || 0;
+                const duration = 1800;
+                const start = 0;
+                const startTime = performance.now();
+                const step = (now) => {
+                    const progress = Math.min((now - startTime) / duration, 1);
+                    el.textContent = Math.floor(progress * (target - start) + start).toLocaleString();
+                    if (progress < 1) requestAnimationFrame(step);
+                };
+                requestAnimationFrame(step);
+            };
+            if ('IntersectionObserver' in window) {
+                const io = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) {
+                            animateCount(e.target);
+                            obs.unobserve(e.target);
+                        }
+                    });
+                }, options);
+                counters.forEach(c => io.observe(c));
+            } else {
+                // fallback
+                counters.forEach(c => animateCount(c));
+            }
+        })();
+        // CONTACT FORM (frontend-only placeholder)
+        (function () {
+            const form = document.getElementById('contactForm');
+            const alertBox = document.getElementById('formAlert');
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                // Simple validation
+                const name = form.name.value.trim();
+                const email = form.email.value.trim();
+                const message = form.message.value.trim();
+                if (!name || !email || !message) {
+                    alertBox.style.display = 'block';
+                    alertBox.className = 'alert alert-danger';
+                    alertBox.textContent = 'Please fill all fields before submitting.';
+                    return;
+                }
+                // Fake submit (no backend). Show success message.
+                alertBox.style.display = 'block';
+                alertBox.className = 'alert alert-success';
+                alertBox.textContent = 'Thanks! Your message has been received. We will reply to your email soon.';
+                form.reset();
+                setTimeout(() => { alertBox.style.display = 'none'; }, 5000);
+            });
+        })();
+        // NEWSLETTER (simple)
+        (function () {
+            const nf = document.getElementById('newsletterForm');
+            nf.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const email = document.getElementById('newsletterEmail').value.trim();
+                if (!email) {
+                    alert('Please provide an email address.');
+                    return;
+                }
+                // placeholder success
+                alert('Thanks for subscribing — this demo does not connect to an email service.');
+                nf.reset();
+            });
+        })();
+        // Accessibility: enable keyboard focus outlines for keyboard users only
+        (function () {
+            function handleFirstTab(e) {
+                if (e.key === 'Tab') {
+                    document.body.classList.add('user-is-tabbing');
+                    window.removeEventListener('keydown', handleFirstTab);
+                }
+            }
+            window.addEventListener('keydown', handleFirstTab);
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Manage Gallery — Admin BMW e.V.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../mod.css">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8f9fa; }
+        .admin-wrapper { display: flex; min-height: 100vh; }
+        .admin-sidebar { width: 260px; background-color: #1a1a1a; color: #fff; flex-shrink: 0; padding-top: 1rem; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+        .admin-sidebar .admin-logo { padding: 0 1.5rem 1rem 1.5rem; display: flex; align-items: center; gap: 10px; }
+        .admin-sidebar .admin-logo img { height: 40px; filter: brightness(0) invert(1); }
+        .admin-sidebar .admin-logo span { font-size: 0.9rem; font-weight: 600; opacity: 0.8; }
+        .admin-nav { padding: 0 1rem; }
+        .admin-nav .nav-link { color: rgba(255, 255, 255, 0.7); font-weight: 500; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 1rem; transition: all 0.2s ease; }
+        .admin-nav .nav-link:hover { color: #fff; background-color: rgba(255, 255, 255, 0.05); }
+        .admin-nav .nav-link.active { color: #fff; background-color: var(--bmw-sky, #007bff); font-weight: 700; border-radius: 8px; }
+        .nav-heading { text-transform: uppercase; font-size: 0.7rem; font-weight: 700; color: rgba(255, 255, 255, 0.4); padding: 2rem 1rem 0.5rem 1rem; }
+        .admin-content { flex-grow: 1; padding: 2rem; overflow-x: hidden; }
+        .gallery-thumb { position: relative; }
+        .gallery-thumb img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; }
+        .gallery-thumb .btn-delete { position: absolute; top: 10px; right: 10px; }
+        .image-preview { max-width: 100%; height: 100px; object-fit: cover; border-radius: 5px; margin-top: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="admin-wrapper">
+        <nav class="admin-sidebar">
+            <div class="admin-logo"><img src="../images/bmw logo.svg" alt="BmW e.V. Logo"><span>Admin Panel</span></div>
+            <hr class="text-secondary m-0">
+            <ul class="nav flex-column admin-nav pt-3">
+                <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-grid-fill"></i> Dashboard</a></li>
+                <li class="nav-heading">Keuangan</li>
+                <li class="nav-item"><a class="nav-link" href="donations.html"><i class="bi bi-cash-coin"></i> Donations</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="campaigns.html"><i class="bi bi-bullseye"></i> Campaigns</a></li> -->
+                <li class="nav-heading">Website Content</li>
+                <li class="nav-item"><a class="nav-link" href="programs.html"><i class="bi bi-layout-text-window-reverse"></i> Programs</a></li>
+                <li class="nav-item"><a class="nav-link" href="team-partners.html"><i class="bi bi-people-fill"></i> Team & Partners</a></li>
+                <li class="nav-item"><a class="nav-link active" href="gallery.html"><i class="bi bi-images"></i> Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="content.html"><i class="bi bi-pencil-square"></i> Site Text & Impact</a></li>
+                <li class="nav-heading">Submissions</li>
+                <li class="nav-item"><a class="nav-link" href="messages.html"><i class="bi bi-envelope-fill"></i> Messages</a></li>
+                <li class="nav-heading">System</li>
+                <li class="nav-item"><a class="nav-link" href="users.html"><i class="bi bi-person-gear"></i> Manage Admins</a></li>
+                <li class="nav-item"><a class="nav-link" href="../index.html" target="_blank"><i class="bi bi-box-arrow-up-right"></i> View Public Site</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-door-closed-fill"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="admin-content" id="app">
+            <div class="container-fluid">
+                <div class="mb-4">
+                    <span class="kicker">Website Content</span>
+                    <h1 class="display-5 fw-bold">Manage Gallery</h1>
+                    <p class="text-muted">Kelola foto yang ditampilkan di galeri halaman utama.</p>
+                </div>
+
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold">Upload New Photo</h5>
+                        <form @submit.prevent="uploadImage">
+                            <div v-if="uploadError" class="alert alert-danger">{{ uploadError }}</div>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-md-5">
+                                    <input type="file" @change="handleFileSelect" ref="fileInput" class="form-control" required accept="image/*">
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" v-model="newImage.alt_text" class="form-control" placeholder="Alt text description (e.g., 'Children studying')">
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary w-100" :disabled="isUploading">
+                                        <span v-if="isUploading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        {{ isUploading ? 'Uploading...' : 'Upload' }}
+                                    </button>
+                                </div>
+                            </div>
+                             <img v-if="imagePreview" :src="imagePreview" class="image-preview" alt="Image Preview"/>
+                        </form>
+                    </div>
+                </div>
+
+                <div v-if="loading" class="text-center py-5">
+                    <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
+                </div>
+
+                <div v-if="!loading && images.length === 0" class="alert alert-info">
+                    No images found in the gallery. Start by uploading one!
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4" v-for="image in images" :key="image.id">
+                        <div class="card gallery-thumb">
+                            <img :src="'../' + image.image_url" :alt="image.alt_text">
+                            <button class="btn btn-danger btn-sm btn-delete" @click="deleteImage(image.id)">
+                                <i class="bi bi-trash-fill"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    images: [],
+                    loading: true,
+                    isUploading: false,
+                    uploadError: null,
+                    imagePreview: null,
+                    newImage: {
+                        file: null,
+                        alt_text: ''
+                    }
+                }
+            },
+            mounted() {
+                this.fetchImages();
+            },
+            methods: {
+                fetchImages() {
+                    this.loading = true;
+                    fetch('api.php?action=get_gallery_images')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.images = data.data;
+                            } else {
+                                alert('Error fetching gallery: ' + data.message);
+                            }
+                            this.loading = false;
+                        })
+                        .catch(error => {
+                            console.error('Fetch Error:', error);
+                            this.loading = false;
+                        });
+                },
+                handleFileSelect(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        this.newImage.file = file;
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            this.imagePreview = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        this.newImage.file = null;
+                        this.imagePreview = null;
+                    }
+                },
+                uploadImage() {
+                    if (!this.newImage.file) {
+                        this.uploadError = "Please select an image file to upload.";
+                        return;
+                    }
+                    this.isUploading = true;
+                    this.uploadError = null;
+
+                    const formData = new FormData();
+                    formData.append('action', 'add_gallery_image');
+                    formData.append('image', this.newImage.file);
+                    formData.append('alt_text', this.newImage.alt_text);
+
+                    fetch('api.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Reset form dan refresh galeri
+                            this.newImage.file = null;
+                            this.newImage.alt_text = '';
+                            this.imagePreview = null;
+                            this.$refs.fileInput.value = '';
+                            this.fetchImages();
+                        } else {
+                            this.uploadError = "Upload failed: " + data.message;
+                        }
+                    })
+                    .catch(error => {
+                        this.uploadError = "An error occurred during upload. Please check the console.";
+                        console.error('Upload Error:', error);
+                    })
+                    .finally(() => {
+                        this.isUploading = false;
+                    });
+                },
+                deleteImage(id) {
+                    if (!confirm('Are you sure you want to delete this image permanently?')) {
+                        return;
+                    }
+
+                    const formData = new FormData();
+                    formData.append('action', 'delete_gallery_image');
+                    formData.append('id', id);
+
+                    fetch('api.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            this.fetchImages(); // Refresh galeri setelah berhasil hapus
+                        } else {
+                            alert('Error deleting image: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Delete Error:', error);
+                        alert('An error occurred. Please check the console.');
+                    });
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
