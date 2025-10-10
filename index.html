@@ -283,11 +283,30 @@
                         <p class="muted small mb-4">Documentation of education, training, and social action activities with communities in Indonesia.</p>
                         <div class="waterfall-gallery member" style="column-count:2; column-gap:0.75rem;">
                             <figure class="" v-for="image in page.gallery" :key="image.image_url">
-                                <img :src="image.image_url" :alt="image.alt_text" loading="lazy" style="width:100%;margin-bottom:0.75rem;border-radius:10px;box-shadow:0 4px 18px rgba(16,24,40,0.06)">
+                                <img :src="image.image_url" :alt="image.alt_text" loading="lazy" style="width:100%; margin-bottom:0.75rem; border-radius:10px; box-shadow:0 4px 18px rgba(16,24,40,0.06); cursor: pointer;" @click="openGalleryModal(image)">
                             </figure>
                         </div>
                     </div>
                 </section>
+
+                <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content" style="background-color: var(--ios-card-bg);">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title fw-bold" id="galleryModalLabel">Activity Photo</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body p-0 text-center">
+                                <template v-if="selectedImage">
+                                    <img :src="selectedImage.image_url" class="img-fluid" :alt="selectedImage.alt_text">
+                                </template>
+                            </div>
+                            <div class="modal-footer border-0" v-if="selectedImage && selectedImage.alt_text">
+                                <p class="small text-muted mb-0">{{ selectedImage.alt_text }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <section id="programs" class="section-compact" aria-labelledby="programs-title">
                     <div class="container m-section-pad">
@@ -702,7 +721,7 @@
 
                 <div class="">
                     <div class="  m-frosted-glass bottom-0 position-absolute position-fixed  w-100  ">
-                        <div class="d-flex flex-row px-3  mb-3">
+                        <div class="d-flex flex-row justify-content-between px-3  mb-3">
                             <a href="#home" class="m-nav-item-app active">
                                 <i class="bi bi-house-door-fill"></i>
                                 <span>Home</span>
@@ -759,8 +778,8 @@
                             <img src="images/bmw logo.svg" alt="Bildung mit Wirkung e.V. Logo" height="50px" class="me-2">
                         </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
                         <div class="collapse navbar-collapse" id="mainNav">
                             <ul class="navbar-nav m-auto align-items-lg-center mb-2 mb-lg-0">
                                 <li class="nav-item"><a class="nav-link" href="#home-lg">Home</a></li>
@@ -768,7 +787,8 @@
                                 <li class="nav-item"><a class="nav-link" href="#data-lg">The aid programs</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#impact-lg">Impact Reports</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#partners-lg">Partners</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#getinvolved-lg">How to participate</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#getinvolved-lg">How to participate</a>
+                                </li>
                                 <li class="nav-item"><a class="nav-link" href="#contact-lg">Contact us</a></li>
                             </ul>
                             <div class="d-flex ms-3 align-items-center">
@@ -788,20 +808,22 @@
                         <div class="row member justify-content-center align-items-center">
                             <div class="col p-lg-0 p-5 member hidden">
                                 <div class="fw-bold my-5 hidden">Bildung mit Wirkung e.V.</div>
-                                <h1 class="mt-2 text-white hidden" v-html="page.settings.hero_title || 'Education with Impact <br> Dignity for All'"></h1>
+                                <h1 class="mt-2 text-white hidden" v-html="page.settings.hero_title || 'Education with Impact <br> Dignity for All'">
+                                </h1>
                                 <div class="hidden my-4 text-white">{{ page.settings.hero_description || 'Loading description...' }}
                                 </div>
                                 <div class="d-flex gap-3 mt-3">
                                     <a href="#donate" class="btn btn-donate btn-warning hidden "><i
-                                        class="bi bi-people-fill me-2"></i> Donate Now</a>
+                                            class="bi bi-people-fill me-2"></i> Donate Now</a>
                                     <a href="#impact" class="btn btn-outline-primary fw-bold hidden "><i
-                                        class="bi bi-heart-pulse me-2"></i> Impact</a>
+                                            class="bi bi-heart-pulse me-2"></i> Impact</a>
                                     <a href="program.html" class="btn btn-outline-secondary hidden"><i
-                                        class="bi bi-compass-fill me-2"></i> Explore Programs</a>
+                                            class="bi bi-compass-fill me-2"></i> Explore Programs</a>
                                 </div>
                             </div>
                             <div class="col hidden d-lg-block d-none">
-                                <figure class="warp mt-5"> <img src="images/bg-logo-transparent.svg" class="" width="100%" alt="placeholder visual representing sunrise and community"></figure>
+                                <figure class="warp mt-5"> <img src="images/bg-logo-transparent.svg" class="" width="100%" alt="placeholder visual representing sunrise and community">
+                                </figure>
                             </div>
                         </div>
                     </div>
@@ -874,9 +896,9 @@
                             </div>
                             <div class="d-flex gap-2 flex-column">
                                 <button class="btn btn-dark rounded-circle px-4 py-3" type="button" data-bs-target="#programCarousel" data-bs-slide="prev"><i
-                                    class="bi bi-chevron-left"></i></button>
+                                        class="bi bi-chevron-left"></i></button>
                                 <button class="btn btn-dark rounded-circle px-4 py-3" type="button" data-bs-target="#programCarousel" data-bs-slide="next"><i
-                                    class="bi bi-chevron-right"></i></button>
+                                        class="bi bi-chevron-right"></i></button>
                             </div>
                         </div>
                         <div id="programCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -890,7 +912,8 @@
                                                     <h5 class="fw-bold">{{ program.title }}</h5>
                                                     <p class="mb-3 flex-grow-1 description-clamp">{{ program.short_description }}</p>
                                                     <div class="mt-auto">
-                                                        <a :href="'program-detail.html?id=' + program.id" class="btn btn-dark btn-sm rounded-3 px-3 py-2">Read More →</a>
+                                                        <a :href="'program-detail.html?id=' + program.id" class="btn btn-dark btn-sm rounded-3 px-3 py-2">Read More
+                                                            →</a>
                                                     </div>
                                                 </div>
                                             </article>
@@ -908,7 +931,8 @@
                             <p id="impact-title" class="fw-bold ls-2 display-3">IMPACT REPORTS </p>
                             <ul class="d-flex flex-row flex-wrap gap-3 list-unstyled" role="list">
                                 <li class="impact-card" role="listitem">
-                                    <div class="impact-num" :data-target="page.settings.impact_children_supported || 0">0
+                                    <div class="impact-num" :data-target="page.settings.impact_children_supported || 0">
+                                        0
                                     </div>
                                     <div class="impact-label">Children Supported</div>
                                 </li>
@@ -999,7 +1023,8 @@
 
                         <div class="program-grid">
                             <article class="program-card text-start shadow-lg" v-for="program in page.programs" :key="program.id" :aria-labelledby="'prog-card-' + program.id">
-                                <div class="imgwrap" :style="{ backgroundImage: 'url(' + program.image_url + ')' }"></div>
+                                <div class="imgwrap" :style="{ backgroundImage: 'url(' + program.image_url + ')' }">
+                                </div>
                                 <h4 :id="'prog-card-' + program.id">{{ program.title }}</h4>
                                 <p class="my-3 description-clamp">{{ program.short_description }}</p>
                                 <div class="mt-3">
@@ -1017,7 +1042,8 @@
                 <section id="partners-lg" class="section-compact bg-light" aria-labelledby="partners-title">
                     <div class="container container-narrow text-center">
                         <h2 id="partners-title" class="section-title">Program Partners</h2>
-                        <p class="muted mb-3">We work with organizations and sponsors who support our vision for education and dignified care. A special thanks to our implementation partner in Indonesia.</p>
+                        <p class="muted mb-3">We work with organizations and sponsors who support our vision for education and dignified care. A special thanks to our implementation partner in Indonesia.
+                        </p>
                         <div class="d-flex justify-content-center">
                             <div class="partner-card text-center p-4">
                                 <img src="images/lentera.png" alt="Lentera Aksara Negeri Foundation Logo" style="max-width: 200px; opacity: 0.8;">
@@ -1045,7 +1071,7 @@
                                 <h5>Volunteer</h5>
                                 <p class="muted">Become a facilitator, trainer, or community mentor. We provide guidance and coordination so your contribution makes a real impact.</p>
                                 <div class="mt-2"><a class="btn btn-outline-secondary btn-sm" href="#contact">Join as
-                                    Volunteer</a></div>
+                                        Volunteer</a></div>
                             </li>
                         </ul>
                         <p class="muted small">We value all forms of support, dignity, community participation, and accountability are at the core of every collaboration.</p>
@@ -1092,14 +1118,16 @@
                             <div class="row">
                                 <div class="col-lg-8">
                                     <div class="mb-4">
-                                        <label for="programSelect" class="form-label fw-bold text-bmw-brick">1. Choose Program to
-                                        Support</label>
+                                        <label for="programSelect" class="form-label fw-bold text-bmw-brick">1. Choose
+                                            Program to
+                                            Support</label>
                                         <select class="form-select form-select-lg" id="programSelect" required>
-                                        <option value="" selected disabled>Select a program...</option>
-                                        <option v-for="program in page.programs" :key="program.id" :value="program.title">
-                                            {{ program.title }}
-                                        </option>
-                                    </select>
+                                            <option value="" selected disabled>Select a program...</option>
+                                            <option v-for="program in page.programs" :key="program.id"
+                                                :value="program.title">
+                                                {{ program.title }}
+                                            </option>
+                                        </select>
                                     </div>
                                     <h3 class="text-bmw-brick mb-4">Your Donation at Work</h3>
                                     <p class="text-muted mb-4">See exactly how your contribution makes an impact:</p>
@@ -1142,24 +1170,24 @@
                                                 <label class="form-label">Amount</label>
                                                 <div class="input-group">
                                                     <select class="form-select" id="currencySelect">
-                                                    <option value="EUR">€</option>
-                                                    <option value="USD">$</option>
-                                                    <option value="IDR">Rp</option>
-                                                </select>
+                                                        <option value="EUR">€</option>
+                                                        <option value="USD">$</option>
+                                                        <option value="IDR">Rp</option>
+                                                    </select>
                                                     <input type="number" class="form-control" id="quickDonationAmount" value="100" min="10">
                                                 </div>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Frequency</label>
                                                 <select class="form-select" id="quickDonationFrequency">
-                                                <option value="one-time">One-time donation</option>
-                                                <option value="monthly">Monthly donation</option>
-                                                <option value="yearly">Yearly donation</option>
-                                            </select>
+                                                    <option value="one-time">One-time donation</option>
+                                                    <option value="monthly">Monthly donation</option>
+                                                    <option value="yearly">Yearly donation</option>
+                                                </select>
                                             </div>
                                             <button class="btn btn-donate w-100 mb-3" type="button" data-bs-toggle="modal" data-bs-target="#donationDataModal">
-                                            Donate Now & Fill Details
-                                        </button>
+                                                Donate Now & Fill Details
+                                            </button>
                                             <div class="text-center">
                                                 <img src="images/Bildung mit Wirkung qr_code.svg" width="150" alt="QR Code for donation" class="img-fluid mb-3">
                                                 <p class="text-muted small">Scan to donate via banking app</p>
@@ -1207,11 +1235,11 @@
                                             <div class="col-6">
                                                 <label for="salutation" class="form-label">Salutation</label>
                                                 <select name="salutation" class="form-select" id="salutation">
-                                                <option selected>Choose...</option>
-                                                <option>Mr.</option>
-                                                <option>Ms.</option>
-                                                <option>Dr.</option>
-                                            </select>
+                                                    <option selected>Choose...</option>
+                                                    <option>Mr.</option>
+                                                    <option>Ms.</option>
+                                                    <option>Dr.</option>
+                                                </select>
                                             </div>
                                             <div class="col-6">
                                                 <label for="academicDegree" class="form-label">Academic Degree</label>
@@ -1252,11 +1280,11 @@
                                             <div class="col-md-6">
                                                 <label for="country" class="form-label">Country</label>
                                                 <select name="country" class="form-select" id="country" required>
-                                                <option selected>Choose...</option>
-                                                <option>Germany</option>
-                                                <option>Indonesia</option>
-                                                <option>Other</option>
-                                            </select>
+                                                    <option selected>Choose...</option>
+                                                    <option>Germany</option>
+                                                    <option>Indonesia</option>
+                                                    <option>Other</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -1269,11 +1297,13 @@
                                                 <input name="telephone" type="tel" class="form-control" id="telephone" placeholder="+49...">
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="emailDonation" class="form-label">Email (for receipt)</label>
+                                                <label for="emailDonation" class="form-label">Email (for
+                                                    receipt)</label>
                                                 <input name="emailDonation" type="email" class="form-control" id="emailDonation" required>
                                             </div>
                                             <div class="col-12">
-                                                <label for="messageDonation" class="form-label">Message (Optional)</label>
+                                                <label for="messageDonation" class="form-label">Message
+                                                    (Optional)</label>
                                                 <textarea name="messageDonation" class="form-control" id="messageDonation" rows="3"></textarea>
                                             </div>
                                         </div>
@@ -1283,22 +1313,26 @@
                                         <h5 class="form-label"> Extras</h5>
                                         <div class="form-check">
                                             <input name="annualReceipt" class="form-check-input" type="checkbox" value="1" id="annualReceipt">
-                                            <label class="form-check-label" for="annualReceipt">Annual donation receipt</label>
+                                            <label class="form-check-label" for="annualReceipt">Annual donation
+                                                receipt</label>
                                         </div>
                                         <div class="form-check">
                                             <input name="digitalPostcard" class="form-check-input" type="checkbox" value="1" id="digitalPostcard">
-                                            <label class="form-check-label" for="digitalPostcard">Digital postcard link</label>
+                                            <label class="form-check-label" for="digitalPostcard">Digital postcard
+                                                link</label>
                                         </div>
                                         <div class="form-check">
                                             <input name="memberCertificate" class="form-check-input" type="checkbox" value="1" id="memberCertificate">
-                                            <label class="form-check-label" for="memberCertificate">Member certificate link</label>
+                                            <label class="form-check-label" for="memberCertificate">Member certificate
+                                                link</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <h5 class="form-label"> Payment Method</h5>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="payment" id="bankTransfer" value="Online Bank Transfer" checked>
-                                            <label class="form-check-label" for="bankTransfer">Online Bank Transfer</label>
+                                            <label class="form-check-label" for="bankTransfer">Online Bank
+                                                Transfer</label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="payment" id="paypal" value="PayPal" disabled>
@@ -1311,7 +1345,8 @@
                                     <input type="hidden" name="selected_frequency" id="modalFrequencyValue">
                                     <div class="col-12 mt-5 text-end border-top pt-4">
                                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-primary btn-lg btn-donate">Submit Donation</button>
+                                        <button type="submit" class="btn btn-primary btn-lg btn-donate">Submit
+                                            Donation</button>
                                     </div>
                                 </form>
                             </div>
@@ -1347,10 +1382,13 @@
                                 <p class="muted">Registered office address and official contact. For partnership inquiries, reports, or donations, contact us via the form or email address.</p>
                                 <div class="contact-card mt-3">
                                     <address>
-                                    <p><strong>Address</strong><br>Hirsch-Gereuth-Straße 55, 81369 München, Deutschland</p>
-                                    <p><strong>Email</strong><br><a href="mailto:info@bmw-ev.org">info@bmw-ev.org</a></p>
-                                    <p><strong>Phone</strong><br><a href="tel: +4915757244505"> +4915757244505</a></p>
-                                </address>
+                                        <p><strong>Address</strong><br>Hirsch-Gereuth-Straße 55, 81369 München,
+                                            Deutschland</p>
+                                        <p><strong>Email</strong><br><a
+                                                href="mailto:info@bmw-ev.org">info@bmw-ev.org</a></p>
+                                        <p><strong>Phone</strong><br><a href="tel: +4915757244505"> +4915757244505</a>
+                                        </p>
+                                    </address>
                                     <hr>
                                     <p class="muted small">Note: All communication via email and forms will be answered within 3–7 business days.</p>
                                 </div>
@@ -1406,7 +1444,8 @@
                             </div>
                             <div>
                                 <h6>Stay in touch</h6>
-                                <p class="muted small mb-2">Subscribe to our newsletter for updates and impact stories.</p>
+                                <p class="muted small mb-2">Subscribe to our newsletter for updates and impact stories.
+                                </p>
                                 <form id="newsletterForm" class="d-flex gap-2">
                                     <input id="newsletterEmail" name="email" type="email" class="form-control form-control-sm" placeholder="Your email" required>
                                     <button class="btn btn-donate btn-sm" type="submit">Subscribe</button>
@@ -1507,7 +1546,10 @@
                         programs: [],
                         team: [],
                         gallery: []
-                    }
+                    },
+                    // TAMBAHKAN DUA BARIS DI BAWAH INI
+                    selectedImage: null,
+                    galleryModalInstance: null
                 }
             },
             mounted() {
@@ -1521,7 +1563,18 @@
                     .finally(() => {
                         this.pageLoaded = true;
                     });
+
+                // TAMBAHKAN BARIS INI untuk menginisialisasi modal
+                this.galleryModalInstance = new bootstrap.Modal(document.getElementById('galleryModal'));
+            },
+            // TAMBAHKAN BLOK METHODS BARU DI BAWAH INI
+            methods: {
+                openGalleryModal(image) {
+                    this.selectedImage = image; // Simpan data gambar yang diklik
+                    this.galleryModalInstance.show(); // Tampilkan modal
+                }
             }
+
         }).mount('#app');
 
         // --- SKRIP UNTUK MENGAKTIFKAN FORMULIR DONASI, KONTAK, & BULETIN ---
