@@ -23,10 +23,11 @@
 /* (Body tidak diubah karena merupakan elemen global) */
 
 body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    /* font-family: 'Plus Jakarta Sans', sans-serif; */
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     /* color: var(--ios-text-primary); */
     /* background-color: var(--ios-bg-light); */
-    padding-bottom: 75px;
+    padding-bottom: 105px;
     /* Ruang untuk bottom navbar */
     padding-top: 55px;
     /* Ruang untuk fixed top header */
@@ -71,18 +72,15 @@ body {
 /* Bottom Nav Bar */
 
 .m-bottom-navbar {
-    position: fixed;
-    bottom: 10px;
-    left: 0;
-    right: 0;
-    height: 70px;
+    /* position: fixed; */
+    /* bottom: 10px; */
     z-index: 1050;
     backdrop-filter: blur(20px) saturate(180%);
     background-color: rgba(255, 255, 255, 0.85);
-    border-top: 1px solid rgba(220, 220, 220, 0.5);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    /* display: flex; */
+    /* justify-content: space-around; */
+    /* align-items: center; */
 }
 
 .m-nav-item-app {
@@ -142,11 +140,15 @@ p.small,
 /* Hero Section */
 
 .m-hero {
-    border-radius: 0 !important;
-    background-image: linear-gradient(135deg, #e8635c, #ff906e);
+    /* background-image: linear-gradient(135deg, #e8635c, #ff906e); */
+    /* background-image: url('https://images.unsplash.com/photo-1550754706-432b118ee3d7?q=80&w=1916&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); */
+    background-image: url('images/bg-baru.png');
+    background-size: cover;
     /* Gradient lembut */
     padding-top: 4rem;
     padding-bottom: 4rem;
+    border-radius: 0 0 25px 25px;
+    /* border-radius: 25px; */
 }
 
 .m-hero h1 {

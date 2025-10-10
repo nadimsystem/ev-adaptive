@@ -15,7 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="mobile.css">
+    <!-- <link rel="stylesheet" href=".css"> -->
+    <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 991px)">
     <link rel="stylesheet" href="mod.css">
     <script defer src="app.js"></script>
 
@@ -42,6 +43,17 @@
             }]
         }
     </script>
+    <style>
+        .description-clamp {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            /* Atur jumlah baris yang ingin ditampilkan di sini: */
+            -webkit-line-clamp: 8;
+            line-clamp: 8;
+            text-overflow: ellipsis;
+        }
+    </style>
 </head>
 
 <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="90" tabindex="0">
@@ -54,7 +66,7 @@
 
 
         <div class="" v-show="pageLoaded">
-            <div class="d-block d-lg-none">
+            <div class="d-block d-lg-none bg-body-tertiary">
                 <nav class="navbar navbar-light fixed-top m-navbar-app-header m-frosted-glass">
                     <div class="container-fluid d-flex justify-content-between align-items-center">
                         <a class="navbar-brand d-flex align-items-center" href="#home">
@@ -63,22 +75,25 @@
                         <div class="d-flex align-items-center gap-2">
                             <div class="lang-switcher">
                                 <a href="javascript:void(0)" class="lang-btn" data-lang="en" title="English"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/gb.svg" alt="English" width="20"></a>
-                                <a href="javascript:void(0)" class="lang-btn" data-lang="id" title="Bahasa Indonesia"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/id.svg" alt="Indonesian" width="20"></a>
+                                <!-- <a href="javascript:void(0)" class="lang-btn" data-lang="id" title="Bahasa Indonesia"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/id.svg" alt="Indonesian" width="20"></a> -->
+                                <a href="javascript:void(0)" class="lang-btn" data-lang="de" title="Deutsch"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/de.svg" alt="German" width="24"></a>
                             </div>
                             <a href="#donate" class="btn btn-sm m-btn-header-donate">DONATE</a>
                         </div>
                     </div>
                 </nav>
 
-                <main id="home" class="m-hero text-white">
-                    <div class="container m-section-pad text-start">
-                        <div class="row pt-4 pb-3 rounded-bottom">
+                <main id="home" class="m-hero text-white shadow-lg">
+                    <div class="container m-section-pad text-center">
+                        <div class="row  rounded-bottom">
                             <div class="col-12">
-                                <h1 class="text-white hidden" v-html="page.settings.hero_title || 'Education with Impact <br> Dignity for All'"></h1>
-                                <p class="hidden my-3 pkecil">{{ page.settings.hero_description || 'Loading description...' }}</p>
-                                <div class="d-flex gap-2 mt-4">
-                                    <a href="#donate" class="btn btn-warning fw-bold">Donate Now</a>
-                                    <a href="#impact" class="btn btn-outline-light fw-bold">Impact</a>
+                                <img src="images/bg-logo-transparent.svg" width="100px" alt="">
+                                <h2 class="text-white hidden" v-html="page.settings.hero_title || 'Education with Impact <br> Dignity for All'">
+                                </h2>
+                                <p class="hidden my-3 pkecil ">{{ page.settings.hero_description || 'Loading description...' }}</p>
+                                <div class="d-flex gap-2 justify-content-center mt-4">
+                                    <a href="#donate" class="btn btn-warning fw-bold hidden">Donate Now</a>
+                                    <a href="#impact" class="btn btn-outline-light fw-bold hidden">Impact</a>
                                 </div>
                             </div>
                         </div>
@@ -87,11 +102,11 @@
 
                 <div id="google_translate_element"></div>
 
-                <section id="about" aria-labelledby="about-title">
+                <section id="about" aria-labelledby="about-title" style="margin-top: -5rem;">
                     <div class="container m-section-pad">
                         <div class="row contn align-items-center">
                             <figure class="col-12 hidden text-center mb-4">
-                                <img src="images/bg-logo-light.jpg" alt="about visual" class="img-fluid" style="max-width:300px;border-radius:12px;box-shadow:0 12px 36px rgba(16,24,40,0.06)">
+                                <!-- <img src="images/bg-logo-light.jpg" alt="about visual" class="img-fluid" style="max-width:300px;border-radius:12px;box-shadow:0 12px 36px rgba(16,24,40,0.06)"> -->
                             </figure>
                             <div class="col-12 member">
                                 <span class="kicker small fw-bold">ABOUT US</span>
@@ -126,10 +141,10 @@
                     </div>
                 </section>
 
-                <div class="container-fluid mb-5">
+                <div class="container-fluid " style="margin-top: -5rem;">
                     <div class="d-flex flex-row flex-nowrap gap-3 overflow-x-scroll m-program-cards-scroll" style="scroll-snap-type: x mandatory;">
 
-                        <div class="card p-4 m-frosted-glass" style="min-width: 80vw; max-width: 90vw; flex: 0 0 auto; scroll-snap-align: start;">
+                        <div class="card p-4 shadow  " style="min-width: 50vw; max-width: 70vw; flex: 0 0 auto; scroll-snap-align: start;">
                             <i class="bi bi-eye-fill text-success mb-2" style="font-size: 1.5rem;"></i>
                             <p class="h5 fw-bold text-success mb-1">Vision</p>
                             <p class="fs-6 fst-italic">
@@ -137,13 +152,13 @@
                             </p>
                         </div>
 
-                        <div class="card p-4 m-frosted-glass" style="min-width: 80vw; max-width: 90vw; flex: 0 0 auto; scroll-snap-align: start;">
+                        <div class="card p-4 shadow " style="min-width: 50vw; max-width: 70vw; flex: 0 0 auto; scroll-snap-align: start;">
                             <i class="bi bi-bullseye text-primary mb-2" style="font-size: 1.5rem;"></i>
                             <p class="h5 fw-bold text-primary mb-1">Mission</p>
                             <p class="fs-6 fst-italic">To empower and support quality educational environments for all children and promoting dignified healthcare for the elderly</p>
                         </div>
 
-                        <div class="card p-4 m-frosted-glass" style="min-width: 80vw; max-width: 90vw; flex: 0 0 auto; scroll-snap-align: start;">
+                        <div class="card p-4 shadow " style="min-width: 50vw; max-width: 70vw; flex: 0 0 auto; scroll-snap-align: start;">
                             <i class="bi bi-hand-thumbs-up text-info mb-2" style="font-size: 1.5rem;"></i>
                             <p class="h5 fw-bold text-info mb-1">Our Values</p>
                             <p class="fs-6 fst-italic">Inclusive, trustworthy, and globally-minded, we work with communities to create meaningful and sustainable change.</p>
@@ -166,7 +181,8 @@
                                 <img :src="program.image_url" class="img-fluid rounded-top" style="height: 180px; object-fit: cover;" :alt="program.title">
                                 <div class="card-body p-3 d-flex flex-column">
                                     <h5 class="fw-bold">{{ program.title }}</h5>
-                                    <p class="mb-2 flex-grow-1 m-description-clamp small">{{ program.short_description }}</p>
+                                    <p class="mb-2 flex-grow-1 m-description-clamp small">{{ program.short_description }}
+                                    </p>
                                     <a :href="'program-detail.html?id=' + program.id" class="btn btn-dark btn-sm rounded-pill mt-2">Read More →</a>
                                 </div>
                             </article>
@@ -200,7 +216,8 @@
                         <div class="row justify-content-center pt-2">
                             <div class="col-12 mb-4">
                                 <h3 class="fw-bold h5 text-dark">Why Indonesia?</h3>
-                                <p class="small text-secondary">Data shows the urgency of our intervention in Indonesia:</p>
+                                <p class="small text-secondary">Data shows the urgency of our intervention in Indonesia:
+                                </p>
                             </div>
                             <div class="col-12 mb-4">
                                 <h4 class="mt-2 fw-bold border-bottom pb-2">Education Data (2023)</h4>
@@ -329,23 +346,23 @@
                         <span class="kicker small fw-bold">QUESTIONS</span>
                         <h2 id="faq-title" class="section-title h4 fw-bold">Frequently Asked Questions</h2>
                         <dl class="faq-list mt-3">
-                            <div class="faq-item">
+                            <div class="faq-item small mt-2 ">
                                 <dt>{{ page.settings.faq_1_q || 'Loading...' }}</dt>
                                 <dd>{{ page.settings.faq_1_a || '...' }}</dd>
                             </div>
-                            <div class="faq-item">
+                            <div class="faq-item small mt-2">
                                 <dt>{{ page.settings.faq_2_q || 'Loading...' }}</dt>
                                 <dd>{{ page.settings.faq_2_a || '...' }}</dd>
                             </div>
-                            <div class="faq-item">
+                            <div class="faq-item small mt-2">
                                 <dt>{{ page.settings.faq_3_q || 'Loading...' }}</dt>
                                 <dd>{{ page.settings.faq_3_a || '...' }}</dd>
                             </div>
-                            <div class="faq-item">
+                            <div class="faq-item small mt-2">
                                 <dt>{{ page.settings.faq_4_q || 'Loading...' }}</dt>
                                 <dd>{{ page.settings.faq_4_a || '...' }}</dd>
                             </div>
-                            <div class="faq-item">
+                            <div class="faq-item small mt-2">
                                 <dt>{{ page.settings.faq_5_q || 'Loading...' }}</dt>
                                 <dd>{{ page.settings.faq_5_a || '...' }}</dd>
                             </div>
@@ -353,48 +370,243 @@
                     </div>
                 </section>
 
+
                 <section id="donate" class="py-5 bg-warning-subtle">
-                    <div class="container container-narrow m-section-pad">
-                        <div class="text-center mb-5">
+                    <div class="container m-section-pad">
+                        <div class="text-center mb-4">
                             <div class="text-bmw-brick fw-semibold">Support Our Mission</div>
-                            <h2 class="h3 fw-bold">Make a Difference in a Child's Education</h2>
-                            <p class="text-muted mx-auto" style="max-width: 700px;">Your donation directly supports children in remote Indonesian communities by providing quality education, safe learning spaces, and essential learning materials.</p>
+                            <h2 class="h4 fw-bold">Make a Difference</h2>
+                            <p class="small text-muted mx-auto">Your donation directly supports children and elders in remote Indonesian communities.</p>
                         </div>
-                        <div class="bg-white rounded-4 shadow-sm p-4">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="mb-4">
-                                        <label for="programSelectMobile" class="form-label fw-bold text-bmw-brick small">1. Choose Program to Support</label>
-                                        <select class="form-select form-select-lg" id="programSelectMobile" required>
-                                <option value="" selected disabled>Select a program...</option>
-                                <option v-for="program in page.programs" :key="program.id" :value="program.title">
-                                    {{ program.title }}
-                                </option>
-                            </select>
+
+                        <div class="bg-white rounded-4 shadow-sm p-3">
+                            <div class="mb-3">
+                                <label for="programSelect" class="form-label fw-bold text-bmw-brick small mb-1">1.
+                                    Choose Program</label>
+                                <select class="form-select" id="programSelect" required>
+                                    <option value="" selected disabled>Select a program...</option>
+                                    <option v-for="program in page.programs" :key="program.id" :value="program.title">
+                                        {{ program.title }}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold text-bmw-brick small mb-2">2. Choose Amount</label>
+                                <div class="d-flex flex-wrap gap-2 mb-2">
+                                    <div class="donation-option p-2 border rounded-2 text-center flex-grow-1" data-amount="25">
+                                        <div class="fw-bold small">€25</div>
                                     </div>
-                                    <h5 class="text-bmw-brick mb-3 fw-bold">Quick Donation</h5>
-                                    <div class="d-flex flex-wrap gap-2 mb-4">
-                                        <div class="donation-option p-3 border rounded-2 text-center flex-grow-1" data-amount="25">
-                                            <div class="fw-bold small">€25</div>
-                                            <div class="text-muted" style="font-size: 0.7rem;">School supplies</div>
-                                        </div>
-                                        <div class="donation-option p-3 border rounded-2 text-center flex-grow-1" data-amount="50">
-                                            <div class="fw-bold small">€50</div>
-                                            <div class="text-muted" style="font-size: 0.7rem;">Textbooks</div>
-                                        </div>
-                                        <div class="donation-option p-3 border rounded-2 text-center bg-light border-primary flex-grow-1" data-amount="100">
-                                            <div class="fw-bold small">€100</div>
-                                            <div class="text-muted" style="font-size: 0.7rem;">Teacher training</div>
-                                        </div>
+                                    <div class="donation-option p-2 border rounded-2 text-center flex-grow-1" data-amount="50">
+                                        <div class="fw-bold small">€50</div>
                                     </div>
-                                    <button class="btn btn-donate w-100 mb-3" type="button" data-bs-toggle="modal" data-bs-target="#donationDataModal">
-                            Donate Now & Fill Details
-                        </button>
+                                    <div class="donation-option p-2 border rounded-2 text-center bg-light border-primary flex-grow-1" data-amount="100">
+                                        <div class="fw-bold small">€100</div>
+                                    </div>
                                 </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="quickDonationAmount" class="form-label fw-bold text-bmw-brick small mb-1">3.
+                                    Custom Amount & Frequency</label>
+                                <div class="input-group mb-2">
+                                    <select class="form-select" id="currencySelect" style="max-width: 60px;">
+                                        <option value="EUR">€</option>
+                                        <option value="USD">$</option>
+                                        <option value="IDR">Rp</option>
+                                    </select>
+                                    <input type="number" class="form-control" id="quickDonationAmount" value="100" min="10">
+                                </div>
+                                <select class="form-select" id="quickDonationFrequency">
+                                    <option value="one-time">One-time donation</option>
+                                    <option value="monthly">Monthly donation</option>
+                                    <option value="yearly">Yearly donation</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-donate w-100 fw-bold p-3" type="button" data-bs-toggle="modal" data-bs-target="#donationDataModal">
+                                Donate Now & Fill Details
+                            </button>
+                            <hr class="my-3">
+                            <div class="text-center">
+                                <p class="text-muted small mb-2">Or scan QR to donate via banking app</p>
+                                <img src="images/Bildung mit Wirkung qr_code.svg" width="120" alt="QR Code for donation" class="img-fluid" data-bs-toggle="modal" data-bs-target="#qrModal">
+                                <p class="muted mt-3 fw-bold text-dark">Bildung mit Wirkung e.V.</p>
+                                <p class="small">DE91721608180005331005 </p>
+                                <p class="small"> GENODEF1INP</p>
+                                <p class="small">Volksbank Raiffeisenbank Bayern Mitte eG</p>
+                                <p class="muted mt-3 small">Scan this code to donate via your banking app.</p>
                             </div>
                         </div>
                     </div>
                 </section>
+                <div class="modal fade mt-5 " style="height: 80vh;" id="donationDataModal" tabindex="-1" aria-labelledby="donationDataModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title" id="donationDataModalLabel">Complete Your Donation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body p-4 p-md-5">
+                                <div id="donationSummaryPreview" class="alert alert-info mb-4" role="alert">
+                                    Loading donation details...
+                                </div>
+                                <form class="donation-form row g-3" id="mainDonationForm">
+                                    <div class="col-12">
+                                        <div class="d-flex justify-content-between text-success mb-4 align-items-center">
+                                            <p class="display-6 fw-bold text-dark mb-0"> Your Details</p>
+                                            <div class="position-relative d-inline-block">
+                                                <img src="images/Bildung mit Wirkung qr_code.svg" width="80px" alt="Donation QR Code" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#qrModal" id="qrThumbnail">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <h5 class="form-label">Personal Details</h5>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row g-2">
+                                            <div class="col-6">
+                                                <label for="salutation" class="form-label">Salutation</label>
+                                                <select name="salutation" class="form-select" id="salutation">
+                                                    <option selected>Choose...</option>
+                                                    <option>Mr.</option>
+                                                    <option>Ms.</option>
+                                                    <option>Dr.</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="academicDegree" class="form-label">Academic Degree</label>
+                                                <input name="academicDegree" type="text" class="form-control" id="academicDegree" placeholder="e.g., M.Sc.">
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="firstName" class="form-label">First Name</label>
+                                                <input name="firstName" type="text" class="form-control" id="firstName" required>
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="lastName" class="form-label">Last Name</label>
+                                                <input name="lastName" type="text" class="form-control" id="lastName" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row g-2">
+                                            <div class="col-12">
+                                                <label for="address" class="form-label">Address</label>
+                                                <input name="address" type="text" class="form-control" id="address" required>
+                                            </div>
+                                            <div class="col-4">
+                                                <label for="houseNumber" class="form-label">No.</label>
+                                                <input name="houseNumber" type="text" class="form-control" id="houseNumber" required>
+                                            </div>
+                                            <div class="col-4">
+                                                <label for="postalCode" class="form-label">Postal Code</label>
+                                                <input name="postalCode" type="text" class="form-control" id="postalCode" required>
+                                            </div>
+                                            <div class="col-4">
+                                                <label for="city" class="form-label">City</label>
+                                                <input name="city" type="text" class="form-control" id="city" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="row g-2">
+                                            <div class="col-md-6">
+                                                <label for="country" class="form-label">Country</label>
+                                                <select name="country" class="form-select" id="country" required>
+                                                    <option selected>Choose...</option>
+                                                    <option>Germany</option>
+                                                    <option>Indonesia</option>
+                                                    <option>Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="my-4">
+                                    <div class="col-12">
+                                        <h5 class="form-label"> Contact Info</h5>
+                                        <div class="row g-2">
+                                            <div class="col-md-6">
+                                                <label for="telephone" class="form-label">Telephone</label>
+                                                <input name="telephone" type="tel" class="form-control" id="telephone" placeholder="+49...">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="emailDonation" class="form-label">Email (for
+                                                    receipt)</label>
+                                                <input name="emailDonation" type="email" class="form-control" id="emailDonation" required>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="messageDonation" class="form-label">Message
+                                                    (Optional)</label>
+                                                <textarea name="messageDonation" class="form-control" id="messageDonation" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="my-4">
+                                    <div class="col-md-6">
+                                        <h5 class="form-label"> Extras</h5>
+                                        <div class="form-check">
+                                            <input name="annualReceipt" class="form-check-input" type="checkbox" value="1" id="annualReceipt">
+                                            <label class="form-check-label" for="annualReceipt">Annual donation
+                                                receipt</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input name="digitalPostcard" class="form-check-input" type="checkbox" value="1" id="digitalPostcard">
+                                            <label class="form-check-label" for="digitalPostcard">Digital postcard
+                                                link</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input name="memberCertificate" class="form-check-input" type="checkbox" value="1" id="memberCertificate">
+                                            <label class="form-check-label" for="memberCertificate">Member certificate
+                                                link</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5 class="form-label"> Payment Method</h5>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="payment" id="bankTransfer" value="Online Bank Transfer" checked>
+                                            <label class="form-check-label" for="bankTransfer">Online Bank
+                                                Transfer</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="payment" id="paypal" value="PayPal" disabled>
+                                            <label class="form-check-label" for="paypal">PayPal (Coming Soon)</label>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="selected_program" id="modalProgramValue">
+                                    <input type="hidden" name="selected_amount" id="modalAmountValue">
+                                    <input type="hidden" name="selected_currency" id="modalCurrencyValue">
+                                    <input type="hidden" name="selected_frequency" id="modalFrequencyValue">
+                                    <div class="col-12 mt-5 text-end border-top pt-4">
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary btn-lg btn-donate">Submit
+                                            Donation</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true" style="z-index: 1060;">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content bg-white">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title" id="qrModalLabel">Scan QR Code</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <img src="images/Bildung mit Wirkung qr_code.svg" alt="Donation Payment QR Code" style="max-width: 100%; width: 520px;">
+                                <p class="muted mt-3 fw-bold text-dark">Bildung mit Wirkung e.V..</p>
+                                <p>DE91721608180005331005 </p>
+                                <p> GENODEF1INP</p>
+                                <p>Volksbank Raiffeisenbank Bayern Mitte eG</p>
+                                <p class="muted mt-3 small">Scan this code to donate via your banking app.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
 
                 <section id="contact" aria-labelledby="contact-title">
                     <div class="container m-section-pad">
@@ -407,30 +619,35 @@
                                     <div class="row">
                                         <div class="col-12 mb-3">
                                             <h5 class="fw-bold fs-6">Contact Form</h5>
-                                            <form id="contactFormMobile" novalidate>
+                                            <form id="contactForm" novalidate>
                                                 <div class="mb-3">
-                                                    <input id="nameMobile" name="name" class="form-control" placeholder="Your full name" required>
+                                                    <input id="name" name="name" class="form-control" placeholder="Your full name" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <input id="emailMobile" name="email" type="email" class="form-control" placeholder="Your email address" required>
+                                                    <input id="email" name="email" type="email" class="form-control" placeholder="Your email address" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <textarea id="messageMobile" name="message" rows="4" class="form-control" placeholder="How can we help?" required></textarea>
+                                                    <textarea id="message" name="message" rows="4" class="form-control" placeholder="How can we help?" required></textarea>
                                                 </div>
                                                 <div class="d-flex gap-2">
-                                                    <button type="submit" class="btn btn-donate w-50">Send Message</button>
+                                                    <button type="submit" class="btn btn-donate w-50">Send
+                                                        Message</button>
                                                     <button type="reset" class="btn btn-outline-secondary w-50">Reset</button>
                                                 </div>
-                                                <div id="formAlertMobile" class="mt-3 small" style="display:none;"></div>
+                                                <div id="formAlert" class="mt-3 small" style="display:none;">
+                                                </div>
                                             </form>
                                         </div>
                                         <div class="col-12 mt-4">
                                             <h5 class="fw-bold fs-6">Office & Map</h5>
                                             <address class="small">
-                                    <p class="mb-1"><strong>Address</strong><br>Hirsch-Gereuth-Straße 55, 81369 München, Deutschland</p>
-                                    <p class="mb-1"><strong>Email</strong><br><a href="mailto:info@bmw-ev.org">info@bmw-ev.org</a></p>
-                                    <p class="mb-1"><strong>Phone</strong><br><a href="tel: +4915757244505"> +4915757244505</a></p>
-                                </address>
+                                                <p class="mb-1"><strong>Address</strong><br>Hirsch-Gereuth-Straße 55,
+                                                    81369 München, Deutschland</p>
+                                                <p class="mb-1"><strong>Email</strong><br><a
+                                                        href="mailto:info@bmw-ev.org">info@bmw-ev.org</a></p>
+                                                <p class="mb-1"><strong>Phone</strong><br><a href="tel: +4915757244505">
+                                                        +4915757244505</a></p>
+                                            </address>
                                             <div class="mt-3">
                                                 <iframe class="map" loading="lazy" title="Map to Hirsch-Gereuth-Straße 55, München" src="https://maps.google.com/maps?q=Hirsch-Gereuth-Stra%C3%9Fe%2055,%2081369%20M%C3%BCnchen&t=&z=13&ie=UTF8&iwloc=&output=embed" style="width: 100%; height: 200px; border: 0; border-radius: 8px;"></iframe>
                                             </div>
@@ -454,12 +671,13 @@
                             </div>
                             <div>
                                 <h6>Stay in touch</h6>
-                                <p class="muted small mb-2">Subscribe to our newsletter for updates and impact stories.</p>
-                                <form id="newsletterFormMobile" class="d-flex gap-2">
-                                    <input id="newsletterEmailMobile" name="email" type="email" class="form-control form-control-sm" placeholder="Your email" required>
+                                <p class="muted small mb-2">Subscribe to our newsletter for updates and impact stories.
+                                </p>
+                                <form id="newsletterForm" class="d-flex gap-2">
+                                    <input id="newsletterEmail" name="email" type="email" class="form-control form-control-sm" placeholder="Your email" required>
                                     <button class="btn btn-donate btn-sm" type="submit">Subscribe</button>
                                 </form>
-                                <div id="newsletterAlertMobile" class="mt-2 small" style="display:none;"></div>
+                                <div id="newsletterAlert" class="mt-2 small" style="display:none;"></div>
                             </div>
                         </div>
                         <hr style="margin:1.5rem 0;border-color:rgba(0,0,0,0.05)">
@@ -471,28 +689,30 @@
                 </footer>
 
 
-                <div class="m-bottom-navbar d-block d-lg-none m-frosted-glass">
-                    <div class="d-flex flex-row px-3 mb-3">
-                        <a href="#home" class="m-nav-item-app active">
-                            <i class="bi bi-house-door-fill"></i>
-                            <span>Home</span>
-                        </a>
-                        <a href="#about" class="m-nav-item-app">
-                            <i class="bi bi-info-circle"></i>
-                            <span>About</span>
-                        </a>
-                        <a href="#data" class="m-nav-item-app">
-                            <i class="bi bi-compass"></i>
-                            <span>Programs</span>
-                        </a>
-                        <a href="#donate" class="m-nav-item-app">
-                            <i class="bi bi-heart-fill"></i>
-                            <span>Donate</span>
-                        </a>
-                        <a href="#" class="m-nav-item-app" data-bs-toggle="modal" data-bs-target="#moreNavModal">
-                            <i class="bi bi-three-dots"></i>
-                            <span>More</span>
-                        </a>
+                <div class="">
+                    <div class="  m-frosted-glass bottom-0 position-absolute position-fixed  w-100  ">
+                        <div class="d-flex flex-row px-3  mb-3">
+                            <a href="#home" class="m-nav-item-app active">
+                                <i class="bi bi-house-door-fill"></i>
+                                <span>Home</span>
+                            </a>
+                            <a href="#about" class="m-nav-item-app">
+                                <i class="bi bi-info-circle"></i>
+                                <span>About</span>
+                            </a>
+                            <a href="#data" class="m-nav-item-app">
+                                <i class="bi bi-compass"></i>
+                                <span>Programs</span>
+                            </a>
+                            <a href="#donate" class="m-nav-item-app">
+                                <i class="bi bi-heart-fill"></i>
+                                <span>Donate</span>
+                            </a>
+                            <a href="#" class="m-nav-item-app" data-bs-toggle="modal" data-bs-target="#moreNavModal">
+                                <i class="bi bi-three-dots"></i>
+                                <span>More</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -505,11 +725,16 @@
                             </div>
                             <div class="modal-body">
                                 <ul class="list-unstyled d-grid gap-2">
-                                    <li><a href="#impact" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal" onclick="document.getElementById('impact').scrollIntoView()"><i class="bi bi-graph-up me-2"></i> Impact Reports</a></li>
-                                    <li><a href="#partners" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal" onclick="document.getElementById('partners').scrollIntoView()"><i class="bi bi-people me-2"></i> Partners</a></li>
-                                    <li><a href="#getinvolved" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal" onclick="document.getElementById('getinvolved').scrollIntoView()"><i class="bi bi-puzzle me-2"></i> How to Participate</a></li>
-                                    <li><a href="#faq" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal" onclick="document.getElementById('faq').scrollIntoView()"><i class="bi bi-question-circle me-2"></i> FAQ</a></li>
-                                    <li><a href="#contact" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal" onclick="document.getElementById('contact').scrollIntoView()"><i class="bi bi-envelope me-2"></i> Contact Us</a></li>
+                                    <li><a href="#impact" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal" onclick="document.getElementById('impact').scrollIntoView()"><i
+                                                class="bi bi-graph-up me-2"></i> Impact Reports</a></li>
+                                    <li><a href="#partners" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal" onclick="document.getElementById('partners').scrollIntoView()"><i
+                                                class="bi bi-people me-2"></i> Partners</a></li>
+                                    <li><a href="#getinvolved" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal" onclick="document.getElementById('getinvolved').scrollIntoView()"><i
+                                                class="bi bi-puzzle me-2"></i> How to Participate</a></li>
+                                    <li><a href="#faq" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal" onclick="document.getElementById('faq').scrollIntoView()"><i
+                                                class="bi bi-question-circle me-2"></i> FAQ</a></li>
+                                    <li><a href="#contact" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal" onclick="document.getElementById('contact').scrollIntoView()"><i
+                                                class="bi bi-envelope me-2"></i> Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -527,16 +752,16 @@
                     </button>
                         <div class="collapse navbar-collapse" id="mainNav">
                             <ul class="navbar-nav m-auto align-items-lg-center mb-2 mb-lg-0">
-                                <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#impact">Impact</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#programs">Programs</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#getinvolved">Get Involved</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#home-lg">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#about-lg">About us</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#data-lg">The aid programs</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#impact-lg">Impact Reports</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#partners-lg">Partners</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#getinvolved-lg">How to participate</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#contact-lg">Contact us</a></li>
                             </ul>
                             <div class="d-flex ms-3 align-items-center">
-                                <a href="#donate" class="btn btn-donate btn-sm me-3">Donate</a>
+                                <a href="#donate-lg" class="btn btn-donate btn-sm me-3">Donate</a>
                                 <div class="lang-switcher">
                                     <a href="javascript:void(0)" class="lang-btn" data-lang="de" title="Deutsch"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/de.svg" alt="German" width="24"></a>
                                     <a href="javascript:void(0)" class="lang-btn" data-lang="en" title="English"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/gb.svg" alt="English" width="24"></a>
@@ -547,13 +772,13 @@
                     </div>
                 </nav>
 
-                <main id="home" class="hero text-white rounded-bottom-5">
+                <main id="home-lg" class="hero text-white rounded-bottom-5">
                     <div class="container container-narrow text-start">
                         <div class="row member justify-content-center align-items-center">
                             <div class="col p-lg-0 p-5 member hidden">
                                 <div class="fw-bold my-5 hidden">Bildung mit Wirkung e.V.</div>
                                 <h1 class="mt-2 text-white hidden" v-html="page.settings.hero_title || 'Education with Impact <br> Dignity for All'"></h1>
-                                <div class="hidden my-4 ">{{ page.settings.hero_description || 'Loading description...' }}
+                                <div class="hidden my-4 text-white">{{ page.settings.hero_description || 'Loading description...' }}
                                 </div>
                                 <div class="d-flex gap-3 mt-3">
                                     <a href="#donate" class="btn btn-donate btn-warning hidden "><i
@@ -573,7 +798,7 @@
 
                 <div id="google_translate_element"></div>
 
-                <section id="about" aria-labelledby="about-title">
+                <section id="about-lg" aria-labelledby="about-title">
                     <div class="container ">
                         <div class="row contn align-items-center">
                             <figure class="col-lg-6 hidden text-center">
@@ -628,11 +853,11 @@
                     </div>
                 </section>
 
-                <section class="programs py-5" id="data">
+                <section class="programs py-5" id="data-lg">
                     <div class="container">
                         <div class="d-flex justify-content-between align-items-center gap-2 mb-4 py-5">
                             <div class="w-75">
-                                <div class="text-uppercase text-muted small fw-semibold">Impact</div>
+                                <!-- <div class="text-uppercase text-muted small fw-semibold">Impact</div> -->
                                 <p class="fw-bold display-4 mb-0 ls-2">Our programs focus on :</p>
                                 <p class=" fs-2 mb-0 ls-1"> children's education, elderly care, community empowerment, and cross-cultural knowledge exchange.</p>
                             </div>
@@ -652,7 +877,7 @@
                                                 <img :src="program.image_url" class="img-fluid rounded-top" style="height: 180px; object-fit: cover;" :alt="program.title">
                                                 <div class="card-body p-4 d-flex flex-column">
                                                     <h5 class="fw-bold">{{ program.title }}</h5>
-                                                    <p class="mb-3 flex-grow-1">{{ program.short_description }}</p>
+                                                    <p class="mb-3 flex-grow-1 description-clamp">{{ program.short_description }}</p>
                                                     <div class="mt-auto">
                                                         <a :href="'program-detail.html?id=' + program.id" class="btn btn-dark btn-sm rounded-3 px-3 py-2">Read More →</a>
                                                     </div>
@@ -666,7 +891,7 @@
                     </div>
                 </section>
 
-                <section id="impact" class="bg-light" aria-labelledby="impact-title">
+                <section id="impact-lg" class="bg-light" aria-labelledby="impact-title">
                     <div class="container container-narrow ">
                         <div class="d-flex flex-row justify-content-between flex-wrap gap-3 align-items-center mb-4">
                             <p id="impact-title" class="fw-bold ls-2 display-3">IMPACT REPORTS </p>
@@ -737,7 +962,7 @@
                     </div>
                 </section>
 
-                <section id="gallery" class="section-compact bg-light" aria-labelledby="gallery-title">
+                <section id="gallery-lg" class="section-compact bg-light" aria-labelledby="gallery-title">
                     <div class="container container-narrow">
                         <span class="kicker">Gallery</span>
                         <h2 id="gallery-title" class="section-title mb-4">Activity Gallery</h2>
@@ -750,7 +975,7 @@
                     </div>
                 </section>
 
-                <section id="programs" class="section-compact" aria-labelledby="programs-title">
+                <section id="programs-lg" class="section-compact" aria-labelledby="programs-title">
                     <div class="container container-narrow ">
                         <span class="kicker">What we do</span>
                         <div class="d-flex align-items-center justify-content-between">
@@ -765,7 +990,7 @@
                             <article class="program-card text-start shadow-lg" v-for="program in page.programs" :key="program.id" :aria-labelledby="'prog-card-' + program.id">
                                 <div class="imgwrap" :style="{ backgroundImage: 'url(' + program.image_url + ')' }"></div>
                                 <h4 :id="'prog-card-' + program.id">{{ program.title }}</h4>
-                                <p class="my-3">{{ program.short_description }}</p>
+                                <p class="my-3 description-clamp">{{ program.short_description }}</p>
                                 <div class="mt-3">
                                     <a class="btn btn-outline-secondary btn-sm" :href="'program-detail.html?id=' + program.id">See details</a>
                                 </div>
@@ -778,7 +1003,7 @@
                     </div>
                 </section>
 
-                <section id="partners" class="section-compact bg-light" aria-labelledby="partners-title">
+                <section id="partners-lg" class="section-compact bg-light" aria-labelledby="partners-title">
                     <div class="container container-narrow text-center">
                         <h2 id="partners-title" class="section-title">Program Partners</h2>
                         <p class="muted mb-3">We work with organizations and sponsors who support our vision for education and dignified care. A special thanks to our implementation partner in Indonesia.</p>
@@ -792,7 +1017,7 @@
                     </div>
                 </section>
 
-                <section id="getinvolved" class="bg-warning-subtle" aria-labelledby="getinvolved-title">
+                <section id="getinvolved-lg" class="bg-warning-subtle" aria-labelledby="getinvolved-title">
                     <div class="container container-narrow text-center">
                         <span class="kicker">Take Part</span>
                         <h2 id="getinvolved-title" class="section-title">Get involved</h2>
@@ -816,7 +1041,7 @@
                     </div>
                 </section>
 
-                <section id="faq" class="bg-light section-compact" aria-labelledby="faq-title">
+                <section id="faq-lg" class="bg-light section-compact" aria-labelledby="faq-title">
                     <div class="container container-narrow">
                         <span class="kicker">Questions</span>
                         <h2 id="faq-title" class="section-title">Frequently Asked Questions</h2>
@@ -845,7 +1070,7 @@
                     </div>
                 </section>
 
-                <section id="donate" class="py-5 bg-warning-subtle">
+                <section id="donate-lg" class="py-5 bg-warning-subtle">
                     <div class="container container-narrow">
                         <div class="text-center mb-5">
                             <div class="text-bmw-brick fw-semibold">Support Our Mission</div>
@@ -1102,7 +1327,7 @@
                     </div>
                 </div>
 
-                <section id="contact" aria-labelledby="contact-title">
+                <section id="contact-lg" aria-labelledby="contact-title">
                     <div class="container container-narrow">
                         <div class="row g-4">
                             <div class="col-lg-6">
