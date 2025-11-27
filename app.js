@@ -1,8 +1,8 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
 
     // --- 1. ANIMASI FADE-IN SAAT SCROLL (BARU DITAMBAHKAN) ---
     // Ini akan memicu class '.show' pada elemen '.hidden' saat terlihat
-    (function () {
+    (function() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateActiveBold() {
-        document.querySelectorAll('.navbar .nav-link').forEach(function (link) {
+        document.querySelectorAll('.navbar .nav-link').forEach(function(link) {
             if (link.classList.contains('active')) {
                 link.classList.add('fw-bold');
             } else {
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // --- 3. NAVBAR BACKGROUND SAAT SCROLL ---
-    (function () {
+    (function() {
         const nav = document.querySelector('.navbar');
         if (nav) {
             const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 50);
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
     })();
 
     // --- 4. COUNTERS ANGKA (ANIMASI HITUNG) ---
-    (function () {
+    (function() {
         const counters = document.querySelectorAll('.impact-num');
         if (counters.length > 0) {
             const options = { root: null, rootMargin: '0px', threshold: 0.4 };
@@ -89,11 +89,11 @@ document.addEventListener("DOMContentLoaded", function () {
     })();
 
     // --- 5. LOGIKA FORM KONTAK ---
-    (function () {
+    (function() {
         const form = document.getElementById('contactForm');
         const alertBox = document.getElementById('formAlert');
         if (form && alertBox) {
-            form.addEventListener('submit', function (e) {
+            form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const name = form.name.value.trim();
                 const email = form.email.value.trim();
@@ -114,10 +114,10 @@ document.addEventListener("DOMContentLoaded", function () {
     })();
 
     // --- 6. LOGIKA FORM NEWSLETTER ---
-    (function () {
+    (function() {
         const nf = document.getElementById('newsletterForm');
         if (nf) {
-            nf.addEventListener('submit', function (e) {
+            nf.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const email = document.getElementById('newsletterEmail').value.trim();
                 if (!email) {
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
     })();
 
     // --- 7. LOGIKA AKSESIBILITAS (TAB) ---
-    (function () {
+    (function() {
         function handleFirstTab(e) {
             if (e.key === 'Tab') {
                 document.body.classList.add('user-is-tabbing');
@@ -173,11 +173,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // 8.2: IIFE untuk Seleksi Opsi Donasi
-    (function () {
+    (function() {
         const options = document.querySelectorAll('.donation-option');
         const quickDonationAmount = document.getElementById('quickDonationAmount');
         options.forEach(option => {
-            option.addEventListener('click', function () {
+            option.addEventListener('click', function() {
                 options.forEach(opt => opt.classList.remove('bg-light', 'border-primary'));
                 this.classList.add('bg-light', 'border-primary');
                 const amount = this.getAttribute('data-amount');
@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const frequencyButtons = document.querySelectorAll('[data-frequency]');
         const quickDonationFrequency = document.getElementById('quickDonationFrequency');
         frequencyButtons.forEach(button => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function() {
                 frequencyButtons.forEach(btn => btn.classList.remove('active'));
                 this.classList.add('active');
                 if (quickDonationFrequency) quickDonationFrequency.value = this.getAttribute('data-frequency');
@@ -212,13 +212,13 @@ document.addEventListener("DOMContentLoaded", function () {
     })();
 
     // 8.3: IIFE untuk Seleksi Mata Uang
-    (function () {
+    (function() {
         const currencySelect = document.getElementById('currencySelect');
         const quickDonationAmount = document.getElementById('quickDonationAmount');
         const customInput = document.getElementById('customDonation');
         if (!currencySelect) return;
 
-        currencySelect.addEventListener('change', function () {
+        currencySelect.addEventListener('change', function() {
             const currency = this.value;
             updateDonationOptions(currency);
             let matched = false;
@@ -236,11 +236,12 @@ document.addEventListener("DOMContentLoaded", function () {
     })();
 
     // 8.4: IIFE untuk Logika QR Toast
-    (function () {
+    (function() {
         var thumb = document.getElementById('qrThumbnail');
         var toast = document.getElementById('qrToast'); // Asumsi #qrToast ada di HTML
         if (thumb && toast) {
             function showToast() { toast.style.opacity = '1'; }
+
             function hideToast() { toast.style.opacity = '0'; }
             thumb.addEventListener('mouseenter', showToast);
             thumb.addEventListener('mouseleave', hideToast);
@@ -249,38 +250,56 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     })();
 
-    // 8.5: Logika Modal Donasi
+    // --- 8.5: Logika Modal Donasi (Perbaikan) ---
     const donationModal = document.getElementById('donationDataModal');
     if (donationModal) {
-        donationModal.addEventListener('show.bs.modal', function (event) {
-            const programEl = document.getElementById('programSelect');
-            const amountEl = document.getElementById('quickDonationAmount');
-            const currencyEl = document.getElementById('currencySelect');
-            const frequencyEl = document.getElementById('quickDonationFrequency');
+        donationModal.addEventListener('show.bs.modal', function(event) {
+            // Mendapatkan tombol mana yang diklik (desktop atau mobile)
+            const button = event.relatedTarget;
+            // Mencari section donasi terdekat dari tombol yang diklik
+            const donateSection = button.closest('section[id^="donate"]');
+
+            if (!donateSection) {
+                console.error("Elemen section donasi tidak ditemukan!");
+                event.preventDefault(); // Menghentikan modal jika terjadi error
+                return;
+            }
+
+            // Mencari elemen form HANYA di dalam section yang aktif tersebut
+            const programEl = donateSection.querySelector('select[id="programSelect"]');
+            const amountEl = donateSection.querySelector('input[id="quickDonationAmount"]');
+            const currencyEl = donateSection.querySelector('select[id="currencySelect"]');
+            const frequencyEl = donateSection.querySelector('select[id="quickDonationFrequency"]');
+
+            // Mengambil nilai dari elemen yang ditemukan
             const selectedProgram = (programEl && programEl.value) ? programEl.value : '';
             const selectedAmount = amountEl ? amountEl.value : '0';
             const selectedCurrencyText = currencyEl ? currencyEl.options[currencyEl.selectedIndex].text : '';
             const selectedCurrencyValue = currencyEl ? currencyEl.value : 'EUR';
             const selectedFrequency = frequencyEl ? frequencyEl.value : 'one-time';
+
             if (!selectedProgram && programEl && programEl.tagName === 'SELECT') {
                 alert('Please select a program to support first!');
                 event.preventDefault();
                 return;
             }
+
+            // Memasukkan data ke dalam modal (bagian ini tidak berubah)
             const summaryPreview = donationModal.querySelector('#donationSummaryPreview');
             const modalProgramInput = donationModal.querySelector('#modalProgramValue');
             const modalAmountInput = donationModal.querySelector('#modalAmountValue');
             const modalCurrencyInput = donationModal.querySelector('#modalCurrencyValue');
             const modalFrequencyInput = donationModal.querySelector('#modalFrequencyValue');
+
             if (summaryPreview) {
                 summaryPreview.innerHTML = `
-                    <h5 class="fw-bold mb-0">Donation Summary</h5>
-                    <p class="mb-0 mt-2">
-                        <span class="fs-4 fw-bold text-bmw-coral">${selectedCurrencyText} ${selectedAmount}</span>
-                        <span class="text-muted">(${selectedFrequency})</span>
-                    </p>
-                    <p class="mb-0"><strong>Supporting:</strong> ${selectedProgram}</p>
-                `;
+                <h5 class="fw-bold mb-0">Donation Summary</h5>
+                <p class="mb-0 mt-2">
+                    <span class="fs-4 fw-bold text-bmw-coral">${selectedCurrencyText} ${selectedAmount}</span>
+                    <span class="text-muted">(${selectedFrequency})</span>
+                </p>
+                <p class="mb-0"><strong>Supporting:</strong> ${selectedProgram}</p>
+            `;
             }
             if (modalProgramInput) modalProgramInput.value = selectedProgram;
             if (modalAmountInput) modalAmountInput.value = selectedAmount;
@@ -289,5 +308,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-}); 
+});
 // === AKHIR DARI WRAPPER DOMCONTENTLOADED TUNGGAL ===

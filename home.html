@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bildung mit Wirkung e.V., Education with Impact</title>
+    <meta name="description" content="Bildung mit Wirkung e.V., bridging Germany and Indonesia to provide education and dignified care for elders in remote communities." />
+    <meta property="og:image" content="images/bg-logo.jpg" />
+    <link rel="icon" type="images/bg-logo-transparent.svg" sizes="32x32" href="images/bg-logo-transparent.svg">
+    <link rel="icon" type="images/bg-logo-transparent.svg" sizes="16x16" href="images/bg-logo-transparent.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/bg-logo-transparent.svg">
+    <link rel="shortcut icon" href="images/bg-logo-transparent.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 991px)">
+    <link rel="stylesheet" href="mod.css">
+    <script defer src="app.js"></script>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Bildung mit Wirkung e.V.",
+            "url": "https://bildungmitwirkung.example",
+            "logo": "https://via.placeholder.com/300x80?text=BMW+e.V",
+            "sameAs": [],
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Hirsch-Gereuth-Straße 55",
+                "addressLocality": "München",
+                "postalCode": "81369",
+                "addressCountry": "DE"
+            },
+            "contactPoint": [{
+                "@type": "ContactPoint",
+                "telephone": " +4915757244505",
+                "contactType": "customer service",
+                "availableLanguage": ["German", "English", "Indonesian"]
+            }]
+        }
+    </script>
+    <style>
+        .description-clamp {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            /* Atur jumlah baris yang ingin ditampilkan di sini: */
+            -webkit-line-clamp: 8;
+            line-clamp: 8;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+
+<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="90" tabindex="0">
+
+    <div id="app">
+        <div v-if="!pageLoaded" class="d-flex justify-content-center align-items-center" style="min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; background: white; z-index: 9999;">
+            <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+        </div>
+
+
+
+        <div class="" v-show="pageLoaded">
+            <div class="d-block d-lg-none bg-body-tertiary">
+                <nav class="navbar navbar-light fixed-top m-navbar-app-header m-frosted-glass">
+                    <div class="container-fluid d-flex justify-content-between align-items-center">
+                        <a class="navbar-brand d-flex align-items-center" href="home.html">
+                            <img src="images/bmw logo.svg" alt="Bildung mit Wirkung e.V. Logo" height="30px" class="me-2">
+                        </a>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="lang-switcher">
+                                <a href="javascript:void(0)" class="lang-btn" data-lang="en" title="English"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/gb.svg" alt="English" width="20"></a>
+                                <a href="javascript:void(0)" class="lang-btn" data-lang="de" title="Deutsch"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/de.svg" alt="German" width="24"></a>
+                            </div>
+                            <a href="#donate" class="btn btn-sm m-btn-header-donate" data-bs-toggle="modal" data-bs-target="#donationDataModal">DONATE</a>
+                        </div>
+                    </div>
+                </nav>
+
+                <main id="home" class="m-hero text-white shadow-lg">
+                    <div class="container m-section-pad text-center">
+                        <div class="row  rounded-bottom">
+                            <div class="col-12">
+                                <img src="images/bg-logo-transparent.svg" width="100px" alt="">
+                                <h2 class="text-white hidden" v-html="page.settings.hero_title || 'Education with Impact <br> Dignity for All'">
+                                </h2>
+                                <p class="hidden my-3 pkecil ">{{ page.settings.hero_description || 'Loading description...' }}</p>
+                                <div class="d-flex gap-2 justify-content-center mt-4">
+                                    <a href="#donate" class="btn btn-warning fw-bold hidden" data-bs-toggle="modal" data-bs-target="#donationDataModal">Donate Now</a>
+                                    <a href="impact.html" class="btn btn-outline-light fw-bold hidden">Impact</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <div id="google_translate_element"></div>
+
+
+                <div class="">
+                    <div class="  m-frosted-glass bottom-0 position-absolute position-fixed  w-100  ">
+                        <div class="d-flex flex-row justify-content-between px-3  mb-3">
+                            <a href="home.html" class="m-nav-item-app active">
+                                <i class="bi bi-house-door-fill"></i>
+                                <span>Home</span>
+                            </a>
+                            <a href="about.html" class="m-nav-item-app">
+                                <i class="bi bi-info-circle"></i>
+                                <span>About</span>
+                            </a>
+                            <a href="programs.html" class="m-nav-item-app">
+                                <i class="bi bi-compass"></i>
+                                <span>Programs</span>
+                            </a>
+                            <a href="#" class="m-nav-item-app" data-bs-toggle="modal" data-bs-target="#donationDataModal">
+                                <i class="bi bi-heart"></i>
+                                <span>Donate</span>
+                            </a>
+                            <a href="#" class="m-nav-item-app" data-bs-toggle="modal" data-bs-target="#moreNavModal">
+                                <i class="bi bi-three-dots"></i>
+                                <span>More</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="moreNavModal" tabindex="-1" aria-labelledby="moreNavModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content rounded-4 m-frosted-glass">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title fw-bold" id="moreNavModalLabel">Navigation Menu</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <ul class="list-unstyled d-grid gap-2">
+                                    <li><a href="impact.html" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal"><i
+                                                class="bi bi-graph-up me-2"></i> Impact Reports</a></li>
+                                    <li><a href="get-involved.html" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal"><i
+                                                class="bi bi-people me-2"></i> Partners</a></li>
+                                    <li><a href="get-involved.html" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal"><i
+                                                class="bi bi-puzzle me-2"></i> How to Participate</a></li>
+                                    <li><a href="get-involved.html" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal"><i
+                                                class="bi bi-question-circle me-2"></i> FAQ</a></li>
+                                    <li><a href="contact.html" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal"><i
+                                                class="bi bi-envelope me-2"></i> Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-lg-block d-none">
+                <nav class="navbar navbar-expand-lg mt-3 navbar-light fixed-top">
+                    <div class="container bg-white px-3 py-2 rounded-5">
+                        <a class="navbar-brand d-flex align-items-center" href="home.html">
+                            <img src="images/bmw logo.svg" alt="Bildung mit Wirkung e.V. Logo" height="50px" class="me-2">
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="mainNav">
+                            <ul class="navbar-nav m-auto align-items-lg-center mb-2 mb-lg-0">
+                                <li class="nav-item"><a class="nav-link active" href="home.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="about.html">About us</a></li>
+                                <li class="nav-item"><a class="nav-link" href="programs.html">The aid programs</a></li>
+                                <li class="nav-item"><a class="nav-link" href="impact.html">Impact Reports</a></li>
+                                <li class="nav-item"><a class="nav-link" href="get-involved.html">Partners</a></li>
+                                <li class="nav-item"><a class="nav-link" href="get-involved.html">How to participate</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" href="contact.html">Contact us</a></li>
+                            </ul>
+                            <div class="d-flex ms-3 align-items-center">
+                                <a href="#donate" class="btn btn-donate btn-sm me-3" data-bs-toggle="modal" data-bs-target="#donationDataModal">Donate</a>
+                                <div class="lang-switcher">
+                                    <a href="javascript:void(0)" class="lang-btn" data-lang="de" title="Deutsch"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/de.svg" alt="German" width="24"></a>
+                                    <a href="javascript:void(0)" class="lang-btn" data-lang="en" title="English"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/gb.svg" alt="English" width="24"></a>
+                                    <a href="javascript:void(0)" class="lang-btn" data-lang="id" title="Bahasa Indonesia"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/id.svg" alt="Indonesian" width="24"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+                <main id="home-lg" class="hero text-white rounded-bottom-5">
+                    <div class="container container-narrow text-start">
+                        <div class="row member justify-content-center align-items-center">
+                            <div class="col p-lg-0 p-5 member hidden">
+                                <div class="fw-bold my-5 hidden">Bildung mit Wirkung e.V.</div>
+                                <h1 class="mt-2 text-white hidden" v-html="page.settings.hero_title || 'Education with Impact <br> Dignity for All'">
+                                </h1>
+                                <div class="hidden my-4 text-white">{{ page.settings.hero_description || 'Loading description...' }}
+                                </div>
+                                <div class="d-flex gap-3 mt-3">
+                                    <a href="#donate" class="btn btn-donate btn-warning hidden " data-bs-toggle="modal" data-bs-target="#donationDataModal"><i
+                                            class="bi bi-people-fill me-2"></i> Donate Now</a>
+                                    <a href="impact.html" class="btn btn-outline-primary fw-bold hidden "><i
+                                            class="bi bi-heart-pulse me-2"></i> Impact</a>
+                                    <a href="programs.html" class="btn btn-outline-secondary hidden"><i
+                                            class="bi bi-compass-fill me-2"></i> Explore Programs</a>
+                                </div>
+                            </div>
+                            <div class="col hidden d-lg-block d-none">
+                                <figure class="warp mt-5"> <img src="images/bg-logo-transparent.svg" class="" width="100%" alt="placeholder visual representing sunrise and community">
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="site-footer" role="contentinfo">
+                    <div class="container container-narrow">
+                        <div class="footer-grid">
+                            <div>
+                                <h6>Bildung mit Wirkung e.V.</h6>
+                                <p class="muted small">Registered association based in München. Our work connects German donors and institutions with remote communities across Indonesia to build sustainable education and elderly care.</p>
+                                <p class="muted small">Hirsch-Gereuth-Straße 55, 81369 München, Deutschland</p>
+                            </div>
+                            <div>
+                                <h6>Quick Links</h6>
+                                <ul class="list-unstyled muted small">
+                                    <li><a href="programs.html">Programs</a></li>
+                                    <li><a href="impact.html">Impact</a></li>
+                                    <li><a href="get-involved.html">Partners</a></li>
+                                    <li><a href="get-involved.html">FAQ</a></li>
+                                    <li><a href="contact.html">Contact</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h6>Stay in touch</h6>
+                                <p class="muted small mb-2">Subscribe to our newsletter for updates and impact stories.</p>
+                                <form id="newsletterForm" class="d-flex gap-2">
+                                    <input id="newsletterEmail" name="email" type="email" class="form-control form-control-sm" placeholder="Your email" required>
+                                    <button class="btn btn-donate btn-sm" type="submit">Subscribe</button>
+                                </form>
+                                <div id="newsletterAlert" class="mt-2 small" style="display:none;"></div>
+                            </div>
+                        </div>
+                        <hr style="margin:1.5rem 0;border-color:rgba(0,0,0,0.05)">
+                        <div class="d-flex justify-content-between flex-wrap muted small">
+                            <div>© 2025 Bildung mit Wirkung e.V.. All rights reserved.</div>
+                            <div>Privacy · Terms · Transparency</div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="donationDataModal" tabindex="-1" aria-labelledby="donationDataModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title" id="donationDataModalLabel">Complete Your Donation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-4 p-md-5">
+                        <div id="donationSummaryPreview" class="alert alert-info mb-4" role="alert">
+                            Loading donation details...
+                        </div>
+                        <form class="donation-form row g-3" id="mainDonationForm">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between text-success mb-4 align-items-center">
+                                    <p class="display-6 ls-3 fw-bold text-dark mb-0"> Your Details</p>
+                                    <div class="position-relative d-inline-block">
+                                        <img src="images/Bildung mit Wirkung qr_code.svg" width="80px" alt="Donation QR Code" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#qrModal" id="qrThumbnail">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <h5 class="form-label">Personal Details</h5>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <label for="salutation" class="form-label">Salutation</label>
+                                        <select name="salutation" class="form-select" id="salutation">
+                                            <option selected>Choose...</option>
+                                            <option>Mr.</option>
+                                            <option>Ms.</option>
+                                            <option>Dr.</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="academicDegree" class="form-label">Academic Degree</label>
+                                        <input name="academicDegree" type="text" class="form-control" id="academicDegree" placeholder="e.g., M.Sc.">
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="firstName" class="form-label">First Name</label>
+                                        <input name="firstName" type="text" class="form-control" id="firstName" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input name="lastName" type="text" class="form-control" id="lastName" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <label for="address" class="form-label">Address</label>
+                                        <input name="address" type="text" class="form-control" id="address" required>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="houseNumber" class="form-label">No.</label>
+                                        <input name="houseNumber" type="text" class="form-control" id="houseNumber" required>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="postalCode" class="form-label">Postal Code</label>
+                                        <input name="postalCode" type="text" class="form-control" id="postalCode" required>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="city" class="form-label">City</label>
+                                        <input name="city" type="text" class="form-control" id="city" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="country" class="form-label">Country</label>
+                                        <select name="country" class="form-select" id="country" required>
+                                            <option selected>Choose...</option>
+                                            <option>Germany</option>
+                                            <option>Indonesia</option>
+                                            <option>Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <div class="col-12">
+                                <h5 class="form-label"> Contact Info</h5>
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="telephone" class="form-label">Telephone</label>
+                                        <input name="telephone" type="tel" class="form-control" id="telephone" placeholder="+49...">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="emailDonation" class="form-label">Email (for receipt)</label>
+                                        <input name="emailDonation" type="email" class="form-control" id="emailDonation" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="messageDonation" class="form-label">Message (Optional)</label>
+                                        <textarea name="messageDonation" class="form-control" id="messageDonation" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <div class="col-md-6">
+                                <h5 class="form-label"> Extras</h5>
+                                <div class="form-check">
+                                    <input name="annualReceipt" class="form-check-input" type="checkbox" value="1" id="annualReceipt">
+                                    <label class="form-check-label" for="annualReceipt">Annual donation receipt</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="digitalPostcard" class="form-check-input" type="checkbox" value="1" id="digitalPostcard">
+                                    <label class="form-check-label" for="digitalPostcard">Digital postcard link</label>
+                                </div>
+                                <div class="form-check">
+                                    <input name="memberCertificate" class="form-check-input" type="checkbox" value="1" id="memberCertificate">
+                                    <label class="form-check-label" for="memberCertificate">Member certificate link</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="form-label"> Payment Method</h5>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="payment" id="bankTransfer" value="Online Bank Transfer" checked>
+                                    <label class="form-check-label" for="bankTransfer">Online Bank Transfer</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="payment" id="paypal" value="PayPal" disabled>
+                                    <label class="form-check-label" for="paypal">PayPal (Coming Soon)</label>
+                                </div>
+                            </div>
+                            <input type="hidden" name="selected_program" id="modalProgramValue">
+                            <input type="hidden" name="selected_amount" id="modalAmountValue">
+                            <input type="hidden" name="selected_currency" id="modalCurrencyValue">
+                            <input type="hidden" name="selected_frequency" id="modalFrequencyValue">
+                            <div class="col-12 mt-5 text-end border-top pt-4">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary btn-lg btn-donate">Submit Donation</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true" style="z-index: 1060;">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-white">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title" id="qrModalLabel">Scan QR Code</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img src="images/Bildung mit Wirkung qr_code.svg" alt="Donation Payment QR Code" style="max-width: 100%; width: 520px;">
+                        <p class="muted mt-3 fw-bold text-dark">Bildung mit Wirkung e.V..</p>
+                        <p>DE91721608180005331005 </p>
+                        <p> GENODEF1INP</p>
+                        <p>Volksbank Raiffeisenbank Bayern Mitte eG</p>
+                        <p class="muted mt-3 small">Scan this code to donate via your banking app.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        // --- Skrip Google Translate tidak berubah ---
+        function setCookie(key, value, expiryDays) {
+            let date = new Date();
+            date.setTime(date.getTime() + (expiryDays * 24 * 60 * 60 * 1000));
+            document.cookie = key + "=" + value + "; expires=" + date.toUTCString() + "; path=/";
+        }
+
+        function getCookie(key) {
+            let name = key + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1);
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+
+        function changeLanguage(lang) {
+            setCookie('googtrans', '/en/' + lang, 1);
+            var googleSelect = document.querySelector("#google_translate_element select");
+            if (googleSelect) {
+                googleSelect.value = lang;
+                var event = new Event('change');
+                googleSelect.dispatchEvent(event);
+            } else {
+                location.reload();
+            }
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,de,id',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var lang = this.getAttribute('data-lang');
+                    changeLanguage(lang);
+                });
+            });
+            let currentLang = getCookie('googtrans');
+            let initialLang = 'en';
+            if (currentLang && currentLang !== 'null' && currentLang.includes('/')) {
+                initialLang = currentLang.split('/')[2];
+            }
+            let activeBtn = document.querySelector('.lang-btn[data-lang="' + initialLang + '"]');
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            } else {
+                document.querySelector('.lang-btn[data-lang="en"]').classList.add('active');
+            }
+        }
+
+        // --- Inisialisasi Aplikasi Vue.js ---
+        const {
+            createApp
+        } = Vue;
+        createApp({
+            data() {
+                return {
+                    pageLoaded: false,
+                    page: {
+                        settings: {},
+                        programs: [],
+                        team: [],
+                        gallery: []
+                    },
+                    // TAMBAHKAN DUA BARIS DI BAWAH INI
+                    selectedImage: null,
+                    galleryModalInstance: null
+                }
+            },
+            mounted() {
+                fetch('administrator/api.php?action=get_homepage_data')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            this.page = data.data;
+                        }
+                    })
+                    .finally(() => {
+                        this.pageLoaded = true;
+                    });
+
+                // TAMBAHKAN BARIS INI untuk menginisialisasi modal
+                // Kita cek dulu apakah elemennya ada di halaman ini
+                const galleryModalEl = document.getElementById('galleryModal');
+                if (galleryModalEl) {
+                    this.galleryModalInstance = new bootstrap.Modal(galleryModalEl);
+                }
+            },
+            // TAMBAHKAN BLOK METHODS BARU DI BAWAH INI
+            methods: {
+                openGalleryModal(image) {
+                    this.selectedImage = image; // Simpan data gambar yang diklik
+                    if (this.galleryModalInstance) {
+                        this.galleryModalInstance.show(); // Tampilkan modal
+                    }
+                }
+            }
+
+        }).mount('#app');
+
+        // --- SKRIP UNTUK MENGAKTIFKAN FORMULIR DONASI, KONTAK, & BULETIN ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menangani Formulir Kontak
+            const contactForm = document.getElementById('contactForm');
+            const formAlert = document.getElementById('formAlert');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(this);
+                    formData.append('action', 'submit_contact_form');
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Sending...';
+
+                    fetch('administrator/api.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            formAlert.style.display = 'block';
+                            if (data.status === 'success') {
+                                formAlert.className = 'alert alert-success';
+                                formAlert.textContent = data.message;
+                                contactForm.reset();
+                            } else {
+                                formAlert.className = 'alert alert-danger';
+                                formAlert.textContent = data.message;
+                            }
+                        })
+                        .catch(err => {
+                            formAlert.style.display = 'block';
+                            formAlert.className = 'alert alert-danger';
+                            formAlert.textContent = 'A network error occurred.';
+                        })
+                        .finally(() => {
+                            submitButton.disabled = false;
+                            submitButton.innerHTML = 'Send Message';
+                        });
+                });
+            }
+
+            // Menangani Formulir Buletin
+            const newsletterForm = document.getElementById('newsletterForm');
+            const newsletterAlert = document.getElementById('newsletterAlert');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(this);
+                    formData.append('action', 'subscribe_newsletter');
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    const originalButtonText = submitButton.innerHTML;
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+
+                    fetch('administrator/api.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            newsletterAlert.style.display = 'block';
+                            if (data.status === 'success') {
+                                newsletterAlert.className = 'text-success';
+                                newsletterAlert.textContent = data.message;
+                                newsletterForm.reset();
+                            } else {
+                                newsletterAlert.className = 'text-danger';
+                                newsletterAlert.textContent = data.message;
+                            }
+                        })
+                        .catch(err => {
+                            newsletterAlert.style.display = 'block';
+                            newsletterAlert.className = 'text-danger';
+                            newsletterAlert.textContent = 'A network error occurred.';
+                        })
+                        .finally(() => {
+                            submitButton.disabled = false;
+                            submitButton.innerHTML = originalButtonText;
+                        });
+                });
+            }
+
+            // Menangani Formulir Donasi
+            const donationForm = document.getElementById('mainDonationForm');
+            if (donationForm) {
+                donationForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const formData = new FormData(this);
+                    formData.append('action', 'add_donation');
+                    formData.append('selected_program', document.getElementById('modalProgramValue').value);
+                    formData.append('selected_amount', document.getElementById('modalAmountValue').value);
+                    formData.append('selected_currency', document.getElementById('modalCurrencyValue').value);
+                    formData.append('selected_frequency', document.getElementById('modalFrequencyValue').value);
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    const originalButtonText = submitButton.innerHTML;
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Submitting...';
+
+                    fetch('administrator/api.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                alert('Success! ' + data.message);
+                                const modal = bootstrap.Modal.getInstance(document.getElementById('donationDataModal'));
+                                modal.hide();
+                                donationForm.reset();
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Submission error:', error);
+                            alert('A network error occurred. Please try again.');
+                        })
+                        .finally(() => {
+                            submitButton.disabled = false;
+                            submitButton.innerHTML = originalButtonText;
+                        });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

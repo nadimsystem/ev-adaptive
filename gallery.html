@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Activity Gallery & Partners — Bildung mit Wirkung e.V.</title>
+    
+    <meta name="description" content="Photo gallery of our activities and partners, including education, elderly care, and community building in Indonesia." />
+    <meta property="og:image" content="images/bg-logo.jpg" />
+    <link rel="icon" type="images/bg-logo-transparent.svg" sizes="32x32" href="images/bg-logo-transparent.svg">
+    <link rel="icon" type="images/bg-logo-transparent.svg" sizes="16x16" href="images/bg-logo-transparent.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/bg-logo-transparent.svg">
+    <link rel="shortcut icon" href="images/bg-logo-transparent.svg">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 991px)">
+    <link rel="stylesheet" href="mod.css">
+    
+    <script defer src="app.js"></script>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Bildung mit Wirkung e.V.",
+            "url": "https://bildungmitwirkung.example",
+            "logo": "https://via.placeholder.com/300x80?text=BMW+e.V",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Hirsch-Gereuth-Straße 55",
+                "addressLocality": "München",
+                "postalCode": "81369",
+                "addressCountry": "DE"
+            }
+        }
+    </script>
+    <style>
+        .description-clamp {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 8;
+            line-clamp: 8;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <div v-if="!pageLoaded" class="d-flex justify-content-center align-items-center" style="min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; background: white; z-index: 9999;">
+            <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+        </div>
+
+        <div class="" v-show="pageLoaded">
+            
+            <div class="d-lg-block d-none">
+                <nav class="navbar navbar-expand-lg mt-3 navbar-light fixed-top scrolled">
+                    <div class="container bg-white px-3 py-2 rounded-5">
+                        <a class="navbar-brand d-flex align-items-center" href="index.html">
+                            <img src="images/bmw logo.svg" alt="Bildung mit Wirkung e.V. Logo" height="50px" class="me-2">
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="mainNav">
+                            <ul class="navbar-nav m-auto align-items-lg-center mb-2 mb-lg-0">
+                                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="about.html">About us</a></li>
+                                <li class="nav-item"><a class="nav-link" href="impact.html">Impact Reports</a></li>
+                                <li class="nav-item"><a class="nav-link active" href="gallery.html">Gallery</a></li>
+                                <li class="nav-item"><a class="nav-link" href="program.html">Programs</a></li>
+                                <li class="nav-item"><a class="nav-link" href="getinvolved.html">Get Involved</a></li>
+                                <li class="nav-item"><a class="nav-link" href="contact.html">Contact us</a></li>
+                            </ul>
+                            <div class="d-flex ms-3 align-items-center">
+                                <a href="donate.html" class="btn btn-donate btn-sm me-3">Donate</a>
+                                <div class="lang-switcher">
+                                    <a href="javascript:void(0)" class="lang-btn" data-lang="de" title="Deutsch"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/de.svg" alt="German" width="24"></a>
+                                    <a href="javascript:void(0)" class="lang-btn" data-lang="en" title="English"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/gb.svg" alt="English" width="24"></a>
+                                    <a href="javascript:void(0)" class="lang-btn" data-lang="id" title="Bahasa Indonesia"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/id.svg" alt="Indonesian" width="24"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            
+            <div class="d-block d-lg-none bg-body-tertiary">
+                <nav class="navbar navbar-light fixed-top m-navbar-app-header m-frosted-glass">
+                    <div class="container-fluid d-flex justify-content-between align-items-center">
+                        <a class="navbar-brand d-flex align-items-center" href="index.html">
+                            <img src="images/bmw logo.svg" alt="Bildung mit Wirkung e.V. Logo" height="30px" class="me-2">
+                        </a>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="lang-switcher">
+                                <a href="javascript:void(0)" class="lang-btn" data-lang="en" title="English"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/gb.svg" alt="English" width="20"></a>
+                                <a href="javascript:void(0)" class="lang-btn" data-lang="de" title="Deutsch"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/de.svg" alt="German" width="24"></a>
+                            </div>
+                            <a href="donate.html" class="btn btn-sm m-btn-header-donate">DONATE</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div id="google_translate_element"></div>
+
+            <main>
+                <div class_alias="container pt-5 container-narrow" style="padding-top: 120px !important;">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item fw-bold">Gallery & Partners</li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <header class="section-compact bg-light mt-4">
+                    <div class="container container-narrow">
+                        <a href="index.html" class="btn btn-dark btn-lg d-none d-lg-inline-block"><i class="bi bi-arrow-left me-2"></i> Back to Home</a>
+                    </div>
+                    <div class="container container-narrow mt-4">
+                        <span class="kicker">Documentation</span>
+                        <p class=" fw-bold display-3">Activity Gallery</p>
+                        <p class=" lead mb-4">Documentation of education, training, and social action activities with communities in Indonesia.</p>
+                    </div>
+                </header>
+
+                <section id="gallery-content" class="section-compact py-5" aria-labelledby="gallery-title">
+                    <div class="container container-narrow">
+                        <div class="waterfall-gallery member" style="column-count:3; column-gap:1rem;">
+                            <figure class="" v-for="image in page.gallery" :key="image.image_url">
+                                <img :src="image.image_url" :alt="image.alt_text" loading="lazy" 
+                                     style="width:100%;margin-bottom:1rem;border-radius:10px;box-shadow:0 4px 18px rgba(16,24,40,0.06); cursor: pointer;"
+                                     @click="openGalleryModal(image)">
+                            </figure>
+                        </div>
+                        <div v-if="!page.gallery || page.gallery.length === 0" class="text-center text-muted py-5">
+                            <p>Loading gallery images...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content" style="background-color: var(--ios-card-bg);">
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title fw-bold" id="galleryModalLabel">Activity Photo</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body p-0 text-center">
+                                <template v-if="selectedImage">
+                                    <img :src="selectedImage.image_url" class="img-fluid" :alt="selectedImage.alt_text">
+                                </template>
+                            </div>
+                            <div class="modal-footer border-0" v-if="selectedImage && selectedImage.alt_text">
+                                <p class="small text-muted mb-0">{{ selectedImage.alt_text }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <section id="partners" class="section-compact bg-light" aria-labelledby="partners-title">
+                    <div class="container container-narrow text-center">
+                        <h2 id="partners-title" class="section-title">Program Partners</h2>
+                        <p class="muted mb-3">We work with organizations and sponsors who support our vision for education and dignified care. A special thanks to our implementation partner in Indonesia.</p>
+                        <div class="d-flex justify-content-center">
+                            <div class="partner-card text-center p-4" style="background-color: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                                <img src="images/lentera.png" alt="Lentera Aksara Negeri Foundation Logo" style="max-width: 200px; opacity: 0.8;">
+                                <h5 class="mt-3 mb-0">Lentera Aksara Negeri Foundation</h5>
+                                <p class="text-muted small">Implementation Partner (Jakarta, Indonesia)</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="site-footer" role="contentinfo">
+                <div class="container container-narrow">
+                    <div class="footer-grid">
+                        <div>
+                            <h6>Bildung mit Wirkung e.V.</h6>
+                            <p class="muted small">Registered association based in München. Our work connects German donors and institutions with remote communities across Indonesia to build sustainable education and elderly care.</p>
+                            <p class="muted small">Hirsch-Gereuth-Straße 55, 81369 München, Deutschland</p>
+                        </div>
+                        <div>
+                            <h6>Quick Links</h6>
+                            <ul class="list-unstyled muted small">
+                                <li><a href="program.html">Programs</a></li>
+                                <li><a href="impact.html">Impact</a></li>
+                                <li><a href="partners.html">Partners</a></li>
+                                <li><a href="faq.html">FAQ</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h6>Stay in touch</h6>
+                            <p class="muted small mb-2">Subscribe to our newsletter for updates and impact stories.</p>
+                            <form id="newsletterForm" class="d-flex gap-2">
+                                <input id="newsletterEmail" name="email" type="email" class="form-control form-control-sm" placeholder="Your email" required>
+                                <button class="btn btn-donate btn-sm" type="submit">Subscribe</button>
+                            </form>
+                            <div id="newsletterAlert" class="mt-2 small" style="display:none;"></div>
+                        </div>
+                    </div>
+                    <hr style="margin:1.5rem 0;border-color:rgba(0,0,0,0.05)">
+                    <div class="d-flex justify-content-between flex-wrap muted small">
+                        <div>© 2025 Bildung mit Wirkung e.V.. All rights reserved.</div>
+                        <div>Privacy · Terms · Transparency</div>
+                    </div>
+                </div>
+            </footer>
+            
+            <div class="d-block d-lg-none">
+                <div class="m-frosted-glass bottom-0 position-absolute position-fixed w-100">
+                    <div class="d-flex flex-row justify-content-between px-3 mb-3">
+                        <a href="index.html" class="m-nav-item-app active"> <i class="bi bi-house-door-fill"></i>
+                            <span>Home</span>
+                        </a>
+                        <a href="about.html" class="m-nav-item-app">
+                            <i class="bi bi-info-circle"></i>
+                            <span>About</span>
+                        </a>
+                        <a href="program.html" class="m-nav-item-app">
+                            <i class="bi bi-compass"></i>
+                            <span>Programs</span>
+                        </a>
+                        <a href="donate.html" class="m-nav-item-app">
+                            <i class="bi bi-heart"></i>
+                            <span>Donate</span>
+                        </a>
+                        <a href="#" class="m-nav-item-app" data-bs-toggle="modal" data-bs-target="#moreNavModal">
+                            <i class="bi bi-three-dots"></i>
+                            <span>More</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="moreNavModal" tabindex="-1" aria-labelledby="moreNavModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content rounded-4 m-frosted-glass">
+                        <div class="modal-header border-0">
+                            <h5 class="modal-title fw-bold" id="moreNavModalLabel">Navigation Menu</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="list-unstyled d-grid gap-2">
+                                <li><a href="impact.html" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal"><i class="bi bi-graph-up me-2"></i> Impact Reports</a></li>
+                                <li><a href="partners.html" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal"><i class="bi bi-people me-2"></i> Partners</a></li>
+                                <li><a href="gallery.html" class="btn btn-primary w-100 text-start fw-bold" data-bs-dismiss="modal"><i class="bi bi-images me-2"></i> Gallery</a></li>
+                                <li><a href="getinvolved.html" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal"><i class="bi bi-puzzle me-2"></i> How to Participate</a></li>
+                                <li><a href="faq.html" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal"><i class="bi bi-question-circle me-2"></i> FAQ</a></li>
+                                <li><a href="contact.html" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal"><i class="bi bi-envelope me-2"></i> Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> </div> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        // --- Skrip Google Translate ---
+        function setCookie(key, value, expiryDays) {
+            let date = new Date();
+            date.setTime(date.getTime() + (expiryDays * 24 * 60 * 60 * 1000));
+            document.cookie = key + "=" + value + "; expires=" + date.toUTCString() + "; path=/";
+        }
+
+        function getCookie(key) {
+            let name = key + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1);
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+
+        function changeLanguage(lang) {
+            setCookie('googtrans', '/en/' + lang, 1);
+            var googleSelect = document.querySelector("#google_translate_element select");
+            if (googleSelect) {
+                googleSelect.value = lang;
+                var event = new Event('change');
+                googleSelect.dispatchEvent(event);
+            } else {
+                location.reload();
+            }
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,de,id',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var lang = this.getAttribute('data-lang');
+                    changeLanguage(lang);
+                });
+            });
+            let currentLang = getCookie('googtrans');
+            let initialLang = 'en';
+            if (currentLang && currentLang !== 'null' && currentLang.includes('/')) {
+                initialLang = currentLang.split('/')[2];
+            }
+            let activeBtn = document.querySelector('.lang-btn[data-lang="' + initialLang + '"]');
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            } else {
+                document.querySelector('.lang-btn[data-lang="en"]').classList.add('active');
+            }
+        }
+
+        // --- Inisialisasi Aplikasi Vue.js ---
+        const {
+            createApp
+        } = Vue;
+        createApp({
+            data() {
+                return {
+                    pageLoaded: false,
+                    page: {
+                        settings: {},
+                        programs: [],
+                        team: [],
+                        gallery: [] // Dibutuhkan untuk galeri
+                    },
+                    selectedImage: null, // Dibutuhkan untuk modal
+                    galleryModalInstance: null // Dibutuhkan untuk modal
+                }
+            },
+            mounted() {
+                // Panggil 'get_homepage_data' untuk mengambil 'page.gallery'
+                fetch('administrator/api.php?action=get_homepage_data')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            this.page = data.data;
+                        }
+                    })
+                    .finally(() => {
+                        this.pageLoaded = true;
+                    });
+                
+                // Inisialisasi modal galeri
+                var galleryModalEl = document.getElementById('galleryModal');
+                if (galleryModalEl) {
+                     this.galleryModalInstance = new bootstrap.Modal(galleryModalEl);
+                }
+            },
+            methods: {
+                // Fungsi ini PENTING untuk halaman ini
+                openGalleryModal(image) {
+                    this.selectedImage = image; 
+                    if (this.galleryModalInstance) {
+                        this.galleryModalInstance.show();
+                    }
+                }
+            }
+        }).mount('#app');
+
+        // --- SKRIP FORMULIR (Hanya Newsletter dari footer) ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menangani Formulir Buletin di Footer
+            const newsletterForm = document.getElementById('newsletterForm');
+            const newsletterAlert = document.getElementById('newsletterAlert');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(this);
+                    formData.append('action', 'subscribe_newsletter');
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    const originalButtonText = submitButton.innerHTML;
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+
+                    fetch('administrator/api.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            newsletterAlert.style.display = 'block';
+                            if (data.status === 'success') {
+                                newsletterAlert.className = 'text-success';
+                                newsletterAlert.textContent = data.message;
+                                newsletterForm.reset();
+                            } else {
+                                newsletterAlert.className = 'text-danger';
+                                newsletterAlert.textContent = data.message;
+                            }
+                        })
+                        .catch(err => {
+                            newsletterAlert.style.display = 'block';
+                            newsletterAlert.className = 'text-danger';
+                            newsletterAlert.textContent = 'A network error occurred.';
+                        })
+                        .finally(() => {
+                            submitButton.disabled = false;
+                            submitButton.innerHTML = originalButtonText;
+                        });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
