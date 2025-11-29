@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     
-    <title>{{ page.settings.site_title || 'Bildung mit Wirkung e.V.' }} - Contact</title>
+    <title>{{ page.settings.site_title || 'Bildung mit Wirkung e.V.' }}</title>
     <meta name="description" :content="page.settings.site_description || 'Bildung mit Wirkung e.V.'" />
     <meta property="og:image" :content="page.settings.og_image || 'images/bg-logo.jpg'" />
     
@@ -24,67 +24,44 @@
     <script defer src="app.js"></script>
 
     <style>
+        /* Mencegah tampilan {{ }} sebelum Vue load */
         [v-cloak] { display: none; }
         
-        /* Contact Specific Styles */
-        .contact-hero {
-            background-color: var(--bmw-dark-blue, #101828);
-            color: white;
-            padding: 8rem 0 4rem;
-            position: relative;
+        /* Utilitas Teks */
+        .description-clamp {
             overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 8;
+            line-clamp: 8;
+            text-overflow: ellipsis;
         }
         
-        .contact-card-premium {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .form-control-premium {
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            transition: all 0.2s;
-        }
-        
-        .form-control-premium:focus {
-            border-color: var(--bmw-coral, #ff7e67);
-            box-shadow: 0 0 0 3px rgba(255, 126, 103, 0.1);
-        }
-
-        .cta-phone-card {
-            background: linear-gradient(135deg, var(--bmw-coral, #ff7e67) 0%, #ff9f8e 100%);
-            color: white;
-            border-radius: 16px;
-            transition: transform 0.3s ease;
-        }
-        
-        .cta-phone-card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* Animations */
-        .fade-in-up {
-            animation: fadeInUp 0.8s ease-out forwards;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-
-        /* Loader */
+        /* Loader Manual (Agar tidak blank saat loading) */
         #initial-loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: white; z-index: 99999; 
             display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+
+        /* Active State untuk Tombol Donasi */
+        .donation-option.active {
+            background-color: var(--bmw-coral, #ff7e67) !important;
+            color: white !important;
+            border-color: var(--bmw-coral, #ff7e67) !important;
+        }
+        .donation-option { cursor: pointer; transition: all 0.2s; }
+
+        /* Responsif Iframe Map */
+        .map-container iframe { width: 100%; height: 250px; border: 0; border-radius: 12px; }
+
+        /* Program Card Hover Effect */
+        .program-card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .program-card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
         }
     </style>
 </head>
@@ -93,7 +70,7 @@
 
     <div id="initial-loader">
         <div class="spinner-border text-primary" role="status"></div>
-        <p class="mt-3 text-muted fw-bold small">Loading...</p>
+        <p class="mt-3 text-muted fw-bold small">Memuat Data...</p>
     </div>
 
     <div id="google_translate_element"></div>
@@ -101,17 +78,16 @@
     <div id="app" v-cloak>
         <div v-show="pageLoaded">
             
-            <!-- MOBILE VIEW -->
             <div class="d-block d-lg-none bg-body-tertiary">
                 <nav class="navbar navbar-light fixed-top m-navbar-app-header m-frosted-glass">
                     <div class="container-fluid d-flex justify-content-between align-items-center">
-                        <a class="navbar-brand d-flex align-items-center" href="index.html">
+                        <a class="navbar-brand d-flex align-items-center" href="#home">
                             <img :src="page.settings.logo_url || 'images/bmw logo.svg'" alt="Logo" height="30px" class="me-2" @error="imgError">
                         </a>
                         <div class="d-flex align-items-center gap-2">
                             <div class="lang-switcher">
-                                <a href="javascript:void(0)" class="lang-btn" data-lang="en"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/gb.svg" width="20"></a>
-                                <a href="javascript:void(0)" class="lang-btn" data-lang="de"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/de.svg" width="20"></a>
+                                <a href="javascript:void(0)" class="lang-btn" data-lang="en" title="English"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/gb.svg" alt="English" width="20"></a>
+                                <a href="javascript:void(0)" class="lang-btn" data-lang="de" title="Deutsch"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/de.svg" alt="German" width="24"></a>
                             </div>
                             <a href="#donate" class="btn btn-sm m-btn-header-donate" data-bs-toggle="modal" data-bs-target="#donationDataModal">
                                 {{ page.settings.nav_btn_donate_text || 'DONATE' }}
@@ -120,56 +96,28 @@
                     </div>
                 </nav>
 
-                <main style="margin-top: 4rem; min-height: 80vh;">
-                    <!-- Mobile Hero -->
-                    <div class="text-center py-5 bg-white shadow-sm mb-4 fade-in-up">
-                        <div class="container">
-                            <h1 class="fw-bold h2 mb-2">Contact Us</h1>
-                            <p class="text-muted small mx-auto" style="max-width: 90%;">{{ page.settings.contact_desc || 'We are here to help. Reach out to us anytime.' }}</p>
+                <main class="py-5" style="margin-top: 5rem; min-height: 80vh;">
+                    <div class="container m-section-pad">
+                        <div class="mb-4">
+                            <a href="index.html" class="btn btn-sm btn-outline-secondary rounded-pill px-3"><i class="bi bi-arrow-left me-2"></i>Back to Home</a>
                         </div>
-                    </div>
-
-                    <div class="container m-section-pad pb-5">
-                        <!-- Phone CTA -->
-                        <div class="mb-4 fade-in-up delay-100">
-                            <a :href="'tel:'+page.settings.contact_phone" class="text-decoration-none">
-                                <div class="cta-phone-card p-4 text-center shadow">
-                                    <i class="bi bi-telephone-fill display-4 mb-2 d-block"></i>
-                                    <h3 class="h5 fw-bold mb-1">Call Us Now</h3>
-                                    <p class="mb-0 fw-bold fs-5">{{ page.settings.contact_phone }}</p>
-                                </div>
-                            </a>
+                        <div class="text-center mb-5">
+                            <h1 class="fw-bold h2 mb-3">Our Programs</h1>
+                            <p class="text-muted small mx-auto">{{ page.settings.programs_desc }}</p>
                         </div>
 
-                        <!-- Contact Info & Form -->
-                        <div class="contact-card-premium p-4 mb-4 fade-in-up delay-200">
-                            <h3 class="h5 fw-bold mb-3">Send a Message</h3>
-                            <form @submit.prevent="submitContact">
-                                <div class="mb-3">
-                                    <label class="form-label small fw-bold text-muted">Name</label>
-                                    <input v-model="formContact.name" class="form-control form-control-premium" placeholder="Your full name" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label small fw-bold text-muted">Email</label>
-                                    <input v-model="formContact.email" type="email" class="form-control form-control-premium" placeholder="Your email address" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label small fw-bold text-muted">Message</label>
-                                    <textarea v-model="formContact.message" rows="4" class="form-control form-control-premium" placeholder="How can we help?" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold" :disabled="formLoading">{{ formLoading ? 'Sending...' : 'Send Message' }}</button>
-                                <div v-if="formMessage" :class="['alert mt-3 small p-2', formSuccess?'alert-success':'alert-danger']">{{ formMessage }}</div>
-                            </form>
-                        </div>
-
-                        <div class="contact-card-premium p-4 fade-in-up delay-300">
-                            <h3 class="h5 fw-bold mb-3">Office Info</h3>
-                            <address class="small text-muted mb-0">
-                                <p class="mb-2"><i class="bi bi-geo-alt-fill text-primary me-2"></i> {{ page.settings.contact_address }}</p>
-                                <p class="mb-2"><i class="bi bi-envelope-fill text-primary me-2"></i> <a :href="'mailto:'+page.settings.contact_email" class="text-decoration-none text-muted">{{ page.settings.contact_email }}</a></p>
-                            </address>
-                            <div class="mt-3 rounded-3 overflow-hidden" v-if="page.settings.map_embed_url">
-                                <iframe :src="page.settings.map_embed_url" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        <div class="row g-3">
+                            <div class="col-12" v-for="program in page.programs" :key="program.id">
+                                <article class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                                    <div class="position-relative">
+                                        <img :src="program.image_url" class="card-img-top" :alt="program.title" style="height: 200px; object-fit: cover;" @error="imgError">
+                                    </div>
+                                    <div class="card-body p-4">
+                                        <h3 class="h5 fw-bold mb-2">{{ program.title }}</h3>
+                                        <p class="text-muted small mb-3 description-clamp">{{ program.short_description }}</p>
+                                        <a :href="'program-detail.html?id=' + program.id" class="btn btn-primary w-100 rounded-pill btn-sm fw-bold">View Details</a>
+                                    </div>
+                                </article>
                             </div>
                         </div>
                     </div>
@@ -184,6 +132,7 @@
                             </div>
                             <div>
                                 <h6>Stay in touch</h6>
+                                <p class="muted small mb-2">Subscribe to our newsletter.</p>
                                 <form @submit.prevent="submitNewsletter" class="d-flex gap-2">
                                     <input v-model="formNewsletter.email" type="email" class="form-control form-control-sm" placeholder="Your email" required>
                                     <button class="btn btn-donate btn-sm" type="submit">Subscribe</button>
@@ -199,14 +148,13 @@
                     </div>
                 </footer>
 
-                <!-- Mobile Bottom Nav -->
                 <div class="m-frosted-glass bottom-0 position-absolute position-fixed w-100" style="z-index:1020;">
                     <div class="d-flex flex-row justify-content-between px-3 mb-3 pt-2">
-                        <a href="index.html" class="m-nav-item-app"><i class="bi bi-house-door"></i><span>Home</span></a>
-                        <a href="programs.html" class="m-nav-item-app"><i class="bi bi-compass"></i><span>Programs</span></a>
-                        <a href="partners.html" class="m-nav-item-app"><i class="bi bi-people"></i><span>Partners</span></a>
+                        <a href="#home" class="m-nav-item-app active"><i class="bi bi-house-door-fill"></i><span>Home</span></a>
+                        <a href="#about" class="m-nav-item-app"><i class="bi bi-info-circle"></i><span>About</span></a>
+                        <a href="#data" class="m-nav-item-app"><i class="bi bi-compass"></i><span>Programs</span></a>
                         <a href="#donate" class="m-nav-item-app" data-bs-toggle="modal" data-bs-target="#donationDataModal"><i class="bi bi-heart"></i><span>Donate</span></a>
-                        <a href="#" class="m-nav-item-app active" data-bs-toggle="modal" data-bs-target="#moreNavModal"><i class="bi bi-three-dots-vertical"></i><span>More</span></a>
+                        <a href="#contact" class="m-nav-item-app" data-bs-toggle="modal" data-bs-target="#moreNavModal"><i class="bi bi-three-dots"></i><span>More</span></a>
                     </div>
                 </div>
                 
@@ -216,9 +164,9 @@
                             <div class="modal-header border-0"><h5 class="modal-title fw-bold">Menu</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
                             <div class="modal-body">
                                 <ul class="list-unstyled d-grid gap-2">
-                                    <li><a href="index.html#impact" class="btn btn-light w-100 text-start fw-bold"><i class="bi bi-graph-up me-2"></i> Impact</a></li>
-                                    <li><a href="participate.html" class="btn btn-light w-100 text-start fw-bold"><i class="bi bi-hand-thumbs-up me-2"></i> Participate</a></li>
-                                    <li><a href="#" class="btn btn-light w-100 text-start fw-bold active"><i class="bi bi-envelope me-2"></i> Contact</a></li>
+                                    <li><a href="#impact" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal"><i class="bi bi-graph-up me-2"></i> Impact</a></li>
+                                    <li><a href="#partners" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal"><i class="bi bi-people me-2"></i> Partners</a></li>
+                                    <li><a href="#contact" class="btn btn-light w-100 text-start fw-bold" data-bs-dismiss="modal"><i class="bi bi-envelope me-2"></i> Contact</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -226,11 +174,10 @@
                 </div>
             </div>
 
-            <!-- DESKTOP VIEW -->
             <div class="d-lg-block d-none">
                 <nav class="navbar navbar-expand-lg mt-3 navbar-light fixed-top">
-                    <div class="container bg-white px-3 py-2 rounded-5 shadow-sm">
-                        <a class="navbar-brand d-flex align-items-center" href="index.html">
+                    <div class="container bg-white px-3 py-2 rounded-5">
+                        <a class="navbar-brand d-flex align-items-center" href="#home-lg">
                             <img :src="page.settings.logo_url || 'images/bmw logo.svg'" alt="Logo" height="50px" class="me-2" @error="imgError">
                         </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
@@ -238,13 +185,13 @@
                         </button>
                         <div class="collapse navbar-collapse" id="mainNav">
                             <ul class="navbar-nav m-auto align-items-lg-center mb-2 mb-lg-0">
-                                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                                <li class="nav-item"><a class="nav-link" href="index.html#about-lg">About us</a></li>
-                                <li class="nav-item"><a class="nav-link" href="programs.html">Programs</a></li>
-                                <li class="nav-item"><a class="nav-link" href="index.html#impact-lg">Impact</a></li>
-                                <li class="nav-item"><a class="nav-link" href="partners.html">Partners</a></li>
-                                <li class="nav-item"><a class="nav-link" href="participate.html">Participate</a></li>
-                                <li class="nav-item"><a class="nav-link active fw-bold" href="#">Contact</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#home-lg">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#about-lg">About us</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#data-lg">Programs</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#impact-lg">Impact</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#partners-lg">Partners</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#getinvolved-lg">Participate</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#contact-lg">Contact</a></li>
                             </ul>
                             <div class="d-flex ms-3 align-items-center">
                                 <a href="#donate-lg" class="btn btn-donate btn-sm me-3" data-bs-toggle="modal" data-bs-target="#donationDataModal">{{ page.settings.nav_btn_donate_text || 'Donate' }}</a>
@@ -257,80 +204,34 @@
                     </div>
                 </nav>
 
-                <main>
-                    <!-- Desktop Hero -->
-                    <section class="contact-hero text-center fade-in-up">
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-8">
-                                    <h1 class="display-4 fw-bold mb-3">Contact Us</h1>
-                                    <p class="lead opacity-75">{{ page.settings.contact_desc || 'Questions? Ideas? We would love to hear from you.' }}</p>
-                                </div>
-                            </div>
+                <main class="py-5" style="margin-top: 6rem; min-height: 80vh;">
+                    <div class="container container-narrow">
+                        <div class="mb-5">
+                            <a href="index.html" class="btn btn-outline-dark rounded-pill px-4"><i class="bi bi-arrow-left me-2"></i> Back to Home</a>
                         </div>
-                    </section>
-
-                    <section class="py-5 bg-light">
-                        <div class="container">
-                            <div class="row g-5 justify-content-center">
-                                <!-- Contact Form -->
-                                <div class="col-lg-6 fade-in-up delay-100">
-                                    <div class="contact-card-premium p-5">
-                                        <h3 class="h4 fw-bold mb-4">Send us a Message</h3>
-                                        <form @submit.prevent="submitContact">
-                                            <div class="mb-3">
-                                                <label class="form-label fw-bold small text-muted">Full Name</label>
-                                                <input v-model="formContact.name" class="form-control form-control-premium" placeholder="Enter your name" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label fw-bold small text-muted">Email Address</label>
-                                                <input v-model="formContact.email" type="email" class="form-control form-control-premium" placeholder="Enter your email" required>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label class="form-label fw-bold small text-muted">Message</label>
-                                                <textarea v-model="formContact.message" rows="5" class="form-control form-control-premium" placeholder="How can we help you?" required></textarea>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary rounded-pill px-5 py-3 fw-bold w-100" :disabled="formLoading">{{ formLoading ? 'Sending...' : 'Send Message' }}</button>
-                                            <div v-if="formMessage" :class="['alert mt-3 small p-2', formSuccess?'alert-success':'alert-danger']">{{ formMessage }}</div>
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <!-- Contact Info & CTA -->
-                                <div class="col-lg-5 fade-in-up delay-200">
-                                    <!-- Phone CTA -->
-                                    <a :href="'tel:'+page.settings.contact_phone" class="text-decoration-none d-block mb-4">
-                                        <div class="cta-phone-card p-5 text-center shadow-lg">
-                                            <i class="bi bi-telephone-fill display-3 mb-3 d-block"></i>
-                                            <h3 class="h4 fw-bold mb-2">Speak with Us</h3>
-                                            <p class="mb-0 display-6 fw-bold">{{ page.settings.contact_phone }}</p>
-                                        </div>
-                                    </a>
-
-                                    <div class="contact-card-premium p-5">
-                                        <h3 class="h5 fw-bold mb-4">Office Information</h3>
-                                        <div class="d-flex mb-3">
-                                            <i class="bi bi-geo-alt-fill text-primary fs-4 me-3"></i>
-                                            <div>
-                                                <h6 class="fw-bold mb-1">Address</h6>
-                                                <p class="text-muted small mb-0">{{ page.settings.contact_address }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex mb-4">
-                                            <i class="bi bi-envelope-fill text-primary fs-4 me-3"></i>
-                                            <div>
-                                                <h6 class="fw-bold mb-1">Email</h6>
-                                                <a :href="'mailto:'+page.settings.contact_email" class="text-decoration-none text-muted small">{{ page.settings.contact_email }}</a>
-                                            </div>
-                                        </div>
-                                        <div class="rounded-4 overflow-hidden shadow-sm" v-if="page.settings.map_embed_url">
-                                            <iframe :src="page.settings.map_embed_url" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        <div class="text-center mb-5">
+                            <h1 class="fw-bold display-4">Our Programs</h1>
+                            <p class="text-muted lead mx-auto" style="max-width: 600px;">{{ page.settings.programs_desc }}</p>
+                        </div>
+                        
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4" v-for="program in page.programs" :key="program.id">
+                                <article class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden program-card-hover">
+                                    <div class="position-relative">
+                                        <img :src="program.image_url" class="card-img-top" :alt="program.title" style="height: 240px; object-fit: cover;" @error="imgError">
+                                        <div class="position-absolute top-0 end-0 m-3">
+                                            <span class="badge bg-white text-dark shadow-sm rounded-pill px-3 py-2">Program</span>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="card-body p-4 d-flex flex-column">
+                                        <h3 class="h5 fw-bold mb-3">{{ program.title }}</h3>
+                                        <p class="text-muted small mb-4 flex-grow-1 description-clamp">{{ program.short_description }}</p>
+                                        <a :href="'program-detail.html?id=' + program.id" class="btn btn-primary w-100 rounded-pill fw-bold py-2">View Details</a>
+                                    </div>
+                                </article>
                             </div>
                         </div>
-                    </section>
+                    </div>
                 </main>
 
                 <footer class="site-footer" role="contentinfo">
@@ -343,11 +244,11 @@
                             <div>
                                 <h6>Quick Links</h6>
                                 <ul class="list-unstyled muted small">
-                                    <li><a href="programs.html">Programs</a></li>
-                                    <li><a href="index.html#impact-lg">Impact</a></li>
-                                    <li><a href="partners.html">Partners</a></li>
-                                    <li><a href="participate.html">Participate</a></li>
-                                    <li><a href="#">Contact</a></li>
+                                    <li><a href="#programs">Programs</a></li>
+                                    <li><a href="#impact">Impact</a></li>
+                                    <li><a href="#partners">Partners</a></li>
+                                    <li><a href="#faq">FAQ</a></li>
+                                    <li><a href="#contact">Contact</a></li>
                                 </ul>
                             </div>
                             <div>
@@ -368,7 +269,6 @@
                 </footer>
             </div>
 
-            <!-- Modals (Donation, etc) -->
             <div class="modal fade" id="donationDataModal" tabindex="-1">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content border-0">
@@ -386,12 +286,34 @@
                 </div>
             </div>
 
-        </div>
-    </div>
+            <div class="modal fade" id="qrModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-white text-center p-4">
+                        <h5 class="modal-title mb-3">Scan QR Code</h5>
+                        <img :src="page.settings.bank_qr_image" style="max-width: 100%; width: 300px;" @error="imgError">
+                        <p class="muted mt-3 fw-bold text-dark">{{ page.settings.bank_holder }}</p>
+                        <p class="small mb-0">{{ page.settings.bank_iban }}</p>
+                        <p class="small">{{ page.settings.bank_name }}</p>
+                    </div>
+                </div>
+            </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+            <div class="modal fade" id="galleryModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content bg-transparent border-0 text-center">
+                        <div class="modal-body p-0 position-relative">
+                            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal"></button>
+                            <img v-if="selectedImage" :src="selectedImage.image_url" class="img-fluid rounded shadow-lg">
+                            <p v-if="selectedImage && selectedImage.alt_text" class="text-white mt-2 bg-dark bg-opacity-75 d-inline-block px-3 py-1 rounded">{{ selectedImage.alt_text }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> </div> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="translations.js"></script>
+<script src="translations.js"></script>
+
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
         const { createApp } = Vue;
@@ -400,7 +322,9 @@
             data() {
                 return {
                     pageLoaded: false,
-                    page: { settings: {} },
+                    page: { settings: {}, programs: [], team: [], gallery: [] },
+                    selectedImage: null,
+                    galleryModalInstance: null,
                     formDonation: { program: 'General', amount: 50, firstName: '', lastName: '', email: '' },
                     formContact: { name: '', email: '', message: '' },
                     formNewsletter: { email: '' },
@@ -408,6 +332,7 @@
                 }
             },
             mounted() {
+                this.galleryModalInstance = new bootstrap.Modal(document.getElementById('galleryModal'));
                 fetch('administrator/api.php?action=get_homepage_data')
                     .then(r => r.json())
                     .then(d => {
@@ -416,17 +341,25 @@
                             this.pageLoaded = true;
                             const loader = document.getElementById('initial-loader');
                             if(loader) loader.style.display = 'none';
+                            // Update Document Title
+                            if(this.page.settings.site_title) document.title = this.page.settings.site_title;
+                            // Animasi Angka
+                            this.$nextTick(() => this.runCounters());
                         }
                     })
                     .catch(e => {
                         console.error("API Error", e);
+                        // Tetap tampilkan halaman meski error (fallback data kosong)
                         this.pageLoaded = true;
                         const loader = document.getElementById('initial-loader');
-                        if(loader) loader.innerHTML = '<p class="text-danger">Failed to load data.</p>';
+                        if(loader) loader.innerHTML = '<p class="text-danger">Gagal memuat data. Refresh halaman.</p>';
                     });
             },
             methods: {
                 imgError(e) { e.target.src = 'images/bg-logo-light.jpg'; },
+                openGalleryModal(img) { this.selectedImage = img; this.galleryModalInstance.show(); },
+                openDonateModal() { const el = document.getElementById('donationDataModal'); if(window.bootstrap) new bootstrap.Modal(el).show(); },
+                
                 submitContact() {
                     this.formLoading = true;
                     this.formMessage = '';
@@ -440,6 +373,7 @@
                         if(this.formSuccess) this.formContact = { name:'', email:'', message:'' };
                     }).finally(()=>this.formLoading=false);
                 },
+                
                 submitNewsletter() {
                     const fd = new FormData();
                     fd.append('action', 'subscribe_newsletter');
@@ -449,6 +383,7 @@
                         if(d.status==='success') this.formNewsletter.email = '';
                     });
                 },
+                
                 submitDonation() {
                     this.formLoading = true;
                     const fd = new FormData();
@@ -465,6 +400,23 @@
                             this.formDonation = { program: 'General', amount: 50, firstName: '', lastName: '', email: '' };
                         }
                     }).finally(()=>this.formLoading=false);
+                },
+                
+                runCounters() {
+                    const counters = document.querySelectorAll('.count-up');
+                    counters.forEach(c => {
+                        const target = +c.getAttribute('data-target');
+                        if(!target) return;
+                        let start = 0;
+                        const duration = 2000;
+                        const step = (timestamp) => {
+                            if (!start) start = timestamp;
+                            const progress = Math.min((timestamp - start) / duration, 1);
+                            c.textContent = Math.floor(progress * target).toLocaleString();
+                            if (progress < 1) window.requestAnimationFrame(step);
+                        };
+                        window.requestAnimationFrame(step);
+                    });
                 }
             }
         }).mount('#app');

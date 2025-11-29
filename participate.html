@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     
-    <title>{{ page.settings.site_title || 'Bildung mit Wirkung e.V.' }} - Contact</title>
+    <title>{{ page.settings.site_title || 'Bildung mit Wirkung e.V.' }} - Participate</title>
     <meta name="description" :content="page.settings.site_description || 'Bildung mit Wirkung e.V.'" />
     <meta property="og:image" :content="page.settings.og_image || 'images/bg-logo.jpg'" />
     
@@ -26,8 +26,8 @@
     <style>
         [v-cloak] { display: none; }
         
-        /* Contact Specific Styles */
-        .contact-hero {
+        /* Participate Specific Styles */
+        .participate-hero {
             background-color: var(--bmw-dark-blue, #101828);
             color: white;
             padding: 8rem 0 4rem;
@@ -35,34 +35,38 @@
             overflow: hidden;
         }
         
-        .contact-card-premium {
+        .participate-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            height: 100%;
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .participate-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: var(--bmw-coral-light, #fff0ed);
+            color: var(--bmw-coral, #ff7e67);
+            box-shadow: none;
+        }
+        
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(0,0,0,0.1);
+        }
+        
+        .accordion-item {
             border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .form-control-premium {
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            transition: all 0.2s;
-        }
-        
-        .form-control-premium:focus {
-            border-color: var(--bmw-coral, #ff7e67);
-            box-shadow: 0 0 0 3px rgba(255, 126, 103, 0.1);
-        }
-
-        .cta-phone-card {
-            background: linear-gradient(135deg, var(--bmw-coral, #ff7e67) 0%, #ff9f8e 100%);
-            color: white;
-            border-radius: 16px;
-            transition: transform 0.3s ease;
-        }
-        
-        .cta-phone-card:hover {
-            transform: translateY(-5px);
+            border-radius: 12px !important;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
         /* Animations */
@@ -124,52 +128,66 @@
                     <!-- Mobile Hero -->
                     <div class="text-center py-5 bg-white shadow-sm mb-4 fade-in-up">
                         <div class="container">
-                            <h1 class="fw-bold h2 mb-2">Contact Us</h1>
-                            <p class="text-muted small mx-auto" style="max-width: 90%;">{{ page.settings.contact_desc || 'We are here to help. Reach out to us anytime.' }}</p>
+                            <h1 class="fw-bold h2 mb-2">Get Involved</h1>
+                            <p class="text-muted small mx-auto" style="max-width: 90%;">{{ page.settings.involve_desc || 'Join us in making a difference.' }}</p>
                         </div>
                     </div>
 
                     <div class="container m-section-pad pb-5">
-                        <!-- Phone CTA -->
-                        <div class="mb-4 fade-in-up delay-100">
-                            <a :href="'tel:'+page.settings.contact_phone" class="text-decoration-none">
-                                <div class="cta-phone-card p-4 text-center shadow">
-                                    <i class="bi bi-telephone-fill display-4 mb-2 d-block"></i>
-                                    <h3 class="h5 fw-bold mb-1">Call Us Now</h3>
-                                    <p class="mb-0 fw-bold fs-5">{{ page.settings.contact_phone }}</p>
+                        <!-- Ways to Participate -->
+                        <div class="row g-3 mb-5">
+                            <div class="col-12 fade-in-up delay-100">
+                                <div class="participate-card p-4 text-center border-top border-4 border-warning">
+                                    <i class="bi bi-cash-stack display-4 text-warning mb-3"></i>
+                                    <h3 class="h5 fw-bold">Donate</h3>
+                                    <p class="small text-muted">{{ page.settings.involve_donate_text || 'Support our projects financially.' }}</p>
+                                    <a href="#donate" class="btn btn-warning btn-sm rounded-pill fw-bold w-100" data-bs-toggle="modal" data-bs-target="#donationDataModal">Donate Now</a>
                                 </div>
-                            </a>
+                            </div>
+                            <div class="col-12 fade-in-up delay-200">
+                                <div class="participate-card p-4 text-center border-top border-4 border-primary">
+                                    <i class="bi bi-people display-4 text-primary mb-3"></i>
+                                    <h3 class="h5 fw-bold">Volunteer</h3>
+                                    <p class="small text-muted">{{ page.settings.involve_volunteer_text || 'Share your skills and time.' }}</p>
+                                    <a href="index.html#contact" class="btn btn-outline-primary btn-sm rounded-pill fw-bold w-100">Join Us</a>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Contact Info & Form -->
-                        <div class="contact-card-premium p-4 mb-4 fade-in-up delay-200">
-                            <h3 class="h5 fw-bold mb-3">Send a Message</h3>
-                            <form @submit.prevent="submitContact">
-                                <div class="mb-3">
-                                    <label class="form-label small fw-bold text-muted">Name</label>
-                                    <input v-model="formContact.name" class="form-control form-control-premium" placeholder="Your full name" required>
+                        <!-- FAQ -->
+                        <div class="fade-in-up delay-300">
+                            <h3 class="h5 fw-bold mb-3 text-center">Frequently Asked Questions</h3>
+                            <div class="accordion accordion-flush" id="faqAccordionMobile">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed fw-bold small" type="button" data-bs-toggle="collapse" data-bs-target="#faq1m">
+                                            {{ page.settings.faq_1_q || 'How is my donation used?' }}
+                                        </button>
+                                    </h2>
+                                    <div id="faq1m" class="accordion-collapse collapse" data-bs-parent="#faqAccordionMobile">
+                                        <div class="accordion-body small text-muted">{{ page.settings.faq_1_a || '100% of public donations go directly to the projects.' }}</div>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label small fw-bold text-muted">Email</label>
-                                    <input v-model="formContact.email" type="email" class="form-control form-control-premium" placeholder="Your email address" required>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed fw-bold small" type="button" data-bs-toggle="collapse" data-bs-target="#faq2m">
+                                            {{ page.settings.faq_2_q || 'Can I visit the projects?' }}
+                                        </button>
+                                    </h2>
+                                    <div id="faq2m" class="accordion-collapse collapse" data-bs-parent="#faqAccordionMobile">
+                                        <div class="accordion-body small text-muted">{{ page.settings.faq_2_a || 'Yes, we organize annual trips for donors.' }}</div>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label small fw-bold text-muted">Message</label>
-                                    <textarea v-model="formContact.message" rows="4" class="form-control form-control-premium" placeholder="How can we help?" required></textarea>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed fw-bold small" type="button" data-bs-toggle="collapse" data-bs-target="#faq3m">
+                                            {{ page.settings.faq_3_q || 'Is my donation tax-deductible?' }}
+                                        </button>
+                                    </h2>
+                                    <div id="faq3m" class="accordion-collapse collapse" data-bs-parent="#faqAccordionMobile">
+                                        <div class="accordion-body small text-muted">{{ page.settings.faq_3_a || 'Yes, we issue donation receipts.' }}</div>
+                                    </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold" :disabled="formLoading">{{ formLoading ? 'Sending...' : 'Send Message' }}</button>
-                                <div v-if="formMessage" :class="['alert mt-3 small p-2', formSuccess?'alert-success':'alert-danger']">{{ formMessage }}</div>
-                            </form>
-                        </div>
-
-                        <div class="contact-card-premium p-4 fade-in-up delay-300">
-                            <h3 class="h5 fw-bold mb-3">Office Info</h3>
-                            <address class="small text-muted mb-0">
-                                <p class="mb-2"><i class="bi bi-geo-alt-fill text-primary me-2"></i> {{ page.settings.contact_address }}</p>
-                                <p class="mb-2"><i class="bi bi-envelope-fill text-primary me-2"></i> <a :href="'mailto:'+page.settings.contact_email" class="text-decoration-none text-muted">{{ page.settings.contact_email }}</a></p>
-                            </address>
-                            <div class="mt-3 rounded-3 overflow-hidden" v-if="page.settings.map_embed_url">
-                                <iframe :src="page.settings.map_embed_url" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                             </div>
                         </div>
                     </div>
@@ -217,8 +235,8 @@
                             <div class="modal-body">
                                 <ul class="list-unstyled d-grid gap-2">
                                     <li><a href="index.html#impact" class="btn btn-light w-100 text-start fw-bold"><i class="bi bi-graph-up me-2"></i> Impact</a></li>
-                                    <li><a href="participate.html" class="btn btn-light w-100 text-start fw-bold"><i class="bi bi-hand-thumbs-up me-2"></i> Participate</a></li>
-                                    <li><a href="#" class="btn btn-light w-100 text-start fw-bold active"><i class="bi bi-envelope me-2"></i> Contact</a></li>
+                                    <li><a href="#" class="btn btn-light w-100 text-start fw-bold active"><i class="bi bi-hand-thumbs-up me-2"></i> Participate</a></li>
+                                    <li><a href="index.html#contact" class="btn btn-light w-100 text-start fw-bold"><i class="bi bi-envelope me-2"></i> Contact</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -243,8 +261,8 @@
                                 <li class="nav-item"><a class="nav-link" href="programs.html">Programs</a></li>
                                 <li class="nav-item"><a class="nav-link" href="index.html#impact-lg">Impact</a></li>
                                 <li class="nav-item"><a class="nav-link" href="partners.html">Partners</a></li>
-                                <li class="nav-item"><a class="nav-link" href="participate.html">Participate</a></li>
-                                <li class="nav-item"><a class="nav-link active fw-bold" href="#">Contact</a></li>
+                                <li class="nav-item"><a class="nav-link active fw-bold" href="#">Participate</a></li>
+                                <li class="nav-item"><a class="nav-link" href="index.html#contact-lg">Contact</a></li>
                             </ul>
                             <div class="d-flex ms-3 align-items-center">
                                 <a href="#donate-lg" class="btn btn-donate btn-sm me-3" data-bs-toggle="modal" data-bs-target="#donationDataModal">{{ page.settings.nav_btn_donate_text || 'Donate' }}</a>
@@ -259,12 +277,12 @@
 
                 <main>
                     <!-- Desktop Hero -->
-                    <section class="contact-hero text-center fade-in-up">
+                    <section class="participate-hero text-center fade-in-up">
                         <div class="container">
                             <div class="row justify-content-center">
                                 <div class="col-lg-8">
-                                    <h1 class="display-4 fw-bold mb-3">Contact Us</h1>
-                                    <p class="lead opacity-75">{{ page.settings.contact_desc || 'Questions? Ideas? We would love to hear from you.' }}</p>
+                                    <h1 class="display-4 fw-bold mb-3">Get Involved</h1>
+                                    <p class="lead opacity-75">{{ page.settings.involve_desc || 'Your support changes lives. Discover how you can contribute to our mission.' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -272,59 +290,83 @@
 
                     <section class="py-5 bg-light">
                         <div class="container">
-                            <div class="row g-5 justify-content-center">
-                                <!-- Contact Form -->
-                                <div class="col-lg-6 fade-in-up delay-100">
-                                    <div class="contact-card-premium p-5">
-                                        <h3 class="h4 fw-bold mb-4">Send us a Message</h3>
-                                        <form @submit.prevent="submitContact">
-                                            <div class="mb-3">
-                                                <label class="form-label fw-bold small text-muted">Full Name</label>
-                                                <input v-model="formContact.name" class="form-control form-control-premium" placeholder="Enter your name" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label fw-bold small text-muted">Email Address</label>
-                                                <input v-model="formContact.email" type="email" class="form-control form-control-premium" placeholder="Enter your email" required>
-                                            </div>
-                                            <div class="mb-4">
-                                                <label class="form-label fw-bold small text-muted">Message</label>
-                                                <textarea v-model="formContact.message" rows="5" class="form-control form-control-premium" placeholder="How can we help you?" required></textarea>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary rounded-pill px-5 py-3 fw-bold w-100" :disabled="formLoading">{{ formLoading ? 'Sending...' : 'Send Message' }}</button>
-                                            <div v-if="formMessage" :class="['alert mt-3 small p-2', formSuccess?'alert-success':'alert-danger']">{{ formMessage }}</div>
-                                        </form>
+                            <!-- Ways to Participate -->
+                            <div class="row g-4 mb-5 justify-content-center">
+                                <div class="col-md-5 fade-in-up delay-100">
+                                    <div class="participate-card p-5 text-center border-top border-4 border-warning h-100">
+                                        <i class="bi bi-cash-stack display-3 text-warning mb-4 d-block"></i>
+                                        <h3 class="h4 fw-bold mb-3">Make a Donation</h3>
+                                        <p class="text-muted mb-4">{{ page.settings.involve_donate_text || 'Your financial contribution directly supports our educational programs and infrastructure projects.' }}</p>
+                                        <a href="#donate-lg" class="btn btn-warning rounded-pill px-4 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#donationDataModal">Donate Now</a>
                                     </div>
                                 </div>
+                                <div class="col-md-5 fade-in-up delay-200">
+                                    <div class="participate-card p-5 text-center border-top border-4 border-primary h-100">
+                                        <i class="bi bi-people display-3 text-primary mb-4 d-block"></i>
+                                        <h3 class="h4 fw-bold mb-3">Become a Volunteer</h3>
+                                        <p class="text-muted mb-4">{{ page.settings.involve_volunteer_text || 'Join our team on the ground or support us remotely with your skills and expertise.' }}</p>
+                                        <a href="index.html#contact-lg" class="btn btn-outline-primary rounded-pill px-4 py-2 fw-bold">Contact Us</a>
+                                    </div>
+                                </div>
+                            </div>
 
-                                <!-- Contact Info & CTA -->
-                                <div class="col-lg-5 fade-in-up delay-200">
-                                    <!-- Phone CTA -->
-                                    <a :href="'tel:'+page.settings.contact_phone" class="text-decoration-none d-block mb-4">
-                                        <div class="cta-phone-card p-5 text-center shadow-lg">
-                                            <i class="bi bi-telephone-fill display-3 mb-3 d-block"></i>
-                                            <h3 class="h4 fw-bold mb-2">Speak with Us</h3>
-                                            <p class="mb-0 display-6 fw-bold">{{ page.settings.contact_phone }}</p>
-                                        </div>
-                                    </a>
-
-                                    <div class="contact-card-premium p-5">
-                                        <h3 class="h5 fw-bold mb-4">Office Information</h3>
-                                        <div class="d-flex mb-3">
-                                            <i class="bi bi-geo-alt-fill text-primary fs-4 me-3"></i>
-                                            <div>
-                                                <h6 class="fw-bold mb-1">Address</h6>
-                                                <p class="text-muted small mb-0">{{ page.settings.contact_address }}</p>
+                            <!-- FAQ -->
+                            <div class="row justify-content-center fade-in-up delay-300">
+                                <div class="col-lg-8">
+                                    <div class="text-center mb-4">
+                                        <span class="text-bmw-brick fw-bold text-uppercase ls-1 small">Common Questions</span>
+                                        <h2 class="h3 fw-bold mt-2">Frequently Asked Questions</h2>
+                                    </div>
+                                    <div class="accordion accordion-flush bg-white rounded-4 shadow-sm p-4" id="faqAccordionDesktop">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1d">
+                                                    {{ page.settings.faq_1_q || 'How is my donation used?' }}
+                                                </button>
+                                            </h2>
+                                            <div id="faq1d" class="accordion-collapse collapse" data-bs-parent="#faqAccordionDesktop">
+                                                <div class="accordion-body text-muted">{{ page.settings.faq_1_a || '100% of public donations go directly to the projects. Operational costs are covered by members.' }}</div>
                                             </div>
                                         </div>
-                                        <div class="d-flex mb-4">
-                                            <i class="bi bi-envelope-fill text-primary fs-4 me-3"></i>
-                                            <div>
-                                                <h6 class="fw-bold mb-1">Email</h6>
-                                                <a :href="'mailto:'+page.settings.contact_email" class="text-decoration-none text-muted small">{{ page.settings.contact_email }}</a>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2d">
+                                                    {{ page.settings.faq_2_q || 'Can I visit the projects?' }}
+                                                </button>
+                                            </h2>
+                                            <div id="faq2d" class="accordion-collapse collapse" data-bs-parent="#faqAccordionDesktop">
+                                                <div class="accordion-body text-muted">{{ page.settings.faq_2_a || 'Yes, we organize annual trips for donors to see the impact firsthand.' }}</div>
                                             </div>
                                         </div>
-                                        <div class="rounded-4 overflow-hidden shadow-sm" v-if="page.settings.map_embed_url">
-                                            <iframe :src="page.settings.map_embed_url" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3d">
+                                                    {{ page.settings.faq_3_q || 'Is my donation tax-deductible?' }}
+                                                </button>
+                                            </h2>
+                                            <div id="faq3d" class="accordion-collapse collapse" data-bs-parent="#faqAccordionDesktop">
+                                                <div class="accordion-body text-muted">{{ page.settings.faq_3_a || 'Yes, as a registered e.V. in Germany, we issue donation receipts.' }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4d">
+                                                    {{ page.settings.faq_4_q || 'How can I volunteer?' }}
+                                                </button>
+                                            </h2>
+                                            <div id="faq4d" class="accordion-collapse collapse" data-bs-parent="#faqAccordionDesktop">
+                                                <div class="accordion-body text-muted">{{ page.settings.faq_4_a || 'You can apply via our contact form. We need skills in teaching, healthcare, and media.' }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq5d">
+                                                    {{ page.settings.faq_5_q || 'Who are your local partners?' }}
+                                                </button>
+                                            </h2>
+                                            <div id="faq5d" class="accordion-collapse collapse" data-bs-parent="#faqAccordionDesktop">
+                                                <div class="accordion-body text-muted">{{ page.settings.faq_5_a || 'We work with trusted local foundations like Lentera Aksara Negeri to ensure cultural relevance.' }}</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -346,8 +388,8 @@
                                     <li><a href="programs.html">Programs</a></li>
                                     <li><a href="index.html#impact-lg">Impact</a></li>
                                     <li><a href="partners.html">Partners</a></li>
-                                    <li><a href="participate.html">Participate</a></li>
-                                    <li><a href="#">Contact</a></li>
+                                    <li><a href="#">Participate</a></li>
+                                    <li><a href="index.html#contact-lg">Contact</a></li>
                                 </ul>
                             </div>
                             <div>
@@ -402,9 +444,8 @@
                     pageLoaded: false,
                     page: { settings: {} },
                     formDonation: { program: 'General', amount: 50, firstName: '', lastName: '', email: '' },
-                    formContact: { name: '', email: '', message: '' },
                     formNewsletter: { email: '' },
-                    formLoading: false, formMessage: '', formSuccess: false, newsletterMsg: ''
+                    formLoading: false, newsletterMsg: ''
                 }
             },
             mounted() {
@@ -427,19 +468,6 @@
             },
             methods: {
                 imgError(e) { e.target.src = 'images/bg-logo-light.jpg'; },
-                submitContact() {
-                    this.formLoading = true;
-                    this.formMessage = '';
-                    const fd = new FormData();
-                    fd.append('action', 'submit_contact_form');
-                    fd.append('name', this.formContact.name);
-                    fd.append('email', this.formContact.email);
-                    fd.append('message', this.formContact.message);
-                    fetch('administrator/api.php', { method:'POST', body:fd }).then(r=>r.json()).then(d=>{
-                        this.formMessage = d.message; this.formSuccess = d.status==='success';
-                        if(this.formSuccess) this.formContact = { name:'', email:'', message:'' };
-                    }).finally(()=>this.formLoading=false);
-                },
                 submitNewsletter() {
                     const fd = new FormData();
                     fd.append('action', 'subscribe_newsletter');

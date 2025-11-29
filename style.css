@@ -173,18 +173,18 @@ a{
 }
 
 /* --- Sembunyikan UI Bawaan Google Translate --- */
+/* --- Sembunyikan UI Bawaan Google Translate --- */
 #google_translate_element {
-    display: none !important; /* Sembunyikan widget dropdown asli */
-    position: fixed; /* Hentikan agar tidak memakan ruang */
-    bottom: -100px;
-    right: -100px;
-    z-index: -999;
+    display: none !important;
+}
+.goog-te-banner-frame {
+    display: none !important;
 }
 .goog-te-banner-frame.skiptranslate {
-    display: none !important; /* Sembunyikan bar atas setelah translasi */
+    display: none !important;
 }
 body {
-    top: 0px !important; /* Perbaiki masalah margin atas dari bar Google */
+    top: 0px !important;
 }
 /* Sembunyikan tooltip "Original" dari Google */
 .goog-tooltip {
@@ -197,4 +197,9 @@ body {
     background-color: transparent !important;
     box-shadow: none !important;
     border: none !important;
+}
+/* Sembunyikan highlight pada font tag yang ditambahkan Google */
+font {
+    background-color: transparent !important;
+    box-shadow: none !important;
 }

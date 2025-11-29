@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bildung mit Wirkung e.V., Education with Impact</title>
+    <meta name="description" content="Bildung mit Wirkung e.V., bridging Germany and Indonesia to provide education and dignified care for elders in remote communities." />
+    <meta property="og:image" content="images/bg-logo.jpg" />
+    <link rel="icon" type="images/bg-logo-transparent.svg" sizes="32x32" href="images/bg-logo-transparent.svg">
+    <link rel="icon" type="images/bg-logo-transparent.svg" sizes="16x16" href="images/bg-logo-transparent.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/bg-logo-transparent.svg">
+    <link rel="shortcut icon" href="images/bg-logo-transparent.svg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        bmw: {
+                            DEFAULT: '#0d6efd', // Primary Blue
+                            dark: '#0a58ca',
+                            coral: '#ff7e67',   // Aksen warna coral
+                            brick: '#e65100',   // Aksen bata
+                            light: '#f8f9fa',
+                        }
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Bildung mit Wirkung e.V.",
+            "url": "https://bildungmitwirkung.example",
+            "logo": "https://via.placeholder.com/300x80?text=BMW+e.V",
+            "sameAs": [],
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Hirsch-Gereuth-Straße 55",
+                "addressLocality": "München",
+                "postalCode": "81369",
+                "addressCountry": "DE"
+            },
+            "contactPoint": [{
+                "@type": "ContactPoint",
+                "telephone": " +4915757244505",
+                "contactType": "customer service",
+                "availableLanguage": ["German", "English", "Indonesian"]
+            }]
+        }
+    </script>
+    <style>
+        .frosted-glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        [v-cloak] { display: none; } /* Mencegah flash konten sebelum Vue load */
+    </style>
+</head>
+
+<body class="font-sans antialiased text-slate-800 bg-gray-50">
+
+    <div id="app" v-cloak>
+        
+        <div v-if="!pageLoaded" class="fixed inset-0 z-[9999] flex items-center justify-center bg-white">
+            <div class="flex flex-col items-center gap-4">
+                <div class="w-12 h-12 border-4 border-bmw-DEFAULT border-t-transparent rounded-full animate-spin"></div>
+                <p class="text-sm font-semibold text-gray-500 animate-pulse">Loading experience...</p>
+            </div>
+        </div>
+
+        <div v-show="pageLoaded">
+            
+            <nav :class="[
+                'fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out px-4 py-3',
+                isScrolled ? 'frosted-glass shadow-sm' : 'bg-transparent pt-6'
+            ]">
+                <div class="container mx-auto max-w-6xl">
+                    <div :class="[
+                        'flex items-center justify-between rounded-full px-6 py-3 transition-all',
+                        isScrolled ? '' : 'bg-white/90 backdrop-blur-md shadow-lg border border-white/50'
+                    ]">
+                        
+                        <a href="home.html" class="flex items-center gap-2 group">
+                            <img src="images/bmw logo.svg" alt="Logo" class="h-10 w-auto group-hover:scale-105 transition-transform">
+                            <span class="font-bold text-lg tracking-tight hidden sm:block"></span>
+                        </a>
+
+                        <div class="hidden md:flex items-center gap-6">
+                            <a href="index.html" class="text-[12px] font-semibold text-bmw-DEFAULT">Home</a>
+                            <a href="about.html" class="text-[12px] font-medium text-gray-600 hover:text-bmw-DEFAULT transition-colors">About us</a>
+                            <a href="programs.html" class="text-[12px] font-medium text-gray-600 hover:text-bmw-DEFAULT transition-colors">The aid programs</a>
+                            <a href="impact.html" class="text-[12px] font-medium text-gray-600 hover:text-bmw-DEFAULT transition-colors">Impact Reports</a>
+                            <a href="get-involved.html" class="text-[12px] font-medium text-gray-600 hover:text-bmw-DEFAULT transition-colors">Partners</a>
+                            <a href="get-involved.html" class="text-[12px] font-medium text-gray-600 hover:text-bmw-DEFAULT transition-colors">How to participate</a>
+                            <a href="contact.html" class="text-[12px] font-medium text-gray-600 hover:text-bmw-DEFAULT transition-colors">Contact us</a>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="hidden sm:flex items-center gap-2 bg-gray-100 rounded-full px-2 py-1">
+                                <button @click="changeLang('en')" :class="{'opacity-100': currentLang === 'en', 'opacity-50': currentLang !== 'en'}" class="lang-btn w-6 h-6 rounded-full overflow-hidden hover:opacity-100 transition" data-lang="en"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/gb.svg" alt="EN"></button>
+                                <button @click="changeLang('de')" :class="{'opacity-100': currentLang === 'de', 'opacity-50': currentLang !== 'de'}" class="lang-btn w-6 h-6 rounded-full overflow-hidden hover:opacity-100 transition" data-lang="de"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/de.svg" alt="DE"></button>
+                            </div>
+
+                            <a href="#" @click.prevent="openDonationModal" class="bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold text-sm px-5 py-2.5 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2">
+                                <span>Donate</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                            </a>
+
+
+            </nav>
+
+            <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-bmw-DEFAULT text-white rounded-b-[3rem] shadow-2xl">
+                <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                
+                <div class="container mx-auto max-w-6xl px-6 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        
+                        <div class="text-center lg:text-left space-y-6">
+                            <span class="inline-block px-3 py-1 rounded-full bg-white/20 text-xs font-bold tracking-wider uppercase backdrop-blur-sm border border-white/10 mb-2">
+                                Non-Profit Organization
+                            </span>
+                            
+                            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight" v-html="page.settings.hero_title || 'Education with Impact.<br>Dignity for All.'"></h1>
+                            
+                            <p class="text-lg text-blue-100 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                                {{ page.settings.hero_description || 'Bridging the gap between Germany and Indonesia. We build sustainable education systems and dignified elderly care in remote communities.' }}
+                            </p>
+                            
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                                <a href="#" @click.prevent="openDonationModal" class="px-8 py-4 bg-yellow-400 text-slate-900 font-bold rounded-xl shadow-lg hover:shadow-yellow-400/50 hover:-translate-y-1 transition-all duration-300 text-center">
+                                    Donate Now
+                                </a>
+                                <a href="impact.html" class="px-8 py-4 bg-transparent border-2 border-white/30 text-white font-bold rounded-xl hover:bg-white/10 transition-all duration-300 text-center">
+                                    Our Impact
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="hidden lg:block relative group">
+                            <div class="absolute -top-10 -right-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+                            <div class="absolute -bottom-10 -left-10 w-72 h-72 bg-bmw-coral rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+                            
+                            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20 transform group-hover:scale-[1.01] transition-transform duration-500">
+                                <img src="images/bg-logo-transparent.svg" class="w-full h-auto object-cover bg-white/10 backdrop-blur-sm p-12" alt="Hero Visual">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="container mx-auto max-w-5xl -mt-16 relative z-20 px-6">
+                <div class="bg-white rounded-2xl shadow-xl p-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                    <div>
+                        <div class="text-4xl font-bold text-bmw-DEFAULT mb-1">5+</div>
+                        <div class="text-sm font-medium text-gray-500 uppercase tracking-wide">Years Active</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-bmw-coral mb-1">12</div>
+                        <div class="text-sm font-medium text-gray-500 uppercase tracking-wide">Schools Helped</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-bmw-brick mb-1">100%</div>
+                        <div class="text-sm font-medium text-gray-500 uppercase tracking-wide">Donation Efficiency</div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="bg-white mt-24 pt-16 pb-8 border-t border-gray-100">
+                <div class="container mx-auto max-w-6xl px-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                        <div>
+                            <h6 class="font-bold text-lg mb-4 text-gray-900">Bildung mit Wirkung e.V.</h6>
+                            <p class="text-gray-500 text-sm leading-relaxed mb-4">
+                                Registered association based in München. Connecting German donors with remote Indonesian communities.
+                            </p>
+                            <p class="text-gray-400 text-xs">Hirsch-Gereuth-Straße 55, 81369 München</p>
+                        </div>
+                        
+                        <div>
+                            <h6 class="font-bold text-lg mb-4 text-gray-900">Quick Links</h6>
+                            <ul class="space-y-2 text-sm text-gray-500">
+                                <li><a href="programs.html" class="hover:text-bmw-DEFAULT transition">Programs</a></li>
+                                <li><a href="impact.html" class="hover:text-bmw-DEFAULT transition">Impact Reports</a></li>
+                                <li><a href="get-involved.html" class="hover:text-bmw-DEFAULT transition">Partners</a></li>
+                                <li><a href="get-involved.html" class="hover:text-bmw-DEFAULT transition">FAQ</a></li>
+                                <li><a href="contact.html" class="hover:text-bmw-DEFAULT transition">Contact Us</a></li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h6 class="font-bold text-lg mb-4 text-gray-900">Stay in Touch</h6>
+                            <form @submit.prevent="submitNewsletter" class="flex gap-2">
+                                <input v-model="newsletterEmail" type="email" placeholder="Your email" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-bmw-DEFAULT focus:ring-2 focus:ring-bmw-DEFAULT/20 outline-none transition text-sm" required>
+                                <button type="submit" class="bg-bmw-DEFAULT text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition" :disabled="newsletterLoading">
+                                    <span v-if="newsletterLoading">...</span>
+                                    <span v-else>Subscribe</span>
+                                </button>
+                            </form>
+                            <p v-if="newsletterMessage" :class="newsletterSuccess ? 'text-green-600' : 'text-red-600'" class="text-xs mt-2">{{ newsletterMessage }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
+                        <p>&copy; 2025 Bildung mit Wirkung e.V. All rights reserved.</p>
+                        <div class="flex gap-4 mt-2 md:mt-0">
+                            <a href="#" class="hover:text-gray-600">Privacy</a>
+                            <a href="#" class="hover:text-gray-600">Terms</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <div class="md:hidden fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-lg border-t border-gray-200 z-40 pb-safe">
+                <div class="grid grid-cols-5 gap-1 p-2">
+                    <a href="home.html" class="flex flex-col items-center justify-center p-2 text-bmw-DEFAULT">
+                        <i class="bi bi-house-door-fill text-xl mb-1"></i>
+                        <span class="text-[10px] font-medium">Home</span>
+                    </a>
+                    <a href="about.html" class="flex flex-col items-center justify-center p-2 text-gray-400 hover:text-gray-600">
+                        <i class="bi bi-info-circle text-xl mb-1"></i>
+                        <span class="text-[10px] font-medium">About</span>
+                    </a>
+                    <a href="#" @click.prevent="openDonationModal" class="flex flex-col items-center justify-center -mt-8">
+                        <div class="w-14 h-14 bg-bmw-coral rounded-full shadow-lg flex items-center justify-center text-white text-2xl border-4 border-gray-50">
+                            <i class="bi bi-heart-fill"></i>
+                        </div>
+                    </a>
+                    <a href="programs.html" class="flex flex-col items-center justify-center p-2 text-gray-400 hover:text-gray-600">
+                        <i class="bi bi-compass text-xl mb-1"></i>
+                        <span class="text-[10px] font-medium">Programs</span>
+                    </a>
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="flex flex-col items-center justify-center p-2 text-gray-400 hover:text-gray-600">
+                        <i class="bi bi-three-dots text-xl mb-1"></i>
+                        <span class="text-[10px] font-medium">More</span>
+                    </button>
+                </div>
+            </div>
+
+            <div v-show="mobileMenuOpen" class="md:hidden fixed inset-0 z-[100] flex items-end justify-center" v-cloak>
+                <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="mobileMenuOpen = false"></div>
+                <div class="bg-white w-full rounded-t-2xl p-6 relative z-10 animate-fade-in-up">
+                    <div class="flex justify-between items-center mb-4">
+                         <h5 class="text-lg font-bold">Navigation Menu</h5>
+                         <button @click="mobileMenuOpen = false" class="btn-close"><i class="bi bi-x-lg"></i></button>
+                    </div>
+                    <ul class="space-y-3">
+                        <li><a href="impact.html" class="block p-3 bg-gray-50 rounded-xl font-bold text-gray-700"><i class="bi bi-graph-up me-2"></i> Impact Reports</a></li>
+                        <li><a href="get-involved.html" class="block p-3 bg-gray-50 rounded-xl font-bold text-gray-700"><i class="bi bi-people me-2"></i> Partners</a></li>
+                        <li><a href="get-involved.html" class="block p-3 bg-gray-50 rounded-xl font-bold text-gray-700"><i class="bi bi-puzzle me-2"></i> How to Participate</a></li>
+                        <li><a href="get-involved.html" class="block p-3 bg-gray-50 rounded-xl font-bold text-gray-700"><i class="bi bi-question-circle me-2"></i> FAQ</a></li>
+                        <li><a href="contact.html" class="block p-3 bg-gray-50 rounded-xl font-bold text-gray-700"><i class="bi bi-envelope me-2"></i> Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Google Translate Element (Hidden) -->
+            <div id="google_translate_element" class="hidden"></div>
+
+            <!-- Donation Modal (Tailwind) -->
+            <div v-if="showDonationModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4" v-cloak>
+                <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="showDonationModal = false"></div>
+                <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative z-10 animate-fade-in-up">
+                    <div class="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between z-20">
+                        <h3 class="text-xl font-bold text-gray-900">Complete Your Donation</h3>
+                        <button @click="showDonationModal = false" class="text-gray-400 hover:text-gray-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                    
+                    <div class="p-6">
+                        <form @submit.prevent="submitDonation" class="space-y-6">
+                            <!-- Program Selection -->
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Choose Program</label>
+                                <select v-model="donationForm.program" class="w-full rounded-xl border-gray-300 focus:border-bmw-DEFAULT focus:ring focus:ring-bmw-DEFAULT/20" required>
+                                    <option value="" disabled>Select a program...</option>
+                                    <option v-for="program in page.programs" :key="program.id" :value="program.title">
+                                        {{ program.title }}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!-- Amount Selection -->
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Donation Amount</label>
+                                <div class="grid grid-cols-3 gap-3 mb-3">
+                                    <button type="button" v-for="amount in [25, 50, 100]" 
+                                        @click="donationForm.amount = amount"
+                                        :class="donationForm.amount === amount ? 'bg-bmw-DEFAULT text-white border-bmw-DEFAULT' : 'bg-white text-gray-700 border-gray-200 hover:border-bmw-DEFAULT'"
+                                        class="py-2 px-4 rounded-lg border font-semibold transition">
+                                        €{{ amount }}
+                                    </button>
+                                </div>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">€</span>
+                                    <input type="number" v-model="donationForm.amount" class="w-full pl-8 pr-4 py-2 rounded-xl border-gray-300 focus:border-bmw-DEFAULT focus:ring focus:ring-bmw-DEFAULT/20" placeholder="Other amount" min="5">
+                                </div>
+                            </div>
+
+                            <!-- Personal Details -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                                    <input type="text" v-model="donationForm.firstName" class="w-full rounded-lg border-gray-300 focus:border-bmw-DEFAULT focus:ring focus:ring-bmw-DEFAULT/20" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                                    <input type="text" v-model="donationForm.lastName" class="w-full rounded-lg border-gray-300 focus:border-bmw-DEFAULT focus:ring focus:ring-bmw-DEFAULT/20" required>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                    <input type="email" v-model="donationForm.email" class="w-full rounded-lg border-gray-300 focus:border-bmw-DEFAULT focus:ring focus:ring-bmw-DEFAULT/20" required>
+                                </div>
+                            </div>
+
+                            <button type="submit" :disabled="donationLoading" class="w-full py-3 bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold rounded-xl shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed">
+                                <span v-if="donationLoading">Processing...</span>
+                                <span v-else>Submit Donation</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div> </div> <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <script>
+        // --- Google Translate Logic ---
+        function setCookie(key, value, expiryDays) {
+            let date = new Date();
+            date.setTime(date.getTime() + (expiryDays * 24 * 60 * 60 * 1000));
+            document.cookie = key + "=" + value + "; expires=" + date.toUTCString() + "; path=/";
+        }
+
+        function getCookie(key) {
+            let name = key + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1);
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+
+        function changeLanguage(lang) {
+            setCookie('googtrans', '/en/' + lang, 1);
+            var googleSelect = document.querySelector("#google_translate_element select");
+            if (googleSelect) {
+                googleSelect.value = lang;
+                var event = new Event('change');
+                googleSelect.dispatchEvent(event);
+            } else {
+                location.reload();
+            }
+            // Update active state of buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('opacity-100');
+                    btn.classList.remove('opacity-50');
+                } else {
+                    btn.classList.remove('opacity-100');
+                    btn.classList.add('opacity-50');
+                }
+            });
+        }
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,de,id',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+            
+            // Initialize active button state based on cookie
+            let currentLang = getCookie('googtrans');
+            let initialLang = 'en';
+            if (currentLang && currentLang !== 'null' && currentLang.includes('/')) {
+                initialLang = currentLang.split('/')[2];
+            }
+            // We can't easily update Vue state from outside without mounting, 
+            // but the buttons will update on click or reload.
+        }
+
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    pageLoaded: false,
+                    mobileMenuOpen: false,
+                    isScrolled: false,
+                    showDonationModal: false,
+                    currentLang: 'en',
+                    newsletterEmail: '',
+                    newsletterLoading: false,
+                    newsletterMessage: '',
+                    newsletterSuccess: false,
+                    donationLoading: false,
+                    donationForm: {
+                        program: '',
+                        amount: 50,
+                        firstName: '',
+                        lastName: '',
+                        email: ''
+                    },
+                    page: {
+                        settings: {},
+                        programs: [],
+                        team: [],
+                        gallery: []
+                    }
+                }
+            },
+            mounted() {
+                // Fetch data dari API existing kamu
+                fetch('administrator/api.php?action=get_homepage_data')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            this.page = data.data;
+                        }
+                    })
+                    .finally(() => {
+                        // Simulasi loading sebentar biar transisi smooth
+                        setTimeout(() => {
+                            this.pageLoaded = true;
+                        }, 500);
+                    });
+
+                // Scroll Listener untuk Navbar effect
+                window.addEventListener('scroll', () => {
+                    this.isScrolled = window.scrollY > 20;
+                });
+            },
+            methods: {
+                changeLang(lang) {
+                    changeLanguage(lang);
+                    this.currentLang = lang;
+                },
+                openDonationModal() {
+                    this.showDonationModal = true;
+                },
+                submitNewsletter() {
+                    if (!this.newsletterEmail) return;
+                    this.newsletterLoading = true;
+                    this.newsletterMessage = '';
+                    
+                    const formData = new FormData();
+                    formData.append('action', 'subscribe_newsletter');
+                    formData.append('email', this.newsletterEmail);
+
+                    fetch('administrator/api.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        this.newsletterSuccess = data.status === 'success';
+                        this.newsletterMessage = data.message;
+                        if (this.newsletterSuccess) this.newsletterEmail = '';
+                    })
+                    .catch(() => {
+                        this.newsletterSuccess = false;
+                        this.newsletterMessage = 'Error occurred. Please try again.';
+                    })
+                    .finally(() => {
+                        this.newsletterLoading = false;
+                    });
+                },
+                submitDonation() {
+                    this.donationLoading = true;
+                    const formData = new FormData();
+                    formData.append('action', 'add_donation');
+                    formData.append('selected_program', this.donationForm.program);
+                    formData.append('selected_amount', this.donationForm.amount);
+                    formData.append('firstName', this.donationForm.firstName);
+                    formData.append('lastName', this.donationForm.lastName);
+                    formData.append('emailDonation', this.donationForm.email);
+                    // Defaults
+                    formData.append('selected_currency', 'EUR');
+                    formData.append('selected_frequency', 'one-time');
+                    formData.append('payment', 'Online Bank Transfer');
+
+                    fetch('administrator/api.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            alert(data.message);
+                            this.showDonationModal = false;
+                            this.donationForm = { program: '', amount: 50, firstName: '', lastName: '', email: '' };
+                        } else {
+                            alert('Error: ' + data.message);
+                        }
+                    })
+                    .catch(err => {
+                        alert('Network error');
+                        console.error(err);
+                    })
+                    .finally(() => {
+                        this.donationLoading = false;
+                    });
+                }
+            }
+        }).mount('#app');
+    </script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+</body>
+</html>

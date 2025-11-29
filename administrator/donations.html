@@ -58,7 +58,7 @@
                     </div>
                     <div>
                         <button @click="exportCSV" class="btn btn-lg btn-success">
-                            <i class="bi bi-file-earmark-spreadsheet-fill me-2"></i> Export Report (CSV)
+                            <i class="bi bi-file-earmark-excel-fill me-2"></i> Export Detailed Report (Excel)
                         </button>
                     </div>
                 </div>
@@ -107,12 +107,13 @@
                                         <th>Amount</th>
                                         <th>Program</th>
                                         <th>Frequency</th>
+                                        <th>Proof (Debug)</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-if="loading">
-                                        <td colspan="7" class="text-center text-muted py-4">
+                                        <td colspan="8" class="text-center text-muted py-4">
                                             <div class="spinner-border spinner-border-sm" role="status">
                                                 <span class="visually-hidden">Loading...</span>
                                             </div>
@@ -126,10 +127,24 @@
                                         <td><strong>{{ formatCurrency(donation.amount, donation.currency) }}</strong></td>
                                         <td>{{ donation.program_name }}</td>
                                         <td>{{ donation.frequency }}</td>
+                                        <td>
+                                            <div v-if="donation.proof_of_payment">
+                                                <div class="small text-muted mb-1" style="font-size:0.7rem;">{{ donation.proof_of_payment }}</div>
+                                                <div v-if="isPdf(donation.proof_of_payment)">
+                                                    <a :href="'../' + donation.proof_of_payment" target="_blank" class="btn btn-sm btn-outline-danger" title="View PDF">
+                                                        <i class="bi bi-file-earmark-pdf-fill"></i> PDF
+                                                    </a>
+                                                </div>
+                                                <div v-else>
+                                                    <img :src="'../' + donation.proof_of_payment" class="img-thumbnail" style="height: 50px; width: 50px; object-fit: cover; cursor: pointer;" @click="viewImage('../' + donation.proof_of_payment)" alt="Proof">
+                                                </div>
+                                            </div>
+                                            <span v-else class="text-muted small">No Proof</span>
+                                        </td>
                                         <td><a href="#" class="btn btn-sm btn-outline-secondary"><i class="bi bi-eye-fill"></i></a></td>
                                     </tr>
                                     <tr v-if="!loading && donations.length === 0">
-                                        <td colspan="7" class="text-center text-muted py-4">
+                                        <td colspan="8" class="text-center text-muted py-4">
                                             {{ error ? 'Failed to load data. Please check the console for details.' : 'No donations found for the selected filters.' }}
                                         </td>
                                     </tr>
@@ -150,6 +165,21 @@
                                 </li>
                             </ul>
                         </nav>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Modal -->
+            <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header border-0">
+                            <h5 class="modal-title">Proof of Payment</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center p-0 bg-light">
+                            <img :src="selectedImageUrl" class="img-fluid" alt="Proof of Payment">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -177,7 +207,8 @@
                         totalRecords: 0
                     },
                     loading: true,
-                    error: null
+                    error: null,
+                    selectedImageUrl: ''
                 }
             },
             mounted() {
@@ -185,6 +216,14 @@
                 this.fetchProgramsForFilter();
             },
             methods: {
+                isPdf(url) {
+                    return url.toLowerCase().endsWith('.pdf');
+                },
+                viewImage(url) {
+                    this.selectedImageUrl = url;
+                    const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+                    modal.show();
+                },
                 // *** FUNGSI BARU UNTUK EKSPOR CSV ***
                 exportCSV() {
                     // Membangun URL untuk ekspor, menyertakan filter yang sedang aktif
@@ -221,6 +260,7 @@
                                 throw new Error('Received invalid data from server. Check api.php for syntax errors.');
                             }
                             if (data.status === 'success') {
+                                console.log('Fetched Donations:', data.data);
                                 this.donations = data.data;
                                 this.pagination = data.pagination;
                             } else {
@@ -273,3 +313,4 @@
     </script>
 </body>
 </html>
+<!-- Updated: Force Refresh -->

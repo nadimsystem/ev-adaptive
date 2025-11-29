@@ -1,240 +1,477 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Manage Site Content — Admin BMW e.V.</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Super Admin — Site Content Manager</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="../mod.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8f9fa; }
-        .admin-wrapper { display: flex; min-height: 100vh; }
-        .admin-sidebar { width: 260px; background-color: #1a1a1a; color: #fff; flex-shrink: 0; padding-top: 1rem; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
-        .admin-sidebar .admin-logo { padding: 0 1.5rem 1rem 1.5rem; display: flex; align-items: center; gap: 10px; }
-        .admin-sidebar .admin-logo img { height: 40px; filter: brightness(0) invert(1); }
-        .admin-sidebar .admin-logo span { font-size: 0.9rem; font-weight: 600; opacity: 0.8; }
-        .admin-nav { padding: 0 1rem; }
-        .admin-nav .nav-link { color: rgba(255, 255, 255, 0.7); font-weight: 500; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 1rem; transition: all 0.2s ease; }
-        .admin-nav .nav-link:hover { color: #fff; background-color: rgba(255, 255, 255, 0.05); }
-        .admin-nav .nav-link.active { color: #fff; background-color: var(--bmw-sky, #007bff); font-weight: 700; border-radius: 8px; }
-        .nav-heading { text-transform: uppercase; font-size: 0.7rem; font-weight: 700; color: rgba(255, 255, 255, 0.4); padding: 2rem 1rem 0.5rem 1rem; }
-        .admin-content { flex-grow: 1; padding: 2rem; overflow-x: hidden; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f4f6f9; }
+        .admin-layout { display: flex; min-height: 100vh; }
+        
+        /* Sidebar Styling */
+        .sidebar { width: 260px; background: #1e1e2d; color: #fff; position: fixed; top: 0; bottom: 0; overflow-y: auto; z-index: 1000; }
+        .sidebar-header { padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .nav-link { color: rgba(255,255,255,0.7); padding: 0.8rem 1.5rem; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
+        .nav-link:hover, .nav-link.active { color: #fff; background: rgba(255,255,255,0.1); border-right: 3px solid #0d6efd; }
+        
+        /* Main Content */
+        .main-content { margin-left: 260px; flex: 1; padding: 2rem; }
+        
+        /* Form Styling */
+        .section-card { border: none; box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075); border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+        .card-header-tabs { margin-bottom: -1rem; border-bottom: none; }
+        .nav-tabs .nav-link { border: none; color: #6c757d; font-weight: 600; padding: 1rem 1.5rem; }
+        .nav-tabs .nav-link.active { color: #0d6efd; border-bottom: 3px solid #0d6efd; background: transparent; }
+        
+        .form-label { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; color: #555; letter-spacing: 0.5px; }
+        .img-preview-box { width: 100%; max-width: 200px; height: 120px; border: 2px dashed #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #fafafa; margin-top: 0.5rem; position: relative; }
+        .img-preview-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .img-preview-box span { font-size: 0.8rem; color: #999; }
+        
+        /* Loader */
+        .page-loader { position: fixed; inset: 0; background: rgba(255,255,255,0.9); z-index: 9999; display: flex; justify-content: center; align-items: center; }
     </style>
 </head>
 <body>
-    <div class="admin-wrapper">
-        <nav class="admin-sidebar">
-            <div class="admin-logo"><img src="../images/bmw logo.svg" alt="BmW e.V. Logo"><span>Admin Panel</span></div>
-            <hr class="text-secondary m-0">
-            <ul class="nav flex-column admin-nav pt-3">
-                <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-grid-fill"></i> Dashboard</a></li>
-                <li class="nav-heading">Keuangan</li>
-                <li class="nav-item"><a class="nav-link" href="donations.html"><i class="bi bi-cash-coin"></i> Donations</a></li>
-                <!-- <li class="nav-item"><a class="nav-link" href="campaigns.html"><i class="bi bi-bullseye"></i> Campaigns</a></li> -->
-                <li class="nav-heading">Website Content</li>
-                <li class="nav-item"><a class="nav-link" href="programs.html"><i class="bi bi-layout-text-window-reverse"></i> Programs</a></li>
-                <li class="nav-item"><a class="nav-link" href="team-partners.html"><i class="bi bi-people-fill"></i> Team & Partners</a></li>
-                <li class="nav-item"><a class="nav-link" href="gallery.html"><i class="bi bi-images"></i> Gallery</a></li>
-                <li class="nav-item"><a class="nav-link active" href="content.html"><i class="bi bi-pencil-square"></i> Site Text & Impact</a></li>
-                <li class="nav-heading">Submissions</li>
-                <li class="nav-item"><a class="nav-link" href="messages.html"><i class="bi bi-envelope-fill"></i> Messages</a></li>
-                <li class="nav-heading">System</li>
-                <li class="nav-item"><a class="nav-link" href="users.html"><i class="bi bi-person-gear"></i> Manage Admins</a></li>
-                <li class="nav-item"><a class="nav-link" href="../index.html" target="_blank"><i class="bi bi-box-arrow-up-right"></i> View Public Site</a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-door-closed-fill"></i> Logout</a></li>
-            </ul>
+
+<div id="app">
+    <div v-if="loading" class="page-loader">
+        <div class="text-center">
+            <div class="spinner-border text-primary mb-2" role="status"></div>
+            <p class="small fw-bold text-muted">Loading System...</p>
+        </div>
+    </div>
+
+    <div class="admin-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="d-flex align-items-center gap-2">
+                    <img src="../images/bmw logo.svg" width="32" class="bg-white rounded p-1">
+                    <span class="fw-bold">Admin Panel</span>
+                </div>
+            </div>
+            <div class="py-3">
+                <small class="px-4 text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Main Menu</small>
+                <a href="index.html" class="nav-link mt-2"><i class="bi bi-grid-fill"></i> Dashboard</a>
+                <a href="donations.html" class="nav-link"><i class="bi bi-wallet2"></i> Donations</a>
+                <a href="programs.html" class="nav-link"><i class="bi bi-collection-play"></i> Programs</a>
+                <a href="content.html" class="nav-link active"><i class="bi bi-pencil-square"></i> Site Content</a>
+                
+                <small class="px-4 text-uppercase text-muted fw-bold d-block mt-4" style="font-size: 0.7rem;">System</small>
+                <a href="../index.html" target="_blank" class="nav-link mt-2"><i class="bi bi-box-arrow-up-right"></i> View Website</a>
+                <a href="logout.php" class="nav-link text-danger"><i class="bi bi-box-arrow-left"></i> Logout</a>
+            </div>
         </nav>
 
-        <main class="admin-content" id="app">
-            <div class="container-fluid">
-                <div class="mb-4">
-                    <span class="kicker">Website Content</span>
-                    <h1 class="display-5 fw-bold">Manage Site Text & Impact</h1>
-                    <p class="text-muted">Edit konten teks utama dan angka statistik di seluruh website.</p>
+        <main class="main-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="fw-bold m-0">Content Manager</h2>
+                    <p class="text-muted m-0 small">Update text, images, and configuration for the entire website.</p>
                 </div>
+                <button @click="saveSettings" class="btn btn-primary btn-lg shadow-sm px-4">
+                    <i class="bi bi-save2-fill me-2"></i> Save Changes
+                </button>
+            </div>
 
-                <div v-if="loading" class="text-center py-5">
-                    <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
+            <div class="card section-card">
+                <div class="card-header bg-white pt-2">
+                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-general">General & Hero</button></li>
+                        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-about">About & Mission</button></li>
+                        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-impact">Impact & Data</button></li>
+                        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-partners">Partners & FAQ</button></li>
+                        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-bank">Bank & Footer</button></li>
+                    </ul>
                 </div>
+                
+                <div class="card-body p-4">
+                    <div class="tab-content">
 
-                <form v-if="!loading" @submit.prevent="saveSettings">
-                    <div v-if="error" class="alert alert-danger">{{ error }}</div>
-                    <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
-                    
-                    <div class="row g-4">
-                        <div class="col-lg-7">
-                            <div class="card shadow-sm mb-4">
-                                <div class="card-header bg-white"><h5 class="mb-0 fw-bold">Main Page Content (Hero & About)</h5></div>
-                                <div class="card-body p-4">
-                                    <div class="mb-3">
-                                        <label class="form-label">Hero Title & Slogan (HTML allowed)</label>
-                                        <textarea class="form-control" v-model="settings.hero_title" rows="2"></textarea>
+                        <div class="tab-pane fade show active" id="tab-general">
+                            <h5 class="text-primary mb-4 border-bottom pb-2">Brand Identity</h5>
+                            <div class="row g-4 mb-5">
+                                <div class="col-md-6">
+                                    <label class="form-label">Browser Title</label>
+                                    <input type="text" class="form-control" v-model="s.site_title">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Meta Description (SEO)</label>
+                                    <input type="text" class="form-control" v-model="s.site_description">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Logo (Navbar)</label>
+                                    <input type="file" class="form-control form-control-sm" @change="upload($event, 'logo_url')">
+                                    <div class="img-preview-box bg-dark">
+                                        <img v-if="s.logo_url" :src="'../' + s.logo_url">
+                                        <span v-else>No Logo</span>
                                     </div>
-                                     <div class="mb-3">
-                                        <label class="form-label">Hero Description</label>
-                                        <textarea class="form-control" v-model="settings.hero_description" rows="3"></textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Favicon (Tab Icon)</label>
+                                    <input type="file" class="form-control form-control-sm" @change="upload($event, 'favicon_url')">
+                                    <div class="img-preview-box">
+                                        <img v-if="s.favicon_url" :src="'../' + s.favicon_url">
                                     </div>
-                                    <hr>
-                                    <div class="mb-3">
-                                        <label class="form-label">About Us Paragraph 1</label>
-                                        <textarea class="form-control" v-model="settings.about_us_paragraph1" rows="4"></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">About Us Paragraph 2</label>
-                                        <textarea class="form-control" v-model="settings.about_us_paragraph2" rows="3"></textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Link Share Image (OG)</label>
+                                    <input type="file" class="form-control form-control-sm" @change="upload($event, 'og_image')">
+                                    <div class="img-preview-box">
+                                        <img v-if="s.og_image" :src="'../' + s.og_image">
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="card shadow-sm">
-                                <div class="card-header bg-white"><h5 class="mb-0 fw-bold">FAQ Section</h5></div>
-                                <div class="card-body p-4">
-                                    <div class="mb-3">
-                                        <label class="form-label">FAQ 1 Question</label>
-                                        <input type="text" class="form-control" v-model="settings.faq_1_q">
-                                        <label class="form-label mt-1 small">FAQ 1 Answer</label>
-                                        <textarea class="form-control" v-model="settings.faq_1_a" rows="2"></textarea>
-                                    </div>
-                                    <hr>
-                                    <div class="mb-3">
-                                        <label class="form-label">FAQ 2 Question</label>
-                                        <input type="text" class="form-control" v-model="settings.faq_2_q">
-                                        <label class="form-label mt-1 small">FAQ 2 Answer</label>
-                                        <textarea class="form-control" v-model="settings.faq_2_a" rows="2"></textarea>
-                                    </div>
-                                    <hr>
-                                    <div class="mb-3">
-                                        <label class="form-label">FAQ 3 Question</label>
-                                        <input type="text" class="form-control" v-model="settings.faq_3_q">
-                                        <label class="form-label mt-1 small">FAQ 3 Answer</label>
-                                        <textarea class="form-control" v-model="settings.faq_3_a" rows="2"></textarea>
-                                    </div>
-                                    <hr>
-                                    <div class="mb-3">
-                                        <label class="form-label">FAQ 4 Question</label>
-                                        <input type="text" class="form-control" v-model="settings.faq_4_q">
-                                        <label class="form-label mt-1 small">FAQ 4 Answer</label>
-                                        <textarea class="form-control" v-model="settings.faq_4_a" rows="2"></textarea>
-                                    </div>
-                                    <hr>
-                                     <div class="mb-3">
-                                        <label class="form-label">FAQ 5 Question</label>
-                                        <input type="text" class="form-control" v-model="settings.faq_5_q">
-                                        <label class="form-label mt-1 small">FAQ 5 Answer</label>
-                                        <textarea class="form-control" v-model="settings.faq_5_a" rows="3"></textarea>
+
+                            <h5 class="text-primary mb-4 border-bottom pb-2">Hero Section (Top Home)</h5>
+                            <div class="row g-4">
+                                <div class="col-md-8">
+                                    <label class="form-label">Hero Title (HTML Allowed)</label>
+                                    <input type="text" class="form-control form-control-lg fw-bold" v-model="s.hero_title">
+                                    <div class="form-text">Use &lt;br&gt; for line breaks.</div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">Hero Description</label>
+                                    <textarea class="form-control" rows="3" v-model="s.hero_description"></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Button 1 Text (Donate)</label>
+                                    <input type="text" class="form-control" v-model="s.hero_btn1_text">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Button 2 Text (Impact)</label>
+                                    <input type="text" class="form-control" v-model="s.hero_btn2_text">
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">Hero Illustration/Image</label>
+                                    <input type="file" class="form-control" @change="upload($event, 'hero_image')">
+                                    <div class="img-preview-box w-100" style="max-width: 300px;">
+                                        <img v-if="s.hero_image" :src="'../' + s.hero_image">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="col-lg-5">
-                            <div class="card shadow-sm mb-4">
-                                <div class="card-header bg-white"><h5 class="mb-0 fw-bold">Impact Numbers (Homepage)</h5></div>
-                                <div class="card-body p-4">
-                                    <div class="mb-2">
-                                        <label class="form-label small text-muted">Children Supported</label>
-                                        <input type="number" class="form-control" v-model.number="settings.impact_children_supported">
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label small text-muted">Elderly Cared For</label>
-                                        <input type="number" class="form-control" v-model.number="settings.impact_elderly_cared_for">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label small text-muted">Communities Reached</label>
-                                        <input type="number" class="form-control" v-model.number="settings.impact_communities_reached">
+
+                        <div class="tab-pane fade" id="tab-about">
+                            <h5 class="text-primary mb-4 border-bottom pb-2">About Section</h5>
+                            <div class="row g-4 mb-5">
+                                <div class="col-12">
+                                    <label class="form-label">Section Title</label>
+                                    <input type="text" class="form-control fw-bold" v-model="s.about_title">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Paragraph 1</label>
+                                    <textarea class="form-control" rows="4" v-model="s.about_text_1"></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Paragraph 2</label>
+                                    <textarea class="form-control" rows="4" v-model="s.about_text_2"></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="bg-light p-3 rounded border">
+                                        <label class="form-label">Quote of the Day</label>
+                                        <input type="text" class="form-control mb-2" v-model="s.about_quote" placeholder="The quote...">
+                                        <input type="text" class="form-control w-50" v-model="s.about_quote_author" placeholder="- Author Name">
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="d-grid mt-4">
-                                <button type="submit" class="btn btn-success btn-lg p-3" :disabled="isSaving">
-                                    <span v-if="isSaving" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    <i v-if="!isSaving" class="bi bi-check-circle-fill me-2"></i> 
-                                    {{ isSaving ? 'Saving...' : 'Save All Content Changes' }}
-                                </button>
+
+                            <h5 class="text-primary mb-4 border-bottom pb-2">Mission Cards</h5>
+                            <div class="row g-4">
+                                <div class="col-md-4">
+                                    <div class="card p-3 h-100 border-success border-top-0 border-end-0 border-bottom-0 border-3">
+                                        <label class="form-label text-success">Vision Text</label>
+                                        <textarea class="form-control" rows="4" v-model="s.vision_text"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card p-3 h-100 border-primary border-top-0 border-end-0 border-bottom-0 border-3">
+                                        <label class="form-label text-primary">Mission Text</label>
+                                        <textarea class="form-control" rows="4" v-model="s.mission_text"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card p-3 h-100 border-info border-top-0 border-end-0 border-bottom-0 border-3">
+                                        <label class="form-label text-info">Values Text</label>
+                                        <textarea class="form-control" rows="4" v-model="s.values_text"></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+
+                        <div class="tab-pane fade" id="tab-impact">
+                            <h5 class="text-primary mb-4 border-bottom pb-2">Key Impact Stats</h5>
+                            <div class="row g-3 mb-5">
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text">#1</span>
+                                        <input type="text" class="form-control fw-bold" v-model="s.impact_1_val" placeholder="1,500">
+                                        <input type="text" class="form-control" v-model="s.impact_1_label" placeholder="Label">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text">#2</span>
+                                        <input type="text" class="form-control fw-bold" v-model="s.impact_2_val" placeholder="800">
+                                        <input type="text" class="form-control" v-model="s.impact_2_label" placeholder="Label">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-text">#3</span>
+                                        <input type="text" class="form-control fw-bold" v-model="s.impact_3_val" placeholder="50">
+                                        <input type="text" class="form-control" v-model="s.impact_3_label" placeholder="Label">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h5 class="text-primary mb-4 border-bottom pb-2">Why Indonesia? (Data Table)</h5>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold">Education Data</h6>
+                                    <div class="d-flex flex-column gap-2">
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control" v-model="s.data_edu_1_label">
+                                            <input type="text" class="form-control fw-bold text-end" style="max-width: 100px;" v-model="s.data_edu_1_val">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control" v-model="s.data_edu_2_label">
+                                            <input type="text" class="form-control fw-bold text-end" style="max-width: 100px;" v-model="s.data_edu_2_val">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control" v-model="s.data_edu_3_label">
+                                            <input type="text" class="form-control fw-bold text-end" style="max-width: 100px;" v-model="s.data_edu_3_val">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control" v-model="s.data_edu_4_label">
+                                            <input type="text" class="form-control fw-bold text-end" style="max-width: 100px;" v-model="s.data_edu_4_val">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control" v-model="s.data_edu_5_label">
+                                            <input type="text" class="form-control fw-bold text-end" style="max-width: 100px;" v-model="s.data_edu_5_val">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold">Elderly Data</h6>
+                                    <div class="d-flex flex-column gap-2">
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control" v-model="s.data_old_1_label">
+                                            <input type="text" class="form-control fw-bold text-end" style="max-width: 150px;" v-model="s.data_old_1_val">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control" v-model="s.data_old_2_label">
+                                            <input type="text" class="form-control fw-bold text-end" style="max-width: 150px;" v-model="s.data_old_2_val">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control" v-model="s.data_old_3_label">
+                                            <input type="text" class="form-control fw-bold text-end" style="max-width: 150px;" v-model="s.data_old_3_val">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="tab-partners">
+                            <h5 class="text-primary mb-4 border-bottom pb-2">Main Partner</h5>
+                            <div class="row g-4 mb-5">
+                                <div class="col-md-4">
+                                    <label class="form-label">Partner Logo</label>
+                                    <input type="file" class="form-control" @change="upload($event, 'partner_logo')">
+                                    <div class="img-preview-box">
+                                        <img v-if="s.partner_logo" :src="'../' + s.partner_logo">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="mb-3">
+                                        <label class="form-label">Partner Name</label>
+                                        <input type="text" class="form-control fw-bold" v-model="s.partner_name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Description / Role</label>
+                                        <input type="text" class="form-control" v-model="s.partner_desc">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h5 class="text-primary mb-4 border-bottom pb-2">Get Involved Cards</h5>
+                            <div class="row g-4 mb-5">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Donate Card Text</label>
+                                    <textarea class="form-control" rows="3" v-model="s.involve_donate_text"></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Volunteer Card Text</label>
+                                    <textarea class="form-control" rows="3" v-model="s.involve_volunteer_text"></textarea>
+                                </div>
+                            </div>
+
+                            <h5 class="text-primary mb-4 border-bottom pb-2">F.A.Q Manager</h5>
+                            <div class="accordion" id="accordionFaqAdmin">
+                                <div class="accordion-item" v-for="i in 5" :key="i">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" :data-bs-target="'#c'+i">
+                                            FAQ #{{i}}
+                                        </button>
+                                    </h2>
+                                    <div :id="'c'+i" class="accordion-collapse collapse show">
+                                        <div class="accordion-body bg-light">
+                                            <input type="text" class="form-control fw-bold mb-2" v-model="s['faq_'+i+'_q']" placeholder="Question...">
+                                            <textarea class="form-control" rows="2" v-model="s['faq_'+i+'_a']" placeholder="Answer..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="tab-bank">
+                            <h5 class="text-primary mb-4 border-bottom pb-2">Banking & Donation Info</h5>
+                            <div class="alert alert-warning small py-2"><i class="bi bi-exclamation-triangle"></i> This data appears on the Payment Modal & QR Pop-up.</div>
+                            <div class="row g-4 mb-5">
+                                <div class="col-md-6">
+                                    <label class="form-label">Bank Name</label>
+                                    <input type="text" class="form-control" v-model="s.bank_name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Account Holder</label>
+                                    <input type="text" class="form-control" v-model="s.bank_holder">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">IBAN</label>
+                                    <input type="text" class="form-control font-monospace" v-model="s.bank_iban">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">BIC / SWIFT</label>
+                                    <input type="text" class="form-control font-monospace" v-model="s.bank_bic">
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">QR Code Image</label>
+                                    <input type="file" class="form-control" @change="upload($event, 'bank_qr_image')">
+                                    <div class="img-preview-box w-auto d-inline-flex p-2 bg-white border mt-2">
+                                        <img v-if="s.bank_qr_image" :src="'../' + s.bank_qr_image" style="height: 150px;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h5 class="text-primary mb-4 border-bottom pb-2">Contact & Footer</h5>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <label class="form-label">Official Email</label>
+                                    <input type="text" class="form-control" v-model="s.contact_email">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" class="form-control" v-model="s.contact_phone">
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">Address</label>
+                                    <textarea class="form-control" v-model="s.contact_address"></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">Google Maps Embed Link (Src only)</label>
+                                    <input type="text" class="form-control font-monospace text-muted" v-model="s.map_embed_url">
+                                </div>
+                                <div class="col-md-12 border-top pt-3 mt-2">
+                                    <label class="form-label">Footer About Text</label>
+                                    <textarea class="form-control" rows="2" v-model="s.footer_text"></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">Copyright</label>
+                                    <input type="text" class="form-control" v-model="s.footer_copyright">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> </div>
             </div>
         </main>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script>
-        const { createApp } = Vue;
+</div>
 
-        createApp({
-            data() {
-                return {
-                    settings: {},
-                    loading: true,
-                    isSaving: false,
-                    error: null,
-                    successMessage: null
-                }
-            },
-            mounted() {
-                this.fetchSettings();
-            },
-            methods: {
-                fetchSettings() {
-                    this.loading = true;
-                    fetch('api.php?action=get_site_settings')
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.status === 'success') {
-                                this.settings = data.data;
-                            } else {
-                                this.error = "Failed to load site settings: " + data.message;
-                            }
-                        })
-                        .catch(err => {
-                            this.error = "A network error occurred. Please check the console.";
-                            console.error(err);
-                        })
-                        .finally(() => {
-                            this.loading = false;
-                        });
-                },
-                saveSettings() {
-                    this.isSaving = true;
-                    this.error = null;
-                    this.successMessage = null;
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+    const { createApp } = Vue;
 
-                    const formData = new FormData();
-                    formData.append('action', 'update_site_settings');
-
-                    // Tambahkan semua data dari objek settings ke formData
-                    for (const key in this.settings) {
-                        formData.append(key, this.settings[key]);
-                    }
-
-                    fetch('api.php', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === 'success') {
-                            this.successMessage = data.message;
-                            // Sembunyikan pesan sukses setelah beberapa detik
-                            setTimeout(() => { this.successMessage = null; }, 3000);
+    createApp({
+        data() {
+            return {
+                loading: true,
+                s: {} 
+            }
+        },
+        mounted() {
+            this.fetchSettings();
+        },
+        methods: {
+            fetchSettings() {
+                // PERUBAHAN: Sekarang fetch ke api-admin.php
+                fetch('api-admin.php?action=get_all_settings')
+                    .then(res => res.json())
+                    .then(res => {
+                        if(res.status === 'success') {
+                            this.s = res.data;
                         } else {
-                            this.error = "Failed to save settings: " + data.message;
+                            // Jika unauthorized, redirect ke login
+                            if(res.message === 'Unauthorized Access') window.location.href = 'login.html';
+                            else alert('Gagal mengambil data: ' + res.message);
                         }
                     })
-                    .catch(err => {
-                        this.error = "An error occurred while saving. Please check the console.";
-                        console.error(err);
-                    })
-                    .finally(() => {
-                        this.isSaving = false;
-                    });
+                    .catch(err => console.error(err))
+                    .finally(() => this.loading = false);
+            },
+
+            saveSettings() {
+                this.loading = true;
+                const formData = new FormData();
+                formData.append('action', 'save_settings');
+                
+                for (const [key, value] of Object.entries(this.s)) {
+                    formData.append(key, value || '');
                 }
+
+                // PERUBAHAN: Fetch ke api-admin.php
+                fetch('api-admin.php', { method: 'POST', body: formData })
+                    .then(res => res.json())
+                    .then(res => {
+                        if(res.status === 'success') {
+                            alert(res.message);
+                        } else {
+                            alert('Error: ' + res.message);
+                        }
+                    })
+                    .catch(err => alert('Network Error'))
+                    .finally(() => this.loading = false);
+            },
+
+            upload(event, settingName) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                this.loading = true;
+                const formData = new FormData();
+                formData.append('action', 'upload_setting_image');
+                formData.append('setting_name', settingName);
+                formData.append('image', file);
+
+                // PERUBAHAN: Fetch ke api-admin.php
+                fetch('api-admin.php', { method: 'POST', body: formData })
+                    .then(res => res.json())
+                    .then(res => {
+                        if(res.status === 'success') {
+                            this.s[settingName] = res.path; 
+                        } else {
+                            alert('Upload Gagal: ' + res.message);
+                        }
+                    })
+                    .catch(err => alert('Upload Error'))
+                    .finally(() => this.loading = false);
             }
-        }).mount('#app');
-    </script>
-</body>
-</html>
+        }
+    }).mount('#app');
+</script>

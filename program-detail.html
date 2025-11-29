@@ -4,222 +4,422 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Program Detail — Bildung mit Wirkung e.V.</title> <meta name="description"
-        content="Detailed information about our programs, including Education Access, Elderly Care, and more." />
+    
+    <title>{{ currentProgram ? currentProgram.title + ' — Bildung mit Wirkung e.V.' : 'Program Detail — Bildung mit Wirkung e.V.' }}</title>
+    <meta name="description" :content="currentProgram ? currentProgram.short_description : 'Detailed information about our programs.'" />
+    <meta property="og:image" :content="currentProgram ? currentProgram.image_url : (page.settings.og_image || 'images/bg-logo.jpg')" />
+    
+    <link rel="icon" :href="page.settings.favicon_url || 'images/bg-logo-transparent.svg'">
+    <link rel="apple-touch-icon" :href="page.settings.favicon_url || 'images/bg-logo-transparent.svg'">
+    <link rel="shortcut icon" :href="page.settings.favicon_url || 'images/bg-logo-transparent.svg'">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="../mod.css">
-    <script defer src="../app.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 991px)">
+    <link rel="stylesheet" href="mod.css">
+    
+    <script defer src="app.js"></script>
 
+    <style>
+        /* Mencegah tampilan {{ }} sebelum Vue load */
+        [v-cloak] { display: none; }
+        
+        /* Utilitas Teks */
+        .description-clamp {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 8;
+            line-clamp: 8;
+            text-overflow: ellipsis;
+        }
+        
+        /* Loader Manual (Agar tidak blank saat loading) */
+        #initial-loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 99999; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+
+        /* Active State untuk Tombol Donasi */
+        .donation-option.active {
+            background-color: var(--bmw-coral, #ff7e67) !important;
+            color: white !important;
+            border-color: var(--bmw-coral, #ff7e67) !important;
+        }
+        .donation-option { cursor: pointer; transition: all 0.2s; }
+
+        /* Responsif Iframe Map */
+        .map-container iframe { width: 100%; height: 250px; border: 0; border-radius: 12px; }
+    </style>
 </head>
 
-<body>
+<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="90" tabindex="0">
 
-    <nav class="navbar navbar-expand-lg mt-3 navbar-light fixed-top scrolled"> <div class="container bg-white px-3 py-2 rounded-5">
-            <a class="navbar-brand d-flex align-items-center" href="../index.html"> <img src="../images/bmw logo.svg" alt="Bildung mit Wirkung e.V. Logo" height="50px" class="me-2">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav m-auto align-items-lg-center mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="../index.html#home">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../index.html#impact">Impact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../index.html#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../index.html#gallery">Gallery</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="../program.html">Programs</a></li> <li class="nav-item"><a class="nav-link" href="../index.html#getinvolved">Get Involved</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../index.html#contact">Contact</a></li>
-                </ul>
-                <div class="d-flex ms-3 align-items-center">
-                    <a href="../index.html#donate" class="btn btn-donate btn-sm me-3">Donate</a> <div class="lang-switcher">
-                        <a href="javascript:void(0)" class="lang-btn" data-lang="de" title="Deutsch">
-                            <img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/de.svg" alt="German" width="24">
-                        </a>
-                        <a href="javascript:void(0)" class="lang-btn" data-lang="en" title="English">
-                            <img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/gb.svg" alt="English" width="24">
-                        </a>
-                        <a href="javascript:void(0)" class="lang-btn" data-lang="id" title="Bahasa Indonesia">
-                            <img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/id.svg" alt="Indonesian" width="24">
-                        </a>
-                    </div>
-                </div>
-                </div>
-        </div>
-    </nav>
-    <div id="google_translate_element"></div>
-
-
-    <div class="container pt-5 container-narrow" style="padding-top: 120px !important;">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="../program.html">Programs</a></li>
-                <li class="breadcrumb-item fw-bold">Program Detail</li>
-            </ol>
-        </nav>
+    <div id="initial-loader">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-3 text-muted fw-bold small">Memuat Data...</p>
     </div>
 
-    <header class="section-compact bg-light mt-4">
+    <div id="google_translate_element"></div>
 
-        <div class="container container-narrow">
-            <a href="../program.html" class="btn btn-dark btn-lg"><i class="bi bi-arrow-left me-2"></i> Back to Programs</a>
-        </div>
-        <div class="container container-narrow mt-4">
-            <span class="kicker">Program Details</span>
-            <h1 class="fw-bold display-3">Education Access & Aid</h1>
-            <p class="lead mb-4">A deep dive into how we provide proper learning facilities in remote villages,
-                overcoming challenges like damaged buildings and lack of internet access.</p>
-        </div>
-    </header>
+    <div id="app" v-cloak>
+        <div v-show="pageLoaded">
+            
+            <!-- MOBILE VIEW -->
+            <div class="d-block d-lg-none bg-body-tertiary">
+                <nav class="navbar navbar-light fixed-top m-navbar-app-header m-frosted-glass">
+                    <div class="container-fluid d-flex justify-content-between align-items-center">
+                        <a class="navbar-brand d-flex align-items-center" href="index.html">
+                            <img :src="page.settings.logo_url || 'images/bmw logo.svg'" alt="Logo" height="30px" class="me-2" @error="imgError">
+                        </a>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="lang-switcher">
+                                <a href="javascript:void(0)" class="lang-btn" data-lang="en" title="English"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/gb.svg" alt="English" width="20"></a>
+                                <a href="javascript:void(0)" class="lang-btn" data-lang="de" title="Deutsch"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/de.svg" alt="German" width="24"></a>
+                            </div>
+                            <a href="#donate" class="btn btn-sm m-btn-header-donate" data-bs-toggle="modal" data-bs-target="#donationDataModal">
+                                {{ page.settings.nav_btn_donate_text || 'DONATE' }}
+                            </a>
+                        </div>
+                    </div>
+                </nav>
 
+                <main class="py-5" style=" min-height: 70vh;">
+                    <div class="container m-section-pad">
+                        <div class="mb-4">
+                            <a href="programs.html" class="btn btn-sm btn-outline-secondary rounded-pill px-3"><i class="bi bi-arrow-left me-2"></i>Back to Programs</a>
+                        </div>
 
-    <main class="section-compact py-5">
-        <div class="container container-narrow">
-            <div class="row g-5">
-                <div class="col-lg-8">
-                    <figure class="mb-4">
-                        <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=1470&auto=format&fit=crop"
-                            class="img-fluid rounded-3" alt="Children reading books in a library">
-                        <figcaption class="text-muted small mt-2">Children in a remote village library we support.
-                        </figcaption>
-                    </figure>
+                        <div v-if="currentProgram">
+                            <img :src="currentProgram.image_url" class="img-fluid rounded-4 shadow-sm mb-4 w-100" style="max-height: 300px; object-fit: cover;" @error="imgError">
+                            
+                            <h1 class="fw-bold h3 mb-3">{{ currentProgram.title }}</h1>
+                            <p class="text-muted small mb-4" v-html="currentProgram.description || currentProgram.short_description"></p>
 
-                    <h2>The Challenge</h2>
-                    <p>In many remote areas of Indonesia, children face significant barriers to education. School
-                        buildings are often damaged and unsafe, lacking basic sanitation, electricity, and internet
-                        access. Furthermore, a shortage of qualified teachers and a lack of learning materials like
-                        textbooks and uniforms mean that children are not getting the quality education they deserve.
-                    </p>
-
-                    <h2 class="mt-5">Our Solution</h2>
-                    <p>Our "Education Access & Aid" program tackles these issues head-on. We work with our local partner,
-                        Lentera Aksara Negeri Foundation, to identify communities most in need.</p>
-                    <ul>
-                        <li><strong>School Renovation:</strong> We fund the repair of damaged classrooms, build new
-                            sanitation facilities, and work to provide solar power for electricity.</li>
-                        <li><strong>Learning Materials:</strong> We distribute packages of schoolbooks, notebooks, pens,
-                            and school uniforms, removing the financial barrier for poor families.</li>
-                        <li><strong>Teacher Support:</strong> We provide resources and training for local volunteer
-                            teachers to help them deliver engaging lessons.</li>
-                    </ul>
-
-                    <blockquote class="blockquote fst-italic my-4">
-                        <p>"Seeing a child receive their first new backpack and set of books is a moment of pure joy. It's
-                            not just supplies; it's a message that their future matters."</p>
-                        <footer class="blockquote-footer">Volunteer, West Sumatra</footer>
-                    </blockquote>
-
-                    <h2 class="mt-5">Your Impact</h2>
-                    <p>Your donation directly contributes to this change. A simple contribution can have a massive
-                        impact:</p>
-                    <ul>
-                        <li><strong>€25:</strong> Provides a complete school kit (uniform, shoes, bag, books) for one
-                            child.</li>
-                        <li><strong>€100:</strong> Funds one month of training and allowance for a local teacher.</li>
-                        <li><strong>€500:</strong> Can purchase new desks and chairs for an entire classroom.</li>
-                    </ul>
-                    <a href="../index.html#donate" class="btn btn-donate btn-lg mt-3">Support This Program</a>
-
-                </div>
-
-                <aside class="col-lg-4">
-                    <div class="sticky-top" style="top: 120px;">
-                        <div class="card bg-light border-0">
-                            <div class="card-body p-4">
-                                <h5 class="text-bmw-brick mb-3">Program Facts</h5>
-                                <ul class="list-unstyled">
-                                    <li class="mb-2">
-                                        <i class="bi bi-geo-alt-fill me-2 text-muted"></i>
-                                        <strong>Location:</strong> Remote villages (e.g., Alor, West Sumatra)
+                            <div class="card bg-white border-0 shadow-sm rounded-4 p-3 mb-4">
+                                <h5 class="fw-bold fs-6 mb-3 text-bmw-brick">Program Facts</h5>
+                                <ul class="list-unstyled small mb-0">
+                                    <li class="mb-2 d-flex align-items-start">
+                                        <i class="bi bi-geo-alt-fill me-2 text-muted mt-1"></i>
+                                        <div><strong>Location:</strong><br> <span class="text-muted">Remote villages (e.g., Alor, West Sumatra)</span></div>
                                     </li>
-                                    <li class="mb-2">
-                                        <i class="bi bi-people-fill me-2 text-muted"></i>
-                                        <strong>Focus:</strong> Children (Ages 6-15)
-                                    </li>
-                                    <li class="mb-2">
-                                        <i class="bi bi-award-fill me-2 text-muted"></i>
-                                        <strong>Key Areas:</strong> Infrastructure, Learning Materials, Teacher Support
+                                    <li class="mb-2 d-flex align-items-start">
+                                        <i class="bi bi-people-fill me-2 text-muted mt-1"></i>
+                                        <div><strong>Focus:</strong><br> <span class="text-muted">Children & Elderly</span></div>
                                     </li>
                                 </ul>
-                                <hr>
-                                <h5 class="text-bmw-brick mb-3">Our Partner</h5>
-                                <p class="small text-muted">This program is implemented on the ground in partnership
-                                    with the <strong>Lentera Aksara Negeri Foundation</strong>, ensuring all aid is
-                                    culturally respectful and effective.</p>
+                            </div>
+
+                            <button class="btn btn-donate w-100 fw-bold p-3 rounded-pill" @click="openDonateModal">Support This Program</button>
+                        </div>
+
+                        <div v-else class="text-center py-5">
+                            <h3 class="text-muted">Program not found.</h3>
+                            <a href="programs.html" class="btn btn-primary mt-3">Browse Programs</a>
+                        </div>
+                    </div>
+                </main>
+
+                <footer class="m-site-footer" role="contentinfo">
+                    <div class="container m-section-pad">
+                        <div class="m-footer-grid">
+                            <div>
+                                <h6>{{ page.settings.site_title }}</h6>
+                                <p class="muted small">{{ page.settings.footer_about_text }}</p>
+                            </div>
+                            <div>
+                                <h6>Stay in touch</h6>
+                                <p class="muted small mb-2">Subscribe to our newsletter.</p>
+                                <form @submit.prevent="submitNewsletter" class="d-flex gap-2">
+                                    <input v-model="formNewsletter.email" type="email" class="form-control form-control-sm" placeholder="Your email" required>
+                                    <button class="btn btn-donate btn-sm" type="submit">Subscribe</button>
+                                </form>
+                                <div v-if="newsletterMsg" class="mt-2 small text-success">{{ newsletterMsg }}</div>
+                            </div>
+                        </div>
+                        <hr style="margin:1.5rem 0;border-color:rgba(0,0,0,0.05)">
+                        <div class="d-flex justify-content-between flex-wrap muted small">
+                            <div>{{ page.settings.footer_copyright }}</div>
+                            <div>Privacy · Terms · Transparency</div>
+                        </div>
+                    </div>
+                </footer>
+
+                <div class="m-frosted-glass bottom-0 position-absolute position-fixed w-100" style="z-index:1020;">
+                    <div class="d-flex flex-row justify-content-between px-3 mb-3 pt-2">
+                        <a href="index.html" class="m-nav-item-app"><i class="bi bi-house-door-fill"></i><span>Home</span></a>
+                        <a href="index.html#about" class="m-nav-item-app"><i class="bi bi-info-circle"></i><span>About</span></a>
+                        <a href="programs.html" class="m-nav-item-app active"><i class="bi bi-compass"></i><span>Programs</span></a>
+                        <a href="#donate" class="m-nav-item-app" data-bs-toggle="modal" data-bs-target="#donationDataModal"><i class="bi bi-heart"></i><span>Donate</span></a>
+                        <a href="index.html#contact" class="m-nav-item-app"><i class="bi bi-three-dots"></i><span>More</span></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DESKTOP VIEW -->
+            <div class="d-lg-block d-none">
+                <nav class="navbar navbar-expand-lg mt-3 navbar-light fixed-top">
+                    <div class="container bg-white px-3 py-2 rounded-5">
+                        <a class="navbar-brand d-flex align-items-center" href="index.html">
+                            <img :src="page.settings.logo_url || 'images/bmw logo.svg'" alt="Logo" height="50px" class="me-2" @error="imgError">
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="mainNav">
+                            <ul class="navbar-nav m-auto align-items-lg-center mb-2 mb-lg-0">
+                                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="index.html#about-lg">About us</a></li>
+                                <li class="nav-item"><a class="nav-link active" href="programs.html">Programs</a></li>
+                                <li class="nav-item"><a class="nav-link" href="impact.html">Impact</a></li>
+                                <li class="nav-item"><a class="nav-link" href="index.html#partners-lg">Partners</a></li>
+                                <li class="nav-item"><a class="nav-link" href="index.html#getinvolved-lg">Participate</a></li>
+                                <li class="nav-item"><a class="nav-link" href="index.html#contact-lg">Contact</a></li>
+                            </ul>
+                            <div class="d-flex ms-3 align-items-center">
+                                <a href="#donate-lg" class="btn btn-donate btn-sm me-3" data-bs-toggle="modal" data-bs-target="#donationDataModal">{{ page.settings.nav_btn_donate_text || 'Donate' }}</a>
+                                <div class="lang-switcher">
+                                    <a href="javascript:void(0)" class="lang-btn" data-lang="de"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/de.svg" width="24"></a>
+                                    <a href="javascript:void(0)" class="lang-btn" data-lang="en"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/gb.svg" width="24"></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </aside>
+                </nav>
+
+                <main class="py-5" style="margin-top: 6rem; min-height: 80vh;">
+                    <div class="container container-narrow">
+                        <nav aria-label="breadcrumb" class="mb-4">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none text-muted">Home</a></li>
+                                <li class="breadcrumb-item"><a href="programs.html" class="text-decoration-none text-muted">Programs</a></li>
+                                <li class="breadcrumb-item active fw-bold" aria-current="page" v-if="currentProgram">{{ currentProgram.title }}</li>
+                            </ol>
+                        </nav>
+
+                        <div v-if="currentProgram">
+                            <div class="row g-5">
+                                <div class="col-lg-8">
+                                    <figure class="mb-4">
+                                        <img :src="currentProgram.image_url" class="img-fluid rounded-4 shadow-sm w-100" :alt="currentProgram.title" style="max-height: 500px; object-fit: cover;" @error="imgError">
+                                    </figure>
+
+                                    <h1 class="fw-bold display-5 mb-4">{{ currentProgram.title }}</h1>
+                                    <div class="lead text-muted mb-5" v-html="currentProgram.description || currentProgram.short_description"></div>
+
+                                    <div class="bg-light p-4 rounded-4 mb-5">
+                                        <h3 class="h5 fw-bold mb-3">Your Impact</h3>
+                                        <p>Your donation directly contributes to this change. A simple contribution can have a massive impact:</p>
+                                        <ul>
+                                            <li><strong>€25:</strong> Provides a complete school kit.</li>
+                                            <li><strong>€100:</strong> Funds one month of training for a teacher.</li>
+                                            <li><strong>€500:</strong> Can purchase new desks and chairs.</li>
+                                        </ul>
+                                        <button class="btn btn-donate btn-lg mt-3" @click="openDonateModal">Support This Program</button>
+                                    </div>
+                                </div>
+
+                                <aside class="col-lg-4">
+                                    <div class="sticky-top" style="top: 120px;">
+                                        <div class="card border-0 shadow-sm rounded-4">
+                                            <div class="card-body p-4">
+                                                <h5 class="text-bmw-brick mb-3 fw-bold">Program Facts</h5>
+                                                <ul class="list-unstyled mb-4">
+                                                    <li class="mb-3">
+                                                        <i class="bi bi-geo-alt-fill me-2 text-muted"></i>
+                                                        <strong>Location:</strong><br>
+                                                        <span class="text-muted ms-4">Remote villages (e.g., Alor)</span>
+                                                    </li>
+                                                    <li class="mb-3">
+                                                        <i class="bi bi-people-fill me-2 text-muted"></i>
+                                                        <strong>Focus:</strong><br>
+                                                        <span class="text-muted ms-4">Children (Ages 6-15)</span>
+                                                    </li>
+                                                    <li class="mb-3">
+                                                        <i class="bi bi-award-fill me-2 text-muted"></i>
+                                                        <strong>Key Areas:</strong><br>
+                                                        <span class="text-muted ms-4">Infrastructure, Learning Materials</span>
+                                                    </li>
+                                                </ul>
+                                                <hr class="opacity-10">
+                                                <h5 class="text-bmw-brick mb-2 fw-bold fs-6">Our Partner</h5>
+                                                <p class="small text-muted">Implemented with <strong>Lentera Aksara Negeri Foundation</strong>.</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mt-4 text-center">
+                                            <a href="programs.html" class="btn btn-outline-secondary rounded-pill px-4">View All Programs</a>
+                                        </div>
+                                    </div>
+                                </aside>
+                            </div>
+                        </div>
+
+                        <div v-else class="text-center py-5">
+                            <h3 class="text-muted">Program not found.</h3>
+                            <p class="text-muted">The program you are looking for does not exist or has been removed.</p>
+                            <a href="programs.html" class="btn btn-primary mt-3 rounded-pill px-4">Browse All Programs</a>
+                        </div>
+                    </div>
+                </main>
+
+                <footer class="site-footer" role="contentinfo">
+                    <div class="container container-narrow">
+                        <div class="footer-grid">
+                            <div>
+                                <h6>{{ page.settings.site_title }}</h6>
+                                <p class="muted small">{{ page.settings.footer_about_text }}</p>
+                            </div>
+                            <div>
+                                <h6>Quick Links</h6>
+                                <ul class="list-unstyled muted small">
+                                    <li><a href="programs.html">Programs</a></li>
+                                    <li><a href="impact.html">Impact</a></li>
+                                    <li><a href="index.html#partners-lg">Partners</a></li>
+                                    <li><a href="index.html#faq-lg">FAQ</a></li>
+                                    <li><a href="index.html#contact-lg">Contact</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h6>Stay in touch</h6>
+                                <form @submit.prevent="submitNewsletter" class="d-flex gap-2">
+                                    <input v-model="formNewsletter.email" type="email" class="form-control form-control-sm" placeholder="Your email" required>
+                                    <button class="btn btn-donate btn-sm" type="submit">Subscribe</button>
+                                </form>
+                                <div v-if="newsletterMsg" class="mt-2 small text-success">{{ newsletterMsg }}</div>
+                            </div>
+                        </div>
+                        <hr style="margin:1.5rem 0;border-color:rgba(0,0,0,0.05)">
+                        <div class="d-flex justify-content-between flex-wrap muted small">
+                            <div>{{ page.settings.footer_copyright }}</div>
+                            <div>Privacy · Terms · Transparency</div>
+                        </div>
+                    </div>
+                </footer>
             </div>
-        </div>
-    </main>
 
-
-    <footer class="site-footer" role="contentinfo">
-        <div class="container container-narrow">
-            <div class="footer-grid">
-                <div>
-                    <h6>Bildung mit Wirkung e.V.</h6>
-                    <p class="muted small">Registered association based in München. Our work connects German donors and
-                        institutions with remote communities across Indonesia to build sustainable education and elderly
-                        care.</p>
-                    <p class="muted small">Hirsch-Gereuth-Straße 55, 81369 München, Deutschland</p>
-                </div>
-                <div>
-                    <h6>Quick Links</h6>
-                    <ul class="list-unstyled muted small">
-                        <li><a href="../program.html">Programs</a></li>
-                        <li><a href="../index.html#impact">Impact</a></li>
-                        <li><a href="../index.html#partners">Partners</a></li>
-                        <li><a href="../index.html#faq">FAQ</a></li>
-                        <li><a href="../index.html#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h6>Stay in touch</h6>
-                    <p class="muted small mb-2">Subscribe to our newsletter for updates and impact stories.</p>
-                    <form id="newsletterForm" class="d-flex gap-2">
-                        <input id="newsletterEmail" type="email" class="form-control form-control-sm"
-                            placeholder="Your email" required>
-                        <button class="btn btn-donate btn-sm" type="submit">Subscribe</button>
-                    </form>
-                    <div class="mt-3">
-                        <a href="#" class="me-2 muted"><i class="bi bi-twitter"></i></a>
-                        <a href="#" class="me-2 muted"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="me-2 muted"><i class="bi bi-instagram"></i></a>
+            <!-- Modals -->
+            <div class="modal fade" id="donationDataModal" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content border-0">
+                        <div class="modal-header border-0"><h5 class="modal-title">Complete Your Donation</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                        <div class="modal-body p-4 p-md-5">
+                            <div class="alert alert-info mb-4">You are donating <strong>€{{ formDonation.amount }}</strong> to <strong>{{ formDonation.program }}</strong></div>
+                            <form @submit.prevent="submitDonation" class="row g-3">
+                                <div class="col-md-6"><label class="form-label">First Name</label><input type="text" class="form-control" v-model="formDonation.firstName" required></div>
+                                <div class="col-md-6"><label class="form-label">Last Name</label><input type="text" class="form-control" v-model="formDonation.lastName" required></div>
+                                <div class="col-12"><label class="form-label">Email</label><input type="email" class="form-control" v-model="formDonation.email" required></div>
+                                <div class="col-12 mt-4 text-end"><button type="submit" class="btn btn-primary btn-lg btn-donate" :disabled="formLoading">{{ formLoading ? 'Processing...' : 'Submit Donation' }}</button></div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-            <hr style="margin:1.5rem 0;border-color:rgba(0,0,0,0.05)">
-            <div class="d-flex justify-content-between flex-wrap muted small">
-                <div>© 2025 Bildung mit Wirkung e.V.. All rights reserved.</div>
-                <div>Privacy · Terms · Transparency</div>
+
+            <div class="modal fade" id="qrModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-white text-center p-4">
+                        <h5 class="modal-title mb-3">Scan QR Code</h5>
+                        <img :src="page.settings.bank_qr_image" style="max-width: 100%; width: 300px;" @error="imgError">
+                        <p class="muted mt-3 fw-bold text-dark">{{ page.settings.bank_holder }}</p>
+                        <p class="small mb-0">{{ page.settings.bank_iban }}</p>
+                        <p class="small">{{ page.settings.bank_name }}</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </footer>
+
+        </div> 
+    </div> 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="translations.js"></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement(
-                {
-                    pageLanguage: 'en',
-                    includedLanguages: 'en,de,id', // English, German, Indonesian
-                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                    autoDisplay: false
-                },
-                'google_translate_element'
-            );
-        }
-    </script>
-    <script type="text/javascript"
-        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    </body>
+    <script>
+        const { createApp } = Vue;
 
+        createApp({
+            data() {
+                return {
+                    pageLoaded: false,
+                    page: { settings: {}, programs: [], team: [], gallery: [] },
+                    programId: null,
+                    formDonation: { program: 'General', amount: 50, firstName: '', lastName: '', email: '' },
+                    formNewsletter: { email: '' },
+                    formLoading: false, formMessage: '', formSuccess: false, newsletterMsg: ''
+                }
+            },
+            computed: {
+                currentProgram() {
+                    if (!this.programId || !this.page.programs) return null;
+                    return this.page.programs.find(p => p.id == this.programId);
+                }
+            },
+            mounted() {
+                // Get ID from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                this.programId = urlParams.get('id');
+
+                fetch('administrator/api.php?action=get_homepage_data')
+                    .then(r => r.json())
+                    .then(d => {
+                        if (d.status === 'success') {
+                            this.page = d.data;
+                            this.pageLoaded = true;
+                            const loader = document.getElementById('initial-loader');
+                            if(loader) loader.style.display = 'none';
+                            
+                            // Set donation program if found
+                            if (this.currentProgram) {
+                                this.formDonation.program = this.currentProgram.title;
+                            }
+                        }
+                    })
+                    .catch(e => {
+                        console.error("API Error", e);
+                        this.pageLoaded = true;
+                        const loader = document.getElementById('initial-loader');
+                        if(loader) loader.innerHTML = '<p class="text-danger">Gagal memuat data. Refresh halaman.</p>';
+                    });
+            },
+            methods: {
+                imgError(e) { e.target.src = 'images/bg-logo-light.jpg'; },
+                openDonateModal() { const el = document.getElementById('donationDataModal'); if(window.bootstrap) new bootstrap.Modal(el).show(); },
+                
+                submitNewsletter() {
+                    const fd = new FormData();
+                    fd.append('action', 'subscribe_newsletter');
+                    fd.append('email', this.formNewsletter.email);
+                    fetch('administrator/api.php', { method:'POST', body:fd }).then(r=>r.json()).then(d=>{
+                        this.newsletterMsg = d.message;
+                        if(d.status==='success') this.formNewsletter.email = '';
+                    });
+                },
+                
+                submitDonation() {
+                    this.formLoading = true;
+                    const fd = new FormData();
+                    fd.append('action', 'add_donation');
+                    fd.append('selected_program', this.formDonation.program);
+                    fd.append('selected_amount', this.formDonation.amount);
+                    fd.append('firstName', this.formDonation.firstName);
+                    fd.append('lastName', this.formDonation.lastName);
+                    fd.append('emailDonation', this.formDonation.email);
+                    fetch('administrator/api.php', { method:'POST', body:fd }).then(r=>r.json()).then(d=>{
+                        alert(d.message);
+                        if(d.status==='success') {
+                            bootstrap.Modal.getInstance(document.getElementById('donationDataModal')).hide();
+                            this.formDonation = { program: 'General', amount: 50, firstName: '', lastName: '', email: '' };
+                        }
+                    }).finally(()=>this.formLoading=false);
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
 </html>

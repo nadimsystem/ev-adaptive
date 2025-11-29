@@ -10,13 +10,15 @@ header('Content-Type: application/json');
 $response = ['status' => 'error', 'message' => 'Invalid Request Action'];
 
 
-// FUNGSI UNTUK EKSPOR CSV
-function exportDonationsToCsv($conn, $filters) {
-    // Menyiapkan header agar browser mengunduh file, bukan menampilkannya
-    header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename=donations_report_' . date('Y-m-d') . '.csv');
+// FUNGSI UNTUK EKSPOR EXCEL (HTML TABLE)
+function exportDonationsToExcel($conn, $filters) {
+    // Header untuk file Excel (.xls)
+    header('Content-Type: application/vnd.ms-excel');
+    header('Content-Disposition: attachment; filename=donations_report_' . date('Y-m-d') . '.xls');
+    header('Pragma: no-cache');
+    header('Expires: 0');
 
-    // Membangun query dengan filter yang sama seperti saat menampilkan data
+    // Membangun query
     $baseQuery = "SELECT * FROM donations";
     $whereClauses = [];
     $params = [];
@@ -45,41 +47,69 @@ function exportDonationsToCsv($conn, $filters) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Membuka output stream PHP untuk menulis file CSV
-    $output = fopen('php://output', 'w');
-
-    // Menulis baris header
-    fputcsv($output, [
-        'ID', 'Program', 'Amount', 'Currency', 'Frequency', 'First Name', 'Last Name', 'Email', 
-        'Address', 'Postal Code', 'City', 'Country', 'Telephone', 'Donation Date'
-    ]);
-
-    // Menulis setiap baris data donasi
+    // Output HTML Table
+    echo '<table border="1">';
+    echo '<thead><tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Program</th>
+            <th>Amount</th>
+            <th>Currency</th>
+            <th>Frequency</th>
+            <th>Salutation</th>
+            <th>Title</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>House No</th>
+            <th>Postal Code</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Message</th>
+            <th>Payment Method</th>
+            <th>Proof of Payment</th>
+            <th>Annual Receipt</th>
+            <th>Digital Postcard</th>
+            <th>Member Cert</th>
+          </tr></thead>';
+    echo '<tbody>';
+    
     while ($row = $result->fetch_assoc()) {
-        fputcsv($output, [
-            $row['id'],
-            $row['program_name'],
-            $row['amount'],
-            $row['currency'],
-            $row['frequency'],
-            $row['first_name'],
-            $row['last_name'],
-            $row['email'],
-            $row['address'],
-            $row['postal_code'],
-            $row['city'],
-            $row['country'],
-            $row['telephone'],
-            $row['donation_date']
-        ]);
+        echo '<tr>';
+        echo '<td>' . $row['id'] . '</td>';
+        echo '<td>' . $row['donation_date'] . '</td>';
+        echo '<td>' . htmlspecialchars($row['program_name']) . '</td>';
+        echo '<td>' . $row['amount'] . '</td>';
+        echo '<td>' . $row['currency'] . '</td>';
+        echo '<td>' . $row['frequency'] . '</td>';
+        echo '<td>' . htmlspecialchars($row['salutation'] ?? '') . '</td>';
+        echo '<td>' . htmlspecialchars($row['academic_degree'] ?? '') . '</td>';
+        echo '<td>' . htmlspecialchars($row['first_name']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['last_name']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['email']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['telephone'] ?? '') . '</td>';
+        echo '<td>' . htmlspecialchars($row['address'] ?? '') . '</td>';
+        echo '<td>' . htmlspecialchars($row['house_number'] ?? '') . '</td>';
+        echo '<td>' . htmlspecialchars($row['postal_code'] ?? '') . '</td>';
+        echo '<td>' . htmlspecialchars($row['city'] ?? '') . '</td>';
+        echo '<td>' . htmlspecialchars($row['country'] ?? '') . '</td>';
+        echo '<td>' . htmlspecialchars($row['message'] ?? '') . '</td>';
+        echo '<td>' . htmlspecialchars($row['payment_method'] ?? '') . '</td>';
+        echo '<td>' . htmlspecialchars($row['proof_of_payment'] ?? 'None') . '</td>';
+        echo '<td>' . ($row['wants_annual_receipt'] ? 'Yes' : 'No') . '</td>';
+        echo '<td>' . ($row['wants_digital_postcard'] ? 'Yes' : 'No') . '</td>';
+        echo '<td>' . ($row['wants_member_certificate'] ? 'Yes' : 'No') . '</td>';
+        echo '</tr>';
     }
-
-    fclose($output);
+    
+    echo '</tbody></table>';
     $stmt->close();
-    exit(); // Hentikan eksekusi skrip setelah file CSV dibuat
+    exit();
 }
 // ... (Fungsi handleFileUpload tidak berubah) ...
-function handleFileUpload($file) {
+function handleFileUpload($file, $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif']) {
     // Direktori tempat file akan disimpan, relatif terhadap lokasi api.php.
     $uploadDir = 'uploads/';
     // Path yang akan disimpan di database, relatif terhadap root direktori proyek.
@@ -110,12 +140,19 @@ function handleFileUpload($file) {
     $pathForDatabase = $dbPathPrefix . $fileName; // Path yang akan disimpan di database.
 
     $fileType = strtolower(pathinfo($targetPathOnServer, PATHINFO_EXTENSION));
-    $check = getimagesize($file['tmp_name']);
+    
+    // Validasi tipe file
+    if (!in_array($fileType, $allowedExtensions)) {
+        return ['error' => 'Invalid file type. Allowed: ' . implode(', ', $allowedExtensions)];
+    }
+    
+    // Validasi gambar hanya jika ekstensi adalah gambar
+    if (in_array($fileType, ['jpg', 'jpeg', 'png', 'gif'])) {
+        $check = getimagesize($file['tmp_name']);
+        if ($check === false) return ['error' => 'File is not a valid image.'];
+    }
 
-    // Validasi lebih lanjut: tipe file, ukuran, dan apakah itu gambar asli.
-    if ($check === false) return ['error' => 'File is not a valid image.'];
     if ($file['size'] > 5000000) return ['error' => 'File is too large (Max 5MB).'];
-    if (!in_array($fileType, ['jpg', 'jpeg', 'png', 'gif'])) return ['error' => 'Only JPG, JPEG, PNG & GIF files are allowed.'];
 
     // Memindahkan file dari lokasi sementara ke direktori tujuan akhir.
     if (move_uploaded_file($file['tmp_name'], $targetPathOnServer)) {
@@ -501,6 +538,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
             $wants_digital_postcard = isset($_POST['digitalPostcard']) ? 1 : 0;
             $wants_member_certificate = isset($_POST['memberCertificate']) ? 1 : 0;
             $payment_method = $_POST['payment'] ?? 'Online Bank Transfer';
+            $proof_of_payment = null;
+
+            // Handle Proof of Payment Upload
+            if (isset($_FILES['proofOfPayment']) && $_FILES['proofOfPayment']['error'] == 0) {
+                $uploadResult = handleFileUpload($_FILES['proofOfPayment'], ['jpg', 'jpeg', 'png', 'gif', 'pdf']);
+                if (isset($uploadResult['path'])) {
+                    $proof_of_payment = $uploadResult['path'];
+                }
+            }
 
             // Validasi sederhana
             if (empty($first_name) || empty($last_name) || empty($email)) {
@@ -509,8 +555,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
                 exit;
             }
 
-            $stmt = $conn->prepare("INSERT INTO donations (program_name, amount, currency, frequency, salutation, academic_degree, first_name, last_name, address, house_number, postal_code, city, country, telephone, email, message, wants_annual_receipt, wants_digital_postcard, wants_member_certificate, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sdssssssssssssssiiis", $program_name, $amount, $currency, $frequency, $salutation, $academic_degree, $first_name, $last_name, $address, $house_number, $postal_code, $city, $country, $telephone, $email, $message, $wants_annual_receipt, $wants_digital_postcard, $wants_member_certificate, $payment_method);
+            $stmt = $conn->prepare("INSERT INTO donations (program_name, amount, currency, frequency, salutation, academic_degree, first_name, last_name, address, house_number, postal_code, city, country, telephone, email, message, wants_annual_receipt, wants_digital_postcard, wants_member_certificate, payment_method, proof_of_payment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sdssssssssssssssiiiss", $program_name, $amount, $currency, $frequency, $salutation, $academic_degree, $first_name, $last_name, $address, $house_number, $postal_code, $city, $country, $telephone, $email, $message, $wants_annual_receipt, $wants_digital_postcard, $wants_member_certificate, $payment_method, $proof_of_payment);
+
 
             if ($stmt->execute()) {
                 $response = ['status' => 'success', 'message' => 'Thank you! Your donation has been recorded.'];
@@ -520,43 +567,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
             $stmt->close();
             break;
 
+        case 'export_donations_csv': // Keep the action name for compatibility or rename if you want
+            $filters = [
+                'search' => $_GET['search'] ?? '',
+                'program' => $_GET['program'] ?? ''
+            ];
+            exportDonationsToExcel($conn, $filters);
+            break;
+
         case 'get_homepage_data':
-            $homepage_data = [];
+            $homepage_data = [
+                'settings' => [],
+                'programs' => [],
+                'team' => [],
+                'gallery' => []
+            ];
 
-            // 1. Ambil Pengaturan Situs
-            $settings_result = $conn->query("SELECT setting_name, setting_value FROM site_settings");
-            $settings = [];
-            while ($row = $settings_result->fetch_assoc()) {
-                $settings[$row['setting_name']] = $row['setting_value'];
+            // 1. AMBIL SETTINGS (Teks & Gambar Dinamis)
+            // Pastikan tabel site_settings sudah dibuat di database
+            $settings_query = "SELECT setting_name, setting_value FROM site_settings";
+            $settings_result = $conn->query($settings_query);
+            
+            if ($settings_result) {
+                while ($row = $settings_result->fetch_assoc()) {
+                    // Konversi jadi format: settings.hero_title = 'Isi Judul'
+                    $homepage_data['settings'][$row['setting_name']] = $row['setting_value'];
+                }
             }
-            $homepage_data['settings'] = $settings;
 
-            // 2. Ambil Program 
-            // *** PERUBAHAN DI SINI ***
-            // Ambil SEMUA program untuk dropdown donasi dan carousel
-            $programs_result = $conn->query("SELECT id, title, short_description, image_url FROM programs WHERE status = 'published' ORDER BY id DESC");
-            $programs = [];
-            while ($row = $programs_result->fetch_assoc()) {
-                $programs[] = $row;
+            // 2. AMBIL PROGRAMS (Hanya yang published, max 6 terbaru)
+            $programs_result = $conn->query("SELECT id, title, short_description, image_url FROM programs WHERE status = 'published' ORDER BY id DESC LIMIT 6");
+            if ($programs_result) {
+                while ($row = $programs_result->fetch_assoc()) {
+                    $homepage_data['programs'][] = $row;
+                }
             }
-            // Kita akan kirim semua program, dan biarkan Vue yang membatasinya untuk carousel jika perlu
-            $homepage_data['programs'] = $programs;
 
-            // 3. Ambil Anggota Tim
-            $team_result = $conn->query("SELECT name, position, image_url FROM team_members ORDER BY display_order ASC");
-            $team = [];
-            while ($row = $team_result->fetch_assoc()) {
-                $team[] = $row;
+            // 3. AMBIL TEAM (Urutkan sesuai display_order)
+            // Pastikan tabel team_members ada kolom display_order atau hapus ORDER BY-nya
+            $team_query = "SELECT name, position, image_url FROM team_members ORDER BY id ASC"; 
+            // Cek apakah kolom display_order ada, jika error ganti ORDER BY id DESC
+            $team_result = $conn->query($team_query);
+            if ($team_result) {
+                while ($row = $team_result->fetch_assoc()) {
+                    $homepage_data['team'][] = $row;
+                }
             }
-            $homepage_data['team'] = $team;
 
-            // 4. Ambil Gambar Galeri
-            $gallery_result = $conn->query("SELECT image_url, alt_text FROM gallery_images ORDER BY display_order ASC");
-            $gallery = [];
-            while ($row = $gallery_result->fetch_assoc()) {
-                $gallery[] = $row;
+            // 4. AMBIL GALLERY (Max 12 gambar terbaru)
+            $gallery_result = $conn->query("SELECT image_url, alt_text FROM gallery_images ORDER BY id DESC LIMIT 12");
+            if ($gallery_result) {
+                while ($row = $gallery_result->fetch_assoc()) {
+                    $homepage_data['gallery'][] = $row;
+                }
             }
-            $homepage_data['gallery'] = $gallery;
 
             $response = ['status' => 'success', 'data' => $homepage_data];
             break;
